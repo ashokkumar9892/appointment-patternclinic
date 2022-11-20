@@ -1,0 +1,63 @@
+.label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+.form-control {
+    margin-bottom:1rem;
+}
+.backStepbtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+    width: 22px;
+    padding: 10px;
+}
+.intake-form .form-control, .intake-form .form-select {
+    outline: none!important;
+    border-radius: 0px!important;
+    border-top: 0!important;
+    border-left: 0!important;
+    border-right: 0!important;
+    padding-bottom: 0!important;
+    border-color: grey!important;
+}
+.health-history-form .form-control, .health-history-form .form-select {
+    outline: none!important;
+    border-radius: 0px!important;
+    border-top: 0!important;
+    border-left: 0!important;
+    border-right: 0!important;
+    padding-bottom: 0!important;
+    border-color: grey!important;
+}
+.family-form .form-control, .health-history-form .form-select {
+    outline: none!important;
+    border-radius: 0px!important;
+    border-top: 0!important;
+    border-left: 0!important;
+    border-right: 0!important;
+    padding-bottom: 0!important;
+    border-color: grey!important;
+}
+ul {
+    list-style-type: disc;
+}
+.w-80 {
+    width: 80px!important;
+}
+.w-120 {
+    width: 120px!important;
+}
+.min-h-30 {
+    min-height: 30px!important;
+}
+.max-w-200 {
+    width: 200px!important;
+}
+.text-black {
+    color: black!important;
+}
+label {
+    color: black!important;
+}

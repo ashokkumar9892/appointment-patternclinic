@@ -1,0 +1,18 @@
+.progess-btn {
+    height: 24px;
+    display: flex;
+    align-items: center;
+    padding: 1.4rem;
+    justify-content: center;
+    z-index: 999;
+    border-radius: 10px;
+}
+.main-wrapper {
+    min-height: 100vh;
+}
+.progress-bar-wrapper {
+    position: absolute;
+    width: 90%;
+    top: 36px;
+    left: 5%;
+}

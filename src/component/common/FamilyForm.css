@@ -1,0 +1,16 @@
+.peronsnalandfamilydiv{
+    height: 45vh;
+    overflow-y: scroll;
+    margin-bottom: 18px;
+}
+.peronsnalandfamilydiv::-webkit-scrollbar {
+    border-radius: 8px;
+    background: rgba(196, 196, 196, 0.4);
+    box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.08);
+    width: 6px;
+}
+.peronsnalandfamilydiv::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(0, 151, 249, 0.4) -5.17%, rgba(0, 106, 175, 0.4) 106.03%);
+    border-radius: 8px;
+}
+

@@ -1,0 +1,139 @@
+.shedule_card_wrap {
+    width: 52%;
+    margin-left: 8%;
+    /* margin-right: 2%; */
+    margin-top: 4%;
+    margin-bottom: 4%;
+    padding-left: 82px;
+    padding-right: 82px;
+    padding-top: 32px;
+    padding-bottom: 52px;
+    background: #FFFFFF;
+    box-shadow: 80px 120px 504px rgba(0, 0, 0, 0.16);
+}
+
+.patientText {
+    /* font-family: 'DM Sans'; */
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 20px;
+    letter-spacing: -0.2px;
+    color: #0050C6;
+
+}
+
+.informationText {
+    /* font-family: 'DM Sans'; */
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 20px;
+    letter-spacing: -0.2px;
+    color: #000000;
+}
+
+.inputBox {
+    background: #F3F3F5;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    height: 34px;
+    width: 100%;
+    padding: 8px;
+}
+
+.nameRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.labelName {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.2px;
+    color: #131313;
+    margin-bottom: 8px;
+
+}
+
+.buttonDiv {
+    border: 1px solid #0052CC;
+    width: 120px;
+    height: 36px;
+    color: #0052CC;
+
+}
+
+.buttonDiv:hover {
+    background: #0052CC;
+    color: #FFFFFF;
+}
+
+.width45 {
+    width: 45%;
+}
+
+.nextButton {
+    margin-left: 20px;
+}
+
+.dateTimeDiv {
+    background: rgba(12, 113, 195, 0.04);
+    border: 1px solid #0052CC;
+    width: 45%;
+    height: 96px;
+    display: flex;
+    flex-direction: row;
+}
+
+.imageDiv {
+    background-color: #0052CC;
+    align-items: center;
+    display: flex;
+    width: 40px;
+    justify-content: center;
+}
+
+.textLocationDiv {
+    padding-top: 12px;
+    padding-left: 23px;
+}
+
+@media only screen and (min-width:453px) and (max-width: 997px) {
+    .shedule_card_wrap {
+        width: 85%;
+    }
+}
+
+@media only screen and (max-width: 453px) {
+    .shedule_card_wrap {
+        width: 85%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .nameRow {
+        flex-direction: column;
+    }
+
+    .width45 {
+        width: 100%;
+    }
+
+    .buttonDiv {
+        width: 100%;
+    }
+
+    .nextButton {
+        margin-left: 0px;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .dateTimeDiv {
+        width: 100%;
+        margin-top: 18px;
+    }
+}

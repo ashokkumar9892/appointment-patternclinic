@@ -1,0 +1,9 @@
+.nameDiv{
+    width: 100%;
+    height: 75px;
+    background: rgba(12, 113, 195, 0.04);
+    border: 1px solid #0052CC;
+    display: flex;
+    flex-direction: row;
+    margin-top: 24px;
+}
