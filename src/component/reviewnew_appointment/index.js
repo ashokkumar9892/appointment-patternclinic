@@ -22,14 +22,14 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 
 const ReviewAppoinmentNew = () => {
-    const history = useHistory();
+  const history = useHistory();
   const patientContext = useContext(PatientContext);
   const [show, setShow] = useState(false);
   const [insuranceError, setInsuranceError] = useState("");
   const [insuranceBtnLoading, setInsuranceBtnLoading] = useState(false);
   const [checkterm, setCheckterm] = useState(false);
   const [insurance, setInsurance] = useState({ departmentid: 1 });
-  const [loading , setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -147,7 +147,7 @@ const ReviewAppoinmentNew = () => {
           swal("Appointment not Booked!", "error");
         }
       })
-      .catch((error) => { setLoading(false)});
+      .catch((error) => { setLoading(false) });
   };
   const patientInsurance = () => {
     setInsuranceError("");
@@ -203,171 +203,173 @@ const ReviewAppoinmentNew = () => {
   };
 
   return (
-        <section className="appointmentrow mx-0">
-            <div className="left-sidebar">
-                <img src={logo} alt="The Patient App" className="logo" />
-                <div className="quote">
-                    <img src={leftQuote} className="quote-icon left" />
-                    <img src={rightQuote} className="quote-icon right" />
-                    <h2>Healthcare You Can Afford</h2>
-                    <p >Here at A Pattern Medical Clinic, our top priority is patient care. In order to make sure that we can see you, we choose rates that are well below the Emergency Room prices.</p>
-                </div>
-            </div>
-            <div className="shedule_card_wrap">
-                <div>
-                    <p> <span className="patientText"> Review </span> <span className="informationText">Information </span> </p>
+    <section className="appointmentrow mx-0">
+      <div className="left-sidebar">
+        <img src={logo} alt="The Patient App" className="logo" />
+        <div className="quote">
+          <img src={leftQuote} className="quote-icon left" />
+          <img src={rightQuote} className="quote-icon right" />
+          <h2>Healthcare You Can Afford</h2>
+          <p >Here at A Pattern Medical Clinic, our top priority is patient care. In order to make sure that we can see you, we choose rates that are well below the Emergency Room prices.</p>
+        </div>
+      </div>
+      <div className="right-content">
+        <div className="rigthDiv">
+        <div>
+          <p> <span className="patientText"> Review </span> <span className="informationText">Information </span> </p>
 
-                </div>
-                <div className="nameDiv">
-                    <div className="imageDiv">
-                        <img height={20} width={20} src={person} />
-                    </div>
-                    <div className="textLocationDiv">
-                    <strong>
-                                      {patientContext.patientDetails.firstname +
-                                        " " +
-                                        patientContext.patientDetails.lastname}
-                                    </strong>
-                                  
-                                  <div className="">
-                                    {getAge(patientContext.patientDetails.dob)} |{" "}
-                                    {patientContext.patientDetails.dob} |
-                                    {patientContext.patientDetails.sex}
-                                  </div>
+        </div>
+        <div className="nameDiv">
+          <div className="imageDiv">
+            <img height={20} width={20} src={person} />
+          </div>
+          <div className="textLocationDiv">
+            <strong>
+              {patientContext.patientDetails.firstname +
+                " " +
+                patientContext.patientDetails.lastname}
+            </strong>
 
-                    </div>
-                </div>
-                <div className="nameDiv">
-                    <div className="imageDiv">
-                        <img height={20} width={20} src={call} />
-                    </div>
-                    <div className="textLocationDiv">
-                        <p className="labelName">Phone </p>
-                        <p>{patientContext.patientDetails.phone}</p>
-                    </div>
-                </div>
-                <div className="nameDiv">
-                    <div className="imageDiv">
-                        <img height={20} width={20} src={msg} />
-                    </div>
-                    <div className="textLocationDiv">
-                        <p className="labelName">Email</p>
-                        <p>{patientContext.patientDetails.email}</p>
-                    </div>
-                </div>
-                <div className="nameRow" style={{ marginTop: "24px" }}>
-                    <div className="dateTimeDiv">
-                        <div className="imageDiv">
-                            <img height={20} width={20} src={dateLogo} />
-                        </div>
-                        <div className="textLocationDiv">
-                            <p className="labelName">Day and Time</p>
-                            <p> {patientContext.patientDetails.value} <br />
-                                            {patientContext.patientDetails.timeData}(EDT)</p>
-                        </div>
-                    </div>
-                    <div className="dateTimeDiv">
-                        <div className="imageDiv">
-                            <img height={20} width={20} src={location} />
-                        </div>
-                        <div className="textLocationDiv">
-                            <p className="labelName">Location</p>
-                           
-                                            <p>{patientContext.patientDetails.location}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="nameRow" style={{ marginTop: "24px" }}>
-                    <div className="dateTimeDiv">
-                        <div className="imageDiv">
-                            <img height={20} width={20} src={question} />
-                        </div>
-                        <div className="textLocationDiv">
-                            <p className="labelName">Reason for Visit</p>
-                            <p>  {patientContext.patientDetails.reason}</p>
-                        </div>
-                    </div>
-
-                    <div className="dateTimeDiv">
-                        <div className="imageDiv">
-                            <img height={20} width={20} src={insurence} />
-                        </div>
-                        <div className="textLocationDiv">
-                            <p className="labelName">Insurance</p>
-                            <p> {patientContext.patientDetails.insurance}</p>
-                        </div>
-                    </div>
-                </div>
-                <div>
-
-                    <div className="row" style={{marginTop:"24px"}}>
-                        <div className="col-md-12">
-                            <p className="mb-0">
-                                <strong>Additional Notes</strong>
-                            </p>
-                            <p>{patientContext.patientDetails.additional}</p>
-                        </div>
-                    </div>
-                    <div className="col-md-12">
-                        <input
-                            type="checkbox"
-                            checked={checkterm}
-                            className=""
-                            onClick={() => {
-                              setCheckterm(!checkterm);
-                            }}
-
-                        />{" "}
-                        I agree to the{" "}
-                        <span className="text-primary">
-                            Terms and Conditions{" "}
-                        </span>
-                        and{" "}
-                        <span className="text-primary">
-                            Privacy policy.
-                        </span>
-                    </div>
-                </div>
-
-                <div style={{ marginTop: "24px" }}>
-
-                    <button className="buttonDiv"
-                     onClick={() => {
-                        Preview();
-                      }}
-                    >
-
-                        Previous
-                    </button>
-
-
-                    {loading == false && (
-                    <button className="buttonDiv nextButton"
-                    style={{width:'170px'}}
-                     type="button"
-                     disabled={!checkterm}
-                     onClick={() => {
-                       ShaduleAppointment();
-                     }}
-
-                    >
-                        Shedule Appointment
-                    </button>)}
-                    {loading == true && (
-                        <button
-                            type="button"
-                            disabled={true}
-                            className=" buttonDiv nextButton btn-primary"
-                        >
-                            Loading...
-                        </button>
-                    )}
-
-
-                </div>
+            <div className="">
+              {getAge(patientContext.patientDetails.dob)} |{" "}
+              {patientContext.patientDetails.dob} |
+              {patientContext.patientDetails.sex}
             </div>
 
-        </section>
-    )
-  }
+          </div>
+        </div>
+        <div className="nameDiv">
+          <div className="imageDiv">
+            <img height={20} width={20} src={call} />
+          </div>
+          <div className="textLocationDiv">
+            <p className="labelName">Phone </p>
+            <p>{patientContext.patientDetails.phone}</p>
+          </div>
+        </div>
+        <div className="nameDiv">
+          <div className="imageDiv">
+            <img height={20} width={20} src={msg} />
+          </div>
+          <div className="textLocationDiv">
+            <p className="labelName">Email</p>
+            <p>{patientContext.patientDetails.email}</p>
+          </div>
+        </div>
+        <div className="nameRow" style={{ marginTop: "24px" }}>
+          <div className="dateTimeDiv">
+            <div className="imageDiv">
+              <img height={20} width={20} src={dateLogo} />
+            </div>
+            <div className="textLocationDiv">
+              <p className="labelName">Day and Time</p>
+              <p> {patientContext.patientDetails.value} <br />
+                {patientContext.patientDetails.timeData}(EDT)</p>
+            </div>
+          </div>
+          <div className="dateTimeDiv">
+            <div className="imageDiv">
+              <img height={20} width={20} src={location} />
+            </div>
+            <div className="textLocationDiv">
+              <p className="labelName">Location</p>
+
+              <p>{patientContext.patientDetails.location}</p>
+            </div>
+          </div>
+        </div>
+        <div className="nameRow" style={{ marginTop: "24px" }}>
+          <div className="dateTimeDiv">
+            <div className="imageDiv">
+              <img height={20} width={20} src={question} />
+            </div>
+            <div className="textLocationDiv">
+              <p className="labelName">Reason for Visit</p>
+              <p>  {patientContext.patientDetails.reason}</p>
+            </div>
+          </div>
+
+          <div className="dateTimeDiv">
+            <div className="imageDiv">
+              <img height={20} width={20} src={insurence} />
+            </div>
+            <div className="textLocationDiv">
+              <p className="labelName">Insurance</p>
+              <p> {patientContext.patientDetails.insurance}</p>
+            </div>
+          </div>
+        </div>
+        <div>
+
+          <div className="row" style={{ marginTop: "24px" }}>
+            <div className="col-md-12">
+              <p className="mb-0">
+                <strong>Additional Notes</strong>
+              </p>
+              <p>{patientContext.patientDetails.additional}</p>
+            </div>
+          </div>
+          <div className="col-md-12">
+            <input
+              type="checkbox"
+              checked={checkterm}
+              className=""
+              onClick={() => {
+                setCheckterm(!checkterm);
+              }}
+
+            />{" "}
+            I agree to the{" "}
+            <span className="text-primary">
+              Terms and Conditions{" "}
+            </span>
+            and{" "}
+            <span className="text-primary">
+              Privacy policy.
+            </span>
+          </div>
+        </div>
+
+        <div style={{ marginTop: "24px" }}>
+
+          <button className="buttonDiv"
+            onClick={() => {
+              Preview();
+            }}
+          >
+
+            Previous
+          </button>
+
+
+          {loading == false && (
+            <button className="buttonDiv nextButton"
+              style={{ width: '170px' }}
+              type="button"
+              disabled={!checkterm}
+              onClick={() => {
+                ShaduleAppointment();
+              }}
+
+            >
+              Shedule Appointment
+            </button>)}
+          {loading == true && (
+            <button
+              type="button"
+              disabled={true}
+              className=" buttonDiv nextButton btn-primary"
+            >
+              Loading...
+            </button>
+          )}
+
+
+        </div>
+      </div>
+      </div>
+
+    </section>
+  )
+}
 export default ReviewAppoinmentNew;

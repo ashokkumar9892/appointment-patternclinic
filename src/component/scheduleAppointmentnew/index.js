@@ -163,7 +163,10 @@ const ScheduleAppointmentNew = () => {
                     <p >Here at A Pattern Medical Clinic, our top priority is patient care. In order to make sure that we can see you, we choose rates that are well below the Emergency Room prices.</p>
                 </div>
             </div>
-            <div className="shedule_card_wrap">
+            {/* <div> */}
+                <div className="right-content">
+                    
+              <div className="rigthDiv">
                 <div> 
                     <p> <span className="patientText"> Patient </span> <span className="informationText">Information </span> </p>
 
@@ -318,7 +321,7 @@ const ScheduleAppointmentNew = () => {
                     )}
 
                 </div>
-
+                </div>
             </div>
         </section>
 

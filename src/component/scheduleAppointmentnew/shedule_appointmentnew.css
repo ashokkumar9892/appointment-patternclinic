@@ -10,6 +10,17 @@
     padding-bottom: 52px;
     background: #FFFFFF;
     box-shadow: 80px 120px 504px rgba(0, 0, 0, 0.16);
+    height: 550px;
+    overflow: auto;
+}
+
+.rigthDiv {
+    padding-left: 12%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    padding-right: 12%;
+    background: #FFFFFF;
+    box-shadow: 80px 120px 504px rgba(0, 0, 0, 0.16)
 }
 
 .patientText {

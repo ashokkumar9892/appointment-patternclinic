@@ -20,6 +20,14 @@
 
 }
 
+.labelList{
+    padding-top: 12px;
+    padding-left: 23px;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
 .appointment-title {
     font-family: 'Lexend', sans-serif;
     font-weight: 700;
