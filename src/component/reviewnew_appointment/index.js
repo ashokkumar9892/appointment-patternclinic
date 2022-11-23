@@ -344,7 +344,6 @@ const ReviewAppoinmentNew = () => {
 
           {loading == false && (
             <button className="buttonDiv nextButton"
-              style={{ width: '170px' }}
               type="button"
               disabled={!checkterm}
               onClick={() => {
