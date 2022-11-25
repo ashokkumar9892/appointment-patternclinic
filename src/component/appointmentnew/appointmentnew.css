@@ -769,9 +769,7 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 
 	.right-content,
 	.left-sidebar,
-	.card {
-		padding: 30px;
-	}
+	
 
 	.left-sidebar {
 		padding: 50px 30px;

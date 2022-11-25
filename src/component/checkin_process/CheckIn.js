@@ -343,14 +343,14 @@ const CheckIn = () => {
                 </div>
                 <button className="btn btn-primary progess-btn " 
                   onClick={() => multiFormStep > 1 ? goPrevStep(1, 0) : null}>
-                  Insurance
+                  {multiFormStep==1 ? "Insurance": "1"}
                 </button>
                 <button
                   className={`btn ${
                     multiFormStep > 1 ? "btn-primary" : "btn-secondary"
                   } step-btn progess-btn mb-2 `}
                 >
-                  Payment
+                  {multiFormStep == 2?"Payment":"2"}
                 </button>
                 <button
                   onClick={() => multiFormStep > 2 || patientContext?.patientDetails?.covidData !== undefined ? goPrevStep(3, 66) : null}
@@ -358,7 +358,8 @@ const CheckIn = () => {
                     multiFormStep > 2 || patientContext?.patientDetails?.covidData !== undefined? "btn-primary" : "btn-secondary"
                   } step-btn progess-btn mb-2 `}
                 >
-                  Covid Form
+                   {multiFormStep == 3?"Covid Form":"3"}
+              
                 </button>
                 <button
                   onClick={() => multiFormStep > 3 || patientContext?.patientDetails?.intakeData !== undefined ? goPrevStep(4, 99) : null}
@@ -366,7 +367,8 @@ const CheckIn = () => {
                     multiFormStep > 3 || patientContext?.patientDetails?.intakeData !== undefined ? "btn-primary" : "btn-secondary"
                   } step-btn progess-btn mb-2 `}
                 >
-                  Intake Form
+                  {multiFormStep ==4 ?"Intake Form":"4"}
+                  
                 </button>
                 
               </div>
