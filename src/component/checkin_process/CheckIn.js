@@ -17,7 +17,21 @@ import Navbarcomponent from "../common/Navbar";
 import IntakeForm from "../common/IntakeForm";
 import HealthHistoryForm from "../common/HealthHistoryForm";
 
+
 const CheckIn = () => {
+  const [deviceType, setDeviceType] = useState("");
+
+  useEffect(() => {
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(
+        navigator.userAgent
+      )
+    ) {
+      setDeviceType("Mobile");
+    } else {
+      setDeviceType("Desktop");
+    }
+  }, []);
   const history = useHistory();
   const location = useLocation();
   const [show, setShow] = useState(false);
@@ -76,9 +90,7 @@ const CheckIn = () => {
   const [otheramount, setOtheramount] = useState("");
   const [balance, setBalance] = useState("");
 
-  useEffect(() => {
-    //console.log(patientContext, "useContext");
-  });
+
 
   useEffect(() => {
     if (location.state && location.state.copay) {
@@ -97,10 +109,7 @@ const CheckIn = () => {
     }
   }, [location]);
 
-  useEffect(() => {
-    //e.log(patientContext.patientDetails);
-  });
-
+ 
   const patientInsurance = () => {
     setInsuranceError("");
 
@@ -331,7 +340,9 @@ const CheckIn = () => {
     checkPaymentForm();
   });
   return (
-    <>
+    <>{
+      console.log(deviceType,"deviceType")
+    }
     <Navbarcomponent />
       <div className="container-fluid main-wrapper">
         <div className="row  main-wrapper justify-content-center align-items-center">
@@ -343,14 +354,16 @@ const CheckIn = () => {
                 </div>
                 <button className="btn btn-primary progess-btn " 
                   onClick={() => multiFormStep > 1 ? goPrevStep(1, 0) : null}>
-                  {multiFormStep==1 ? "Insurance": "1"}
+                  {deviceType == "Mobile" &&(multiFormStep==1  ? "Insurance": "1")}
+                  {deviceType == "Desktop" && "Insurance"}
                 </button>
                 <button
                   className={`btn ${
                     multiFormStep > 1 ? "btn-primary" : "btn-secondary"
                   } step-btn progess-btn mb-2 `}
                 >
-                  {multiFormStep == 2?"Payment":"2"}
+                  {deviceType == "Mobile" &&(multiFormStep == 2?"Payment":"2")}
+                  {deviceType == "Desktop" && "Payment"}
                 </button>
                 <button
                   onClick={() => multiFormStep > 2 || patientContext?.patientDetails?.covidData !== undefined ? goPrevStep(3, 66) : null}
@@ -358,7 +371,8 @@ const CheckIn = () => {
                     multiFormStep > 2 || patientContext?.patientDetails?.covidData !== undefined? "btn-primary" : "btn-secondary"
                   } step-btn progess-btn mb-2 `}
                 >
-                   {multiFormStep == 3?"Covid Form":"3"}
+                   {deviceType == "Mobile" &&(multiFormStep == 3?"Covid Form":"3")}
+                   {deviceType == "Desktop" && "Covid Form"}
               
                 </button>
                 <button
@@ -367,7 +381,8 @@ const CheckIn = () => {
                     multiFormStep > 3 || patientContext?.patientDetails?.intakeData !== undefined ? "btn-primary" : "btn-secondary"
                   } step-btn progess-btn mb-2 `}
                 >
-                  {multiFormStep ==4 ?"Intake Form":"4"}
+                  {deviceType == "Mobile" &&(multiFormStep ==4 ?"Intake Form":"4")}
+                  {deviceType == "Desktop" && "Intake Form"}
                   
                 </button>
                 
