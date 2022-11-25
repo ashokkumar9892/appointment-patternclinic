@@ -257,8 +257,8 @@ button:focus {
 .appointmentrow {
 	display: flex;
 	flex-wrap: wrap;
-	margin-left: -15px;
-	margin-right: -15px;
+	margin-left: -25px;
+	margin-right: -27px;
 }
 
 .d-flex {
@@ -808,9 +808,14 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 }
 
 @media (max-width:575px) {
+
+	.form-select {
+		width: 98%;
+	}
+	
 	.appointmentrow {
-		margin-left: -10px;
-		margin-right: -10px;
+		margin-left: -25px;
+		margin-right: -27px;
 	}
 
 	[class*="col-"] {

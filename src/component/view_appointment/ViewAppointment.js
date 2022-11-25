@@ -122,8 +122,8 @@ const ViewAppointment = () => {
         {videoComplete !== true ?
           <div className="text-center">
             <div className="confetti-wrapper">
-              <img className="left" src="/confetti2.gif" alt="" />
-              <img className="right" src="/confetti1.gif" alt="" />
+              <img className="left" style={{marginLeft:"-75px"}} src="/confetti2.gif" alt="" />
+              <img className="right" style={{marginRight:"-75px"}} src="/confetti1.gif" alt="" />
             </div>
             {/* <Confetti active={showConfetti} config={config} /> */}
             <h2 className="appointment-title">Congratulations!</h2>
