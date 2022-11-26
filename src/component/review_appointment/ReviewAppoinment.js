@@ -126,13 +126,33 @@ const ReviewAppoinment = () => {
       .putAuth(request)
       .then((data) => {
         if (data.status === 200) {
-          history.push("/appointment/" + data.data[0].appointmentid);
+          //history.push("/appointment/" + data.data[0].appointmentid);
+          sendSms(data.data[0].appointmentid)
+
         } else {
           swal("Appointment not Booked!", "error");
         }
       })
       .catch((error) => {});
   };
+  const sendSms = (appointmentid) => {
+    try {
+      let request = {
+        url: `https://appointmentapi.apatternclinic.com/sms`,
+        params: {
+          name: patientContext.patientDetails.firstname + ' ' + patientContext.patientDetails.lastname,
+          to: patientContext.patientDetails.phone,
+          time: patientContext.patientDetails.value + ' ' + patientContext.patientDetails.timeData,
+          location: patientContext.patientDetails.location,
+        },
+      };
+      api.get(request);
+    } catch (error) {
+
+    } finally {
+      history.push("/appointment/" + appointmentid);
+    }
+  }
   const patientInsurance = () => {
     setInsuranceError("");
     const formData = new FormData();

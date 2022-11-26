@@ -25,7 +25,13 @@ function getToken() {
 
 
 const api = {
-
+    get: async(request) => axios.get(
+        request.url,
+        {
+            headers: { "accept": "application/json" },
+            params: request?.params || {}
+        }
+    ),
     getAuth: async(request) => axios.get(
         request.url,
         {
