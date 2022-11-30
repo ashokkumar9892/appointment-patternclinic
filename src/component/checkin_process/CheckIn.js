@@ -31,7 +31,7 @@ const CheckIn = () => {
     } else {
       setDeviceType("Desktop");
     }
-  }, []);
+  }, [navigator.userAgent]);
   const history = useHistory();
   const location = useLocation();
   const [show, setShow] = useState(false);
