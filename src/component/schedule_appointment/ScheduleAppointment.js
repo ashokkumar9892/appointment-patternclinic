@@ -29,6 +29,7 @@ const ScheduleAppointment = () => {
     email: email,
     guarantoremail: email,
     ssn: 178988977,
+    homephone: phone
   };
 
   const dobMax = moment().subtract(2, "days").format("YYYY-MM-DD");
