@@ -48,15 +48,12 @@ const ScheduleAppointmentNew = () => {
         const regex =
             /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         if (!email || regex.test(email) === false) {
-            alert("please enter valid email id");
-            return false;
-        } else {
             return true;
-        }
+        } 
     };
 
     const validation = () => {
-        console.log("in validatinnnn");
+        console.log(phone.length,"phone ")
         if (firstname.length == 0) {
             alert("please enter first name.");
         } else if (lastname.length == 0) {
@@ -65,13 +62,16 @@ const ScheduleAppointmentNew = () => {
             alert(" please select date of birth ");
         } else if (email.length == 0) {
             alert("please enter valid email id");
-        } else if (email.length > 0) {
-            return emailValidation();
+        } else if (emailValidation()) {
+            alert("please enter valid email id");
         } else if (additional.length == 0) {
             alert(" please enter requrired field  ");
-        } else if (insurance.length == 0) {
-            alert(" please enter requrired field  ");
-        } else {
+        } 
+        else if (phonenumber()) {
+            alert(" please enter valid mobile  number  ");
+            
+        }
+        else {
             console.log("check validatin");
             return true;
         }
@@ -111,6 +111,16 @@ const ScheduleAppointmentNew = () => {
             setSex(patientContext.patientDetails.sex);
         }
     }, []);
+
+    function phonenumber() {
+       
+        var re = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        if (!re.test(phone))
+        {
+           return true
+        }
+        
+    }
 
     const ScheduleApi = () => {
         if (validation()) {
@@ -165,163 +175,164 @@ const ScheduleAppointmentNew = () => {
                 </div>
             </div>
             {/* <div> */}
-                <div className="right-content">
-                    
-              <div className="rigthDiv">
-                <div> 
-                    <p> <span className="patientText"> Patient </span> <span className="informationText">Information </span> </p>
+            <div className="right-content">
 
-                </div>
-                <div className="nameRow" style={{ marginTop: "24px" }}>
-                    <div className="width45">
-                        <p className="labelName">First Name</p>
-                        <input
+                <div className="rigthDiv">
+                    <div>
+                        <p> <span className="patientText"> Patient </span> <span className="informationText">Information </span> </p>
+
+                    </div>
+                    <div className="nameRow" style={{ marginTop: "24px" }}>
+                        <div className="width45">
+                            <p className="labelName">First Name</p>
+                            <input
+                                className="inputBox"
+                                type="text"
+                                name="name"
+                                value={firstname}
+                                onChange={(e) => {
+                                    setFirstname(e.target.value);
+                                }}
+                            />
+                        </div>
+                        <div className="width45">
+                            <p className="labelName">Last Name</p>
+                            <input className="inputBox"
+                                type="text"
+                                value={lastname}
+                                onChange={(e) => {
+                                    setLastname(e.target.value);
+                                }}
+                                name="name"
+                            />
+                        </div>
+                    </div>
+                    <div style={{ marginTop: "12px" }}>
+                        <p className="labelName"> Date of Birth</p>
+                        <input className="inputBox"
+                            type="date"
+                            name="name"
+                            value={viewDob}
+                            max={dobMax}
+                            onChange={createDob}
+                        />
+
+                    </div>
+                    <div style={{ marginTop: "12px" }}>
+                        <p className="labelName"> Legal Sex</p>
+                        <select
                             className="inputBox"
-                            type="text"
-                            name="name"
-                            value={firstname}
-                            onChange={(e) => {
-                                setFirstname(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <div className="width45">
-                        <p className="labelName">Last Name</p>
-                        <input className="inputBox"
-                            type="text"
-                            value={lastname}
-                            onChange={(e) => {
-                                setLastname(e.target.value);
-                            }}
-                            name="name"
-                        />
-                    </div>
-                </div>
-                <div style={{ marginTop: "12px" }}>
-                    <p className="labelName"> Date of Birth</p>
-                    <input className="inputBox"
-                        type="date"
-                        name="name"
-                        value={viewDob}
-                        max={dobMax}
-                        onChange={createDob}
-                    />
-
-                </div>
-                <div style={{ marginTop: "12px" }}>
-                    <p className="labelName"> Legal Sex</p>
-                    <select
-                        className="inputBox"
-                        onChange={(e) => setSex(e.target.value)}
-                    >
-                        <option>Male</option>
-                        <option>Female</option>
-                    </select>
-
-
-                </div>
-                <div className="nameRow" style={{ marginTop: "12px" }}>
-                    <div className="width45">
-                        <p className="labelName">Primary Phone</p>
-                        <input className="inputBox"
-                            type="number"
-                            name="name"
-                            value={phone}
-                            onChange={(e) => {
-                                setPhone(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <div className="width45">
-                        <p className="labelName">Phone Type</p>
-                        <select className="inputBox">
-                            <option selected="selected">Choose...</option>
-                            <option>Home</option>
-                            <option>Office</option>
-                        </select>
-                    </div>
-                </div>
-                <div style={{ marginTop: "12px" }}>
-                    <p className="labelName">Email</p>
-                    <input className="inputBox"
-                        type="email"
-                        name="name"
-                        value={email}
-                        onChange={(e) => {
-                            setEmail(e.target.value);
-                        }}
-                    />
-
-                </div>
-                <div className="nameRow" style={{ marginTop: "24px" }}>
-                    <div className="dateTimeDiv">
-                        <div className="imageDiv">
-                            <img height={20} width={20} src={dateLogo} />
-                        </div>
-                        <div className="textLocationDiv">
-                            <p className="labelName">Day and Time</p>
-                            <p> {patientContext?.patientDetails?.value}
-                                <br /> {patientContext?.patientDetails?.timeData}
-                                {patientContext?.patientDetails?.timeData?.split(
-                                    ":"
-                                )[0] > 12
-                                    ? "pm"
-                                    : "am"}{" "}
-                                (EDT)</p>
-                        </div>
-                    </div>
-                    <div className="dateTimeDiv">
-                        <div className="imageDiv">
-                            <img height={20} width={20} src={location} />
-                        </div>
-                        <div className="textLocationDiv">
-                            <p className="labelName">Location</p>
-                            <p>{patientContext?.patientDetails?.location}</p>
-                        </div>
-                    </div>
-                </div>
-                <div style={{ marginTop: "12px" }}>
-                    <p className="labelName">Additional Notes</p>
-                    <input className="inputBox"
-                        value={additional}
-                        onChange={(e) => {
-                            setAdditional(e.target.value);
-                        }}
-                    />
-
-                </div>
-
-                <div style={{ marginTop: "24px" }}>
-
-                    <button className="buttonDiv"
-                        onClick={() => {
-                            Preview();
-                        }}
-                    >
-
-                        Previous
-                    </button>
-
-
-
-                    {buttonloading == false && (<button className="buttonDiv nextButton"
-                        onClick={() => {
-                            ScheduleApi();
-                        }}
-                    >
-                        Next
-                    </button>)}
-                    {buttonloading == true && (
-                        <button
-                            type="button"
-                            disabled={true}
-                            className=" buttonDiv nextButton btn-primary"
+                            onChange={(e) => setSex(e.target.value)}
                         >
-                            Loading...
-                        </button>
-                    )}
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
 
-                </div>
+
+                    </div>
+                    <div className="nameRow" style={{ marginTop: "12px" }}>
+                        <div className="width45">
+                            <p className="labelName">Primary Phone</p>
+                            <input className="inputBox"
+                                type="number"
+                                name="name"
+                                maxLength="10"
+                                value={phone}
+                                onChange={(e) => {
+                                    setPhone(e.target.value);
+                                }}
+                            />
+                        </div>
+                        <div className="width45">
+                            <p className="labelName">Phone Type</p>
+                            <select className="inputBox">
+                                <option selected="selected">Choose...</option>
+                                <option>Home</option>
+                                <option>Office</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style={{ marginTop: "12px" }}>
+                        <p className="labelName">Email</p>
+                        <input className="inputBox"
+                            type="email"
+                            name="name"
+                            value={email}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                            }}
+                        />
+
+                    </div>
+                    <div className="nameRow" style={{ marginTop: "24px" }}>
+                        <div className="dateTimeDiv">
+                            <div className="imageDiv">
+                                <img height={20} width={20} src={dateLogo} />
+                            </div>
+                            <div className="textLocationDiv">
+                                <p className="labelName">Day and Time</p>
+                                <p> {patientContext?.patientDetails?.value}
+                                    <br /> {patientContext?.patientDetails?.timeData}
+                                    {patientContext?.patientDetails?.timeData?.split(
+                                        ":"
+                                    )[0] > 12
+                                        ? "pm"
+                                        : "am"}{" "}
+                                    (EDT)</p>
+                            </div>
+                        </div>
+                        <div className="dateTimeDiv">
+                            <div className="imageDiv">
+                                <img height={20} width={20} src={location} />
+                            </div>
+                            <div className="textLocationDiv">
+                                <p className="labelName">Location</p>
+                                <p>{patientContext?.patientDetails?.location}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style={{ marginTop: "12px" }}>
+                        <p className="labelName">Additional Notes</p>
+                        <input className="inputBox"
+                            value={additional}
+                            onChange={(e) => {
+                                setAdditional(e.target.value);
+                            }}
+                        />
+
+                    </div>
+
+                    <div style={{ marginTop: "24px" }}>
+
+                        <button className="buttonDiv"
+                            onClick={() => {
+                                Preview();
+                            }}
+                        >
+
+                            Previous
+                        </button>
+
+
+
+                        {buttonloading == false && (<button className="buttonDiv nextButton"
+                            onClick={() => {
+                                ScheduleApi();
+                            }}
+                        >
+                            Next
+                        </button>)}
+                        {buttonloading == true && (
+                            <button
+                                type="button"
+                                disabled={true}
+                                className=" buttonDiv nextButton btn-primary"
+                            >
+                                Loading...
+                            </button>
+                        )}
+
+                    </div>
                 </div>
             </div>
         </section>
