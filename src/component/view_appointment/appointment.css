@@ -20,7 +20,7 @@
 
 }
 
-.labelList{
+.labelList {
     padding-top: 12px;
     padding-left: 23px;
     display: flex;
@@ -71,7 +71,7 @@
 .confetti-wrapper img {
     position: absolute;
     top: 0;
-    max-height: 200px;
+    max-height: 145px;
     max-width: 50%;
 }
 
@@ -114,7 +114,21 @@
         font-size: 35px;
     }
 
+    .confetti-wrapper img.left {
+        margin-left: -75px;
+    }
+
+    .confetti-wrapper img.right {
+        margin-right: -75px;
+    }
+
     .appointment-subtitle {
         font-size: 18px;
+    }
+}
+
+@media (max-width: 978px) {
+    .watchtext {
+        font-size: 14px;
     }
 }
