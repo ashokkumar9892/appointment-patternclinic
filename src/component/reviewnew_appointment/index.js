@@ -275,7 +275,7 @@ const ReviewAppoinmentNew = () => {
             <p>{patientContext.patientDetails.email}</p>
           </div>
         </div>
-        <div className="nameRow" style={{ marginTop: "24px" }}>
+        <div className="nameRow">
           <div className="dateTimeDiv">
             <div className="imageDiv">
               <img height={20} width={20} src={dateLogo} />
@@ -297,7 +297,7 @@ const ReviewAppoinmentNew = () => {
             </div>
           </div>
         </div>
-        <div className="nameRow" style={{ marginTop: "24px" }}>
+        <div className="nameRow" >
           <div className="dateTimeDiv">
             <div className="imageDiv">
               <img height={20} width={20} src={question} />
@@ -320,7 +320,7 @@ const ReviewAppoinmentNew = () => {
         </div>
         <div>
 
-          <div className="row" style={{ marginTop: "24px" }}>
+          <div className="row" style={{marginTop:"12px"}}>
             <div className="col-md-12">
               <p className="mb-0">
                 <strong>Additional Notes</strong>

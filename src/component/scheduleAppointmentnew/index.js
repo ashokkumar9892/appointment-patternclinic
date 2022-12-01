@@ -13,7 +13,6 @@ import moment from "moment";
 const ScheduleAppointmentNew = () => {
     const history = useHistory();
     const patientContext = useContext(PatientContext);
-    const [dateData, setDateData] = useState(1111);
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [dob, setDob] = useState("");
@@ -24,7 +23,6 @@ const ScheduleAppointmentNew = () => {
     const [additional, setAdditional] = useState("");
     const [sex, setSex] = useState("male");
     const [buttonloading, setButtonloading] = useState(false);
-    const [insuranceImage, setInsuranceImage] = useState("");
 
     var details = {
         firstname: firstname,
@@ -64,8 +62,6 @@ const ScheduleAppointmentNew = () => {
             alert("please enter valid email id");
         } else if (emailValidation()) {
             alert("please enter valid email id");
-        } else if (additional.length == 0) {
-            alert(" please enter requrired field  ");
         } 
         else if (phonenumber()) {
             alert(" please enter valid mobile  number  ");
@@ -113,13 +109,11 @@ const ScheduleAppointmentNew = () => {
     }, []);
 
     function phonenumber() {
-       
         var re = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         if (!re.test(phone))
         {
            return true
-        }
-        
+        }  
     }
 
     const ScheduleApi = () => {
@@ -182,9 +176,9 @@ const ScheduleAppointmentNew = () => {
                         <p> <span className="patientText"> Patient </span> <span className="informationText">Information </span> </p>
 
                     </div>
-                    <div className="nameRow" style={{ marginTop: "24px" }}>
+                    <div className="nameRow" >
                         <div className="width45">
-                            <p className="labelName">First Name</p>
+                            <p className="labelName">First Name <span style={{color:"red"}}>*</span></p>
                             <input
                                 className="inputBox"
                                 type="text"
@@ -196,7 +190,7 @@ const ScheduleAppointmentNew = () => {
                             />
                         </div>
                         <div className="width45">
-                            <p className="labelName">Last Name</p>
+                            <p className="labelName">Last Name <span style={{color:"red"}}>*</span></p>
                             <input className="inputBox"
                                 type="text"
                                 value={lastname}
@@ -208,7 +202,7 @@ const ScheduleAppointmentNew = () => {
                         </div>
                     </div>
                     <div style={{ marginTop: "12px" }}>
-                        <p className="labelName"> Date of Birth</p>
+                        <p className="labelName"> Date of Birth <span style={{color:"red"}}>*</span></p>
                         <input className="inputBox"
                             type="date"
                             name="name"
@@ -219,7 +213,7 @@ const ScheduleAppointmentNew = () => {
 
                     </div>
                     <div style={{ marginTop: "12px" }}>
-                        <p className="labelName"> Legal Sex</p>
+                        <p className="labelName"> Legal Sex <span style={{color:"red"}}>*</span></p>
                         <select
                             className="inputBox"
                             onChange={(e) => setSex(e.target.value)}
@@ -232,7 +226,7 @@ const ScheduleAppointmentNew = () => {
                     </div>
                     <div className="nameRow" style={{ marginTop: "12px" }}>
                         <div className="width45">
-                            <p className="labelName">Primary Phone</p>
+                            <p className="labelName">Primary Phone <span style={{color:"red"}}>*</span></p>
                             <input className="inputBox"
                                 type="number"
                                 name="name"
@@ -253,7 +247,7 @@ const ScheduleAppointmentNew = () => {
                         </div>
                     </div>
                     <div style={{ marginTop: "12px" }}>
-                        <p className="labelName">Email</p>
+                        <p className="labelName">Email <span style={{color:"red"}}>*</span></p>
                         <input className="inputBox"
                             type="email"
                             name="name"
@@ -264,7 +258,7 @@ const ScheduleAppointmentNew = () => {
                         />
 
                     </div>
-                    <div className="nameRow" style={{ marginTop: "24px" }}>
+                    <div className="nameRow" >
                         <div className="dateTimeDiv">
                             <div className="imageDiv">
                                 <img height={20} width={20} src={dateLogo} />
@@ -291,7 +285,7 @@ const ScheduleAppointmentNew = () => {
                             </div>
                         </div>
                     </div>
-                    <div style={{ marginTop: "12px" }}>
+                    <div style={{ marginTop: "24px" }}>
                         <p className="labelName">Additional Notes</p>
                         <input className="inputBox"
                             value={additional}
