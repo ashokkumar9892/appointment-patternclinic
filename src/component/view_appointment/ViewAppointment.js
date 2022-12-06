@@ -26,6 +26,7 @@ const ViewAppointment = () => {
   const patientContext = useContext(PatientContext);
   const { id } = useParams();
   const [appointment, setAppointment] = useState({});
+  const [patient, setPatient] = useState({});
   const [btnLoading, setBtnLoading] = useState(false);
   const [checkinRequirements, setCheckinRequirements] = useState([]);
   const [videoComplete, setVideoComplete] = useState(false);
@@ -58,6 +59,12 @@ const ViewAppointment = () => {
   }, []);
 
   useEffect(() => {
+    if(appointment?.patientid) {
+      getPatient();
+    }
+  }, [appointment]);
+
+  useEffect(() => {
     const element = document.getElementById("ViewComplete");
     if (element !== null) {
       element.scrollIntoView();
@@ -66,17 +73,33 @@ const ViewAppointment = () => {
   const checkInsurance = () => {
     //history.push("/checkin/")
     let request = {
-      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
+      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointment.patientid}/insurances`,
     };
     api.checkInsurances(request).then((res) => {
       console.log(res)
       if (res.data.insurances.length > 0) {
         let copays = res.data.insurances[0].copays;
-        history.push({ pathname: "/checkin/", state: { copay: copays } })
+        history.push({ pathname: `/checkin/${id}`, state: { copay: copays } })
       } else {
-        history.push("/checkin/")
+        history.push(`/checkin/${id}`)
       }
     })
+  }
+  const checkLater = () => {
+    try {
+      let request = {
+        url: `https://appointmentapi.apatternclinic.com/sms`,
+        params: {
+          type: 'checkLater',
+          to: patient.mobilephone,
+          name: patient.firstname + ' ' + patient.lastname,
+          url: `${window.location.protocol}//${window.location.host}/checkin/${id}`,
+        },
+      };
+      api.get(request);
+    } catch (error) {
+
+    }
   }
 
   const loadData = () => {
@@ -99,6 +122,17 @@ const ViewAppointment = () => {
       setCheckinRequirements(data);
     });
   };
+
+  const getPatient = () => {
+    let request = {
+      url: `https://appointmentapi.apatternclinic.com//v1/24451/patients/${appointment.patientid}`,
+    };
+    api.getAuth(request).then((res) => {
+      if (res.data && res.data.length) {
+        setPatient(res.data[0])
+      }
+    })
+  }
 
   const onSelfCheckout = () => {
     if (appointment) {
@@ -187,7 +221,7 @@ const ViewAppointment = () => {
               >
                 Yes
               </button>
-              <button type="button"className="buttonDiv nextButton">
+              <button type="button" onClick={checkLater} className="buttonDiv nextButton">
                 Later
               </button>
             </div>

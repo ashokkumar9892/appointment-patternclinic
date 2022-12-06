@@ -140,6 +140,7 @@ const ReviewAppoinment = () => {
       let request = {
         url: `https://appointmentapi.apatternclinic.com/sms`,
         params: {
+          type: 'scheduled',
           name: patientContext.patientDetails.firstname + ' ' + patientContext.patientDetails.lastname,
           to: patientContext.patientDetails.phone,
           time: patientContext.patientDetails.value + ' ' + patientContext.patientDetails.timeData,

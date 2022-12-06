@@ -20,7 +20,7 @@ import HealthHistoryForm from "../common/HealthHistoryForm";
 
 const CheckIn = () => {
   const [deviceType, setDeviceType] = useState("");
-
+  const { id } = useParams();
   useEffect(() => {
     if (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(
@@ -44,6 +44,7 @@ const CheckIn = () => {
   const [insuranceBtnLoading, setInsuranceBtnLoading] = useState(false);
   const [copayamount, setCopayAmount] = useState(0);
   const [showResponsibleToPay, setShowResponsibleToPay] = useState(false);
+  const [appointmentData, setAppointmentData] = useState({});
   const [cardDetails, setCardDetails] = useState({});
   const [showCardDetails, setShowCardDetails] = useState(false);
   const patientContext = useContext(PatientContext);
@@ -93,6 +94,10 @@ const CheckIn = () => {
 
 
   useEffect(() => {
+    loadData();
+  }, []);
+
+  useEffect(() => {
     if (location.state && location.state.copay) {
       setMultiFormStep(2);
       setProgressBar(33);
@@ -109,7 +114,28 @@ const CheckIn = () => {
     }
   }, [location]);
 
- 
+  const loadData = () => {
+    let request = {
+      url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/${id}`,
+    };
+    api.getAuth(request).then((res) => {
+      if (res.data && res.data.length) {
+        setAppointmentData(res.data[0])
+      }
+    });
+  };
+
+  const checkInsurance = () => {
+    let request = {
+      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointmentData.patientid}/insurances`,
+    };
+    api.checkInsurances(request).then((res) => {
+      if (res.data.insurances.length > 0) {
+        let copays = res.data.insurances[0].copays;
+        history.pushState({ copay: copays }, '')
+      }
+    })
+  }
   const patientInsurance = () => {
     setInsuranceError("");
 
@@ -122,17 +148,17 @@ const CheckIn = () => {
     setInsuranceBtnLoading(true);
     buildFormData(formData, data);
     let request = {
-      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
+      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointmentData.patientid}/insurances`,
       data: new URLSearchParams(formData),
     };
     api
       .postAuth(request)
       .then((res) => {
         if (res.status === 200) {
-          let patientId = patientContext.patientDetails.patientid;
+          let patientId = appointmentData.patientid;
           console.log(insurance.insuranceidnumber);
           let request = {
-            url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
+            url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointmentData.patientid}/insurances`,
             data: new URLSearchParams(formData),
           };
           api.getAuth(request).then((res) => {
@@ -197,7 +223,7 @@ const CheckIn = () => {
     const formData = new FormData();
     const data = {
       ...cardDetails,
-      appointmentid: patientContext.patientDetails.appointmentid,
+      appointmentid: appointmentData.appointmentid,
       copayamount: copayamount || 0,
       departmentid: 1,
       ecommercemode: true,
@@ -205,7 +231,7 @@ const CheckIn = () => {
     };
     buildFormData(formData, data);
     let request = {
-      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${patientContext.patientDetails.patientid}/collectpayment`,
+      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointmentData.patientid}/collectpayment`,
       data: new URLSearchParams(formData),
     };
     api
@@ -253,7 +279,7 @@ const CheckIn = () => {
 
     var details = {
       cardnumberlast4: accountNumber.slice(-4),
-      appointmentid: patientContext.patientDetails.appointmentid,
+      appointmentid: appointmentData.appointmentid,
       departmentid: 1,
       otheramount: null,
       claimpayment: null,
@@ -274,7 +300,7 @@ const CheckIn = () => {
     buildFormData(formData, details);
     console.log(details, "details");
     let request = {
-      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${patientContext.patientDetails.patientid}/recordpayment`,
+      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointmentData.patientid}/recordpayment`,
       data: new URLSearchParams(formData),
     };
     api
@@ -309,7 +335,7 @@ const CheckIn = () => {
   };
   const checkBalance = () => {
     let request = {
-      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${patientContext.patientDetails.patientid}?showbalancedetails=true&departmentid=1`,
+      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointmentData.patientid}?showbalancedetails=true&departmentid=1`,
     };
     api
       .getBalance(request)
@@ -327,11 +353,13 @@ const CheckIn = () => {
 
   let checkBalanceMounted = useRef(null);
   useEffect(() => {
-    if (!checkBalanceMounted.current) {
+    // if (!checkBalanceMounted.current) {
+    if (appointmentData?.patientid) {
       checkBalance();
+      checkInsurance();
       checkBalanceMounted.current = true;
     }
-  });
+  }, [appointmentData]);
   const goPrevStep = (form, progress) => {
     setMultiFormStep(form);
     setProgressBar(progress);
@@ -615,7 +643,7 @@ const CheckIn = () => {
                 <>
                   <div className="py-4 card-body">
                     <CovidForm
-                      patientid={patientContext.patientDetails.patientid}
+                      patientid={appointmentData.patientid}
                       complete={() => {
                         setMultiFormStep(4);
                         setProgressBar(99);
@@ -626,7 +654,7 @@ const CheckIn = () => {
               ) : multiFormStep == 4 ? (
                 <>
                   <div className="my-3 card-body">
-                    <IntakeForm patientid={patientContext.patientDetails.patientid} complete={() => {
+                    <IntakeForm patientid={appointmentData.patientid} complete={() => {
                         setMultiFormStep(5);
                         setProgressBar(100);
                       }}/>

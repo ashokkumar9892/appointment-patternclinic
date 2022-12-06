@@ -18,7 +18,7 @@ const routes  = [
     {path:'/review',exact: true, strict:true, component:ReviewAppoinment},
     {path:'/reviewnew',exact: true, strict:true, component:ReviewAppoinmentNew},
     {path:'/appointment/:id',exact: true, strict:true, component:ViewAppointment},
-    {path:'/checkin/',exact: true, strict:true, component:CheckIn},
+    {path:'/checkin/:id',exact: true, strict:true, component:CheckIn},
     {path:'/familyForm',exact:true, strict:true, component:FamilyForm},
     {path:'/newappointment' ,exact: true, strict:true, component: Appointment}
 ]
