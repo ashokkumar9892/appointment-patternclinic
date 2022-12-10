@@ -570,6 +570,7 @@ export default function IntakeForm(props) {
                     disabled={checkFormStep1}
                     onClick={() => {
                       generateDocs(1);
+                      setMultiFormStep(2);
                     }}
                     className="btn btn-primary "
                   >
@@ -711,6 +712,7 @@ export default function IntakeForm(props) {
                   disabled={checkFormStep2}
                   onClick={() => {
                     generateDocs(2);
+                    setMultiFormStep(3);
                   }}
                   className="btn btn-primary "
                 >
@@ -787,6 +789,7 @@ export default function IntakeForm(props) {
                 <button
                   onClick={() => {
                     generateDocs(3);
+                    setMultiFormStep(4)
                   }}
                   className="btn btn-primary "
                 >
@@ -989,6 +992,7 @@ export default function IntakeForm(props) {
                 disabled={checkFormStep4}
                 onClick={() => {
                   generateDocs(4);
+                  setMultiFormStep(5)
                 }}
                 className="btn btn-primary"
               >
@@ -1130,6 +1134,7 @@ export default function IntakeForm(props) {
                 disabled={checkFormStep5}
                 onClick={() => {
                   generateDocs(5);
+                  setMultiFormStep(6)
                 }}
                 className="btn btn-primary"
               >
@@ -1240,6 +1245,7 @@ export default function IntakeForm(props) {
                 disabled={checkFormStep6}
                 onClick={() => {
                   generateDocs(6);
+                  setMultiFormStep(7)
                 }}
                 className="btn btn-primary"
               >
@@ -1495,6 +1501,7 @@ export default function IntakeForm(props) {
                 disabled={checkFormStep7}
                 onClick={() => {
                   generateDocs(7);
+                  setMultiFormStep(8)
                 }}
                 className="btn btn-primary"
               >
@@ -1837,6 +1844,7 @@ export default function IntakeForm(props) {
                 disabled={isLoading || checkFormStep8}
                 onClick={() => {
                   generateDocs(8);
+                  setMultiFormStep(9)
                 }}
                 className="btn btn-primary"
               >
