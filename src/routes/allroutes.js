@@ -8,6 +8,7 @@ import FamilyForm from "../component/common/FamilyForm";
 import NewAppointment from "../component/appointmentnew";
 import ScheduleAppointmentNew from "../component/scheduleAppointmentnew";
 import ReviewAppoinmentNew from "../component/reviewnew_appointment";
+import CheckInNew from "../component/checkinprocessnew"
 
 
 
@@ -19,6 +20,7 @@ const routes  = [
     {path:'/reviewnew',exact: true, strict:true, component:ReviewAppoinmentNew},
     {path:'/appointment/:id',exact: true, strict:true, component:ViewAppointment},
     {path:'/checkin/:id',exact: true, strict:true, component:CheckIn},
+    {path:'/checkinnew/:id',exact: true, strict:true, component:CheckInNew},
     {path:'/familyForm',exact:true, strict:true, component:FamilyForm},
     {path:'/newappointment' ,exact: true, strict:true, component: Appointment}
 ]
