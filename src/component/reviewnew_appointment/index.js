@@ -362,7 +362,7 @@ const ReviewAppoinmentNew = () => {
 
 
           {loading == false && (
-            <button className="buttonDiv nextButton"
+            <button className="nextButton"
               type="button"
               disabled={!checkterm}
               onClick={() => {

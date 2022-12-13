@@ -207,7 +207,7 @@ const AppointmentNew = () => {
 			</div>
 
 			<div className="right-content">
-				<div className="card-wrap main-buttons">
+				<div className="card-wrap main-buttonstab">
 					<div className="appointmentcard">
 						<div className="appointmentrow">
 							<div className="col-6 paddingleftright" >

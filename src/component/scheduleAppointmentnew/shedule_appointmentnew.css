@@ -90,6 +90,13 @@
 .nextButton {
     margin-left: 20px;
     width: 161px;
+    border: 1px solid #0052CC;
+    height: 36px;
+    color: #0052CC;
+}
+.nextButton:hover {
+    background: #0052CC;
+    color: #FFFFFF;
 }
 
 .dateTimeDiv {

@@ -588,11 +588,11 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 	margin-bottom: 0;
 }
 
-.main-buttons {
+.main-buttonstab {
 	justify-content: space-between;
 }
 
-.main-buttons button {
+.main-buttonstab button {
 	width: 100%;
 	height: 60px;
     background: #fff;
@@ -605,12 +605,12 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 	padding: 0 10px;
 }
 
-.main-buttons button.active {
+.main-buttonstab button.active {
 	background: #0052CC;
     color: #fff;
 }
 
-.main-buttons button:hover {
+.main-buttonstab button:hover {
 	background: #0052CC;
 	color: #fff;
 }

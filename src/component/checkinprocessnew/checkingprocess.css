@@ -56,6 +56,8 @@ textarea{
     font-size: 13px;
 }
 
+
+
 .select{
     width: 100%!important;
     min-height: 40px;
@@ -93,7 +95,7 @@ textarea {
 	font-size: 13px;
 	padding: 0;
 	margin: 0 0 6px;
-	color: var(--black);
+	color: black;
 }
 .bullet-points{
     color: #FAFAFA;
@@ -149,8 +151,12 @@ textarea {
 }
 .steps ul li a:hover div,
 .steps ul li.active a div{
-	background: blue;
+	background: #0052CC;
 	color: white;
+}
+
+.left-sidebar{
+    width: 400px; 
 }
 
 .right-data{
@@ -160,6 +166,19 @@ textarea {
     overflow-y: auto;
     
 }
+.buttonDiv {
+    border: 1px solid #0052CC;
+    width: 120px;
+    height: 36px;
+    color: #0052CC;
+
+}
+
+.buttonDiv:hover {
+    background: #0052CC;
+    color: #FFFFFF;
+}
+
 .options{
     display: flex;
     flex-wrap: wrap;
@@ -182,30 +201,42 @@ textarea {
 .main-buttons button{
 	width: 100%;
     height: 50px;
-    background: blue;
+    background: #0052CC;
     color: white;
     border: 0;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     padding: 0 10px;
-    border: 2px solid blue;
+    border: 2px solid #0052CC;
 }
 .main-buttons button:hover,
 .main-buttons button.outline:hover{
-	background: blue;
-	border-color: blue;
+	background: #0052CC;
+	border-color: #0052CC;
 	color: white;
 }
 .main-buttons button.outline{
 	width: auto;
 	padding: 0 40px;
-	border-color: blue;
-	color: blue;
+	border-color: #0052CC;
+	color: #0052CC;
 	background: transparent;
+}
+@media (max-width: 1350){
+    .left-sidebar{
+        width: 500px; 
+    }
+	.right-data{
+        width:calc(100% - 500px); 
+    }
+
 }
 
 @media (max-width: 992px){
+    .left-sidebar{
+        width: 100%; 
+    }
 	.right-data{
         width:100%;
         padding: 20px;
@@ -224,6 +255,9 @@ textarea {
 	.insurance-form .field{
         width: 100%;
         padding: 0 15px 30px;
+    }
+    .left-sidebar{
+        width: 100%; 
     }
     .right-data{
         width:100%;
