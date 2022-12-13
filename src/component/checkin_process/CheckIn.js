@@ -8,14 +8,13 @@ import Button from "react-bootstrap/Button";
 import PatientContext from "../../context/patientDetails/patientContext";
 import { useHistory, useLocation } from "react-router-dom";
 import "./checkin.css";
-import Spinner from "react-bootstrap/Spinner";
-import { Navbar, ProgressBar } from "react-bootstrap";
+import { ProgressBar } from "react-bootstrap";
 import { usePaymentInputs } from "react-payment-inputs";
 import images from "react-payment-inputs/images";
 import CovidForm from "../common/CovidForm";
 import Navbarcomponent from "../common/Navbar";
 import IntakeForm from "../common/IntakeForm";
-import HealthHistoryForm from "../common/HealthHistoryForm";
+// import HealthHistoryForm from "../common/HealthHistoryForm";
 
 
 const CheckIn = () => {

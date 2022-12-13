@@ -1,0 +1,233 @@
+.right-data::-webkit-scrollbar {
+	width: 6px;
+}
+
+/* Track */
+.right-data::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* Handle */
+.right-data::-webkit-scrollbar-thumb {
+	background: #0052CC;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #003e9b;
+}
+
+.card-wrap{
+	margin-bottom: 30px;
+}
+.card{
+	padding: 35px;
+	background: white;
+	box-shadow: 0px 0px 16px 9px rgba(0, 0, 0, 0.04);
+}
+.card.no-shadow{
+	box-shadow: unset;
+}
+.card-wrap:nth-last-child(1){
+	margin-bottom: 0;
+}
+
+.multiselect-dropdown,
+.options .select-selected,
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+input[type="file"],
+textarea{
+    width: 100%!important;
+    min-height: 40px;
+    line-height: 40px;
+    display: inline-block;
+    padding: 0 12px 0 15px;
+    background: #F3F3F5;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    position: relative;
+    /* background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e); */
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    font-size: 13px;
+}
+
+.select{
+    width: 100%!important;
+    min-height: 40px;
+    line-height: 40px;
+    display: inline-block;
+    padding: 0 12px 0 15px;
+    background: #F3F3F5;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    position: relative;
+    /* background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e); */
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    font-size: 13px;  
+}
+textarea {
+    line-height: 1.6;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+.insurance-form .options{
+	width: auto;
+	margin-left: -15px;
+	margin-right: -15px;
+	margin-top: 0;
+}
+.insurance-form .field{
+	width: 33.33%;
+	padding: 0 15px 30px;
+}
+.insurance-form .field.preview{
+	width: 66.66%;
+}
+.field label{
+	font-size: 13px;
+	padding: 0;
+	margin: 0 0 6px;
+	color: var(--black);
+}
+.bullet-points{
+    color: #FAFAFA;
+    margin-top: 100%;
+    
+}
+.bulltetlist{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #FAFAFA;
+}
+.bulletli{
+    list-style: none;
+    margin-top: 12px;
+}
+
+.bulletlisttext {
+    margin-left: 12px;
+}
+.steps ul{
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	padding-bottom: 10px;
+}
+.steps ul li{
+	margin: 0 35px 15px 0;
+    list-style: none;
+}
+.steps ul li:nth-last-child(1){
+	margin-right: 0;
+}
+.steps ul li a{
+	display: flex;
+	align-items: center;
+	color: var(--black);
+	font-weight: 500;
+}
+.steps ul li div{
+	width: 35px;
+	min-width: 35px;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	background: #D9D9D9;
+	border-radius: 9px;
+	font-size: 18px;
+    color: var(--black);
+    font-weight: 500;
+    margin-right: 12px;
+    transition: all 0.2s;
+}
+.steps ul li a:hover div,
+.steps ul li.active a div{
+	background: blue;
+	color: white;
+}
+
+.right-data{
+    width:calc(100% - 400px) ;
+    height: 100vh;
+    padding: 30px;
+    overflow-y: auto;
+    
+}
+.options{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 25px;
+}
+.question {
+    margin-bottom: 40px;
+}
+.question p{
+	color: black;
+	font-size: 16px;
+	line-height: 1.8;
+	font-weight: 500;
+}
+.main-buttons{
+	justify-content:space-between;
+	text-align: right;
+}
+.main-buttons button{
+	width: 100%;
+    height: 50px;
+    background: blue;
+    color: white;
+    border: 0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0 10px;
+    border: 2px solid blue;
+}
+.main-buttons button:hover,
+.main-buttons button.outline:hover{
+	background: blue;
+	border-color: blue;
+	color: white;
+}
+.main-buttons button.outline{
+	width: auto;
+	padding: 0 40px;
+	border-color: blue;
+	color: blue;
+	background: transparent;
+}
+
+@media (max-width: 992px){
+	.right-data{
+        width:100%;
+        padding: 20px;
+        
+    }
+
+}
+
+@media (max-width: 767px){
+	.insurance-form .field{
+        width: 50%;
+        padding: 0 15px 30px;
+    }
+}
+@media (max-width: 478px){
+	.insurance-form .field{
+        width: 100%;
+        padding: 0 15px 30px;
+    }
+    .right-data{
+        width:100%;
+        padding: 10px;
+        
+    }
+}
