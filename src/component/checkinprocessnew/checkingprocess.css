@@ -166,18 +166,7 @@ textarea {
     overflow-y: auto;
     
 }
-.buttonDiv {
-    border: 1px solid #0052CC;
-    width: 120px;
-    height: 36px;
-    color: #0052CC;
 
-}
-
-.buttonDiv:hover {
-    background: #0052CC;
-    color: #FFFFFF;
-}
 
 .options{
     display: flex;
@@ -240,6 +229,14 @@ textarea {
 	.right-data{
         width:100%;
         padding: 20px;
+        
+    }
+    .bullet-points{
+        color: #FAFAFA;
+        display: flex;
+        align-items: center;
+        margin-top: 5%;
+        justify-content: center;
         
     }
 

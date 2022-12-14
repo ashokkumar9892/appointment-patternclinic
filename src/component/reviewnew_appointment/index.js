@@ -370,7 +370,7 @@ const ReviewAppoinmentNew = () => {
               }}
 
             >
-              Shedule Appointment
+              Schedule Appointment
             </button>)}
           {loading == true && (
             <button
