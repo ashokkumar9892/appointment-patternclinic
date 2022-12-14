@@ -14,3 +14,15 @@
     border-radius: 8px;
 }
 
+.buttonDiv {
+    border: 1px solid #0052CC;
+    width: 120px;
+    height: 36px;
+    color: #0052CC;
+
+}
+
+.buttonDiv:hover {
+    background: #0052CC;
+    color: #FFFFFF;
+}

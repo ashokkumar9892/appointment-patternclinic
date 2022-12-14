@@ -2,9 +2,11 @@
     font-weight: 500;
     margin-bottom: 0.5rem;
 }
+
 .form-control {
-    margin-bottom:1rem;
+    margin-bottom: 1rem;
 }
+
 .backStepbtn {
     display: flex;
     align-items: center;
@@ -13,51 +15,87 @@
     width: 22px;
     padding: 10px;
 }
-.intake-form .form-control, .intake-form .form-select {
-    outline: none!important;
-    border-radius: 0px!important;
-    border-top: 0!important;
-    border-left: 0!important;
-    border-right: 0!important;
-    padding-bottom: 0!important;
-    border-color: grey!important;
+
+.intake-form .form-control,
+.intake-form .form-select {
+    outline: none !important;
+    border-radius: 0px !important;
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    padding-bottom: 0 !important;
+    border-color: grey !important;
 }
-.health-history-form .form-control, .health-history-form .form-select {
-    outline: none!important;
-    border-radius: 0px!important;
-    border-top: 0!important;
-    border-left: 0!important;
-    border-right: 0!important;
-    padding-bottom: 0!important;
-    border-color: grey!important;
+
+.health-history-form .form-control,
+.health-history-form .form-select {
+    outline: none !important;
+    border-radius: 0px !important;
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    padding-bottom: 0 !important;
+    border-color: grey !important;
 }
-.family-form .form-control, .health-history-form .form-select {
-    outline: none!important;
-    border-radius: 0px!important;
-    border-top: 0!important;
-    border-left: 0!important;
-    border-right: 0!important;
-    padding-bottom: 0!important;
-    border-color: grey!important;
+
+.family-form .form-control,
+.health-history-form .form-select {
+    outline: none !important;
+    border-radius: 0px !important;
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    padding-bottom: 0 !important;
+    border-color: grey !important;
 }
+
 ul {
     list-style-type: disc;
 }
+
 .w-80 {
-    width: 80px!important;
+    width: 80px !important;
 }
+
 .w-120 {
-    width: 120px!important;
+    width: 120px !important;
 }
+
 .min-h-30 {
-    min-height: 30px!important;
+    min-height: 30px !important;
 }
+
 .max-w-200 {
-    width: 200px!important;
+    width: 200px !important;
 }
+
 .text-black {
-    color: black!important;
+    color: black !important;
 }
+
 label {
-    color: black!important;
+    color: black !important;
+}
+
+/*  Covid  form css */
+
+.optionList {
+    display: flex;
+    flex-direction: column;
+}
+
+.optionListDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.optionListName {
+    position: relative;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #808080;
 }
