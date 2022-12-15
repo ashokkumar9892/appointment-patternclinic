@@ -19,9 +19,10 @@ const ScheduleAppointmentNew = () => {
     const [viewDob, setViewDob] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [phonetype, setPhonetype] = useState("HOMEPHONE");
     const [insurance, setInsurance] = useState("");
     const [additional, setAdditional] = useState("");
-    const [sex, setSex] = useState("male");
+    const [sex, setSex] = useState("M");
     const [buttonloading, setButtonloading] = useState(false);
 
     var details = {
@@ -30,10 +31,16 @@ const ScheduleAppointmentNew = () => {
         departmentid: 1,
         dob: dob,
         email: email,
-        guarantoremail: email,
-        ssn: 178988977,
-        mobilephone: phone
+        mobilephone: phone,
+        sex:sex,
+        contactpreference:phonetype,
+        
     };
+    if(phonetype==='WORKPHONE'){
+        details.workphone=phone
+    }else{
+        details.homephone=phone
+    }
 
     const dobMax = moment().subtract(2, "days").format("YYYY-MM-DD");
 
@@ -218,8 +225,8 @@ const ScheduleAppointmentNew = () => {
                             className="inputBox"
                             onChange={(e) => setSex(e.target.value)}
                         >
-                            <option>Male</option>
-                            <option>Female</option>
+                            <option value='M'>Male</option>
+                            <option value='F'>Female</option>
                         </select>
 
 
@@ -239,10 +246,10 @@ const ScheduleAppointmentNew = () => {
                         </div>
                         <div className="width45">
                             <p className="labelName">Phone Type</p>
-                            <select className="inputBox">
+                            <select className="inputBox" onChange={(e) => setPhonetype(e.target.value)}>
                                 <option selected="selected">Choose...</option>
-                                <option>Home</option>
-                                <option>Office</option>
+                                <option value='HOMEPHONE'>Home</option>
+                                <option value='WORKPHONE'>Office</option>
                             </select>
                         </div>
                     </div>
