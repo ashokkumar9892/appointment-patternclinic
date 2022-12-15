@@ -16,8 +16,8 @@ function getToken() {
             method: "post",
             baseURL: "https://appointmentapi.apatternclinic.com/",
             auth: {
-                username: process.env.REACT_APP_CLIENT_ID,
-                password: process.env.REACT_APP_SECRET_ID
+                username: "0oady1uewg1C26P1X297",
+                password: "AzW1B_E3PuijHjhqMtte5FmV8yggwc209qDqKxj9"
             },
             data: "grant_type=client_credentials&scope=athena/service/Athenanet.MDP.*"
         }).then(res => {
