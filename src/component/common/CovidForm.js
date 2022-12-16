@@ -298,7 +298,7 @@ export default function CovidForm(props) {
         <div className='form-group mb-3'>
           <label className='fw-bold  fw-bold mb-1 d-block'>Primary Language Spoken *</label>
           <label className='label'>Select the Patient's primary language spoken</label>  
-          <select className="form-select" onChange={(e) => {buildPersonalDetails('spokenLanguage', e.target.value)}} aria-label="Default select example">
+          <select className="form-select" style={{borderRadius:"3px", color:"#808080", height:"46px"}} onChange={(e) => {buildPersonalDetails('spokenLanguage', e.target.value)}} aria-label="Default select example">
             <option selected disabled>Select</option>
             {languages.map((item, index) => { return(
               <option key={index} value={item.value} selected={patientContext?.patientDetails?.covidData?.personalDetails?.spokenLanguage == item.value}>{item.label}</option>
@@ -459,7 +459,7 @@ export default function CovidForm(props) {
         <label className='fw-bold  fw-bold mb-1 d-block'>Release of Information</label>
         <label className="label d-block col-12">Please Confirm the sign below</label>
         <div className='noticeDiv'>
-          <span>
+          <span >
           AUTHORIZATION TO RELEASE INFORMATION Your signature on this form authorizes The Doc's Here LLC and your designee(s) specified below to communicate (disclose) health information related to your care at The Doc's Here LLC. Disclosures to Friends and/or Family Members DO YOU WANT TO DESIGNATE A FAMILY MEMBER OR OTHER INDIVIDUAL WITH WHOM THE PROVIDER MAY DISCUSS YOUR MEDICAL CONDITION? IF YES, WHOM? I give permission for my Protected Health Information to be disclosed for purposes of communicating results, findings and care decisions to the family members and others listed below: Privacy Options I want NO ONE to receive my personal health information [X] I want the following person(s) BE ALLOWED to access my Personal health information: Tester Spouse / Partner This information about you is protected under federal law, and may be revoked/changed as noted above Please be advised, however, that any revocation/change will be effective only to the extent we have not already token action in reliance on your authorization By signing below, you recognize that the protected health information used or disclosed pursuant to this authorization may be subject to re-disclosure by the recipient of this disclosure and may no longer be protected under federal law. We will not condition treatment based on your authorization. You may refuse to sign the authorization. Patient Name: TEST TEST Date of Birth: 01/01/1990 Date: 09/21/2022
           </span>
         </div>

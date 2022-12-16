@@ -377,6 +377,24 @@ button:focus {
 
 .formselectdiv {
 	width: 92%;
+	font-size: 1em;
+    height: auto;
+    min-height: var(--input-height);
+    color: var(--body);
+    box-shadow: initial!important;
+    background-color: var(--foreground);
+    border-color: var(--separator);
+    border-radius: var(--border-radius-md);
+    filter: none;
+    transition: border-color .15s ease-in-out;
+	padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+	display: block;
+    padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
 }
 
 .select-selected:after {

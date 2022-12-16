@@ -1590,7 +1590,7 @@ button{outline:initial!important;box-shadow:initial!important;text-decoration:in
 .dropdown-submenu.dropend>.dropdown-toggle{display:flex;justify-content:space-between;align-items:center;width:100%}
 .dropdown-header,.dropdown-item,.dropdown-item-text{padding:.5rem 1.5rem}
 .dropend.dropdown-submenu .dropdown-menu{bottom:initial}
-.custom-select,.form-control,.form-select{font-size:1em;height:auto;min-height:var(--input-height);color:var(--body);box-shadow:initial!important;background-color:var(--foreground);border-color:var(--separator);border-radius:var(--border-radius-md);filter:none;transition:border-color .15s ease-in-out}
+.custom-select,.form-control,.form-select{font-size:1em;height:auto;min-height:var(--input-height);color:var(--body);box-shadow:initial!important;background-color:var(--foreground);border-color:var(--separator);filter:none;transition:border-color .15s ease-in-out}
 .custom-select.borderless,.form-control.borderless,.form-select.borderless{border:initial;box-shadow:initial}
 .custom-select:focus,.form-control:focus,.form-select:focus{background-color:var(--foreground);color:var(--body);border-color:rgba(var(--primary-rgb),1)}
 .custom-select.shadow,.form-control.shadow,.form-select.shadow{border:initial;box-shadow:0 4px 10px rgba(0,0,0,.03)!important}
