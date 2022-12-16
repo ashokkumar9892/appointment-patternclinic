@@ -87,6 +87,7 @@ const api = {
     ),
     getAuth: async(request) => axios.get(
         request.url,
+        
         {
             headers: { "Authorization": "Bearer " + await getToken(), "accept": "application/json" }
         }
@@ -96,6 +97,14 @@ const api = {
         {
             headers: { "Authorization": "Bearer " + await getToken(), "accept": "application/json" }
         }
+    ),
+    getAuth1: async(request) => axios.get(
+        request.url,
+        request.data,
+        {
+            headers: { "Authorization": "Bearer " + await getToken(), 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }
+        }
+
     ),
     postAuth: async(request) => axios.post(
         request.url,
@@ -109,7 +118,7 @@ const api = {
         request.url,
         request.data,
         {
-            headers: { Authorization: "Bearer " + await getToken() }
+            headers: { Authorization: "Bearer " + await getToken(),'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8', "Accept": "*/*", "Accept-Encoding": "gzip, deflate, br" }
         }
     ),
     updatePatientInsurance: async(request) => axios.put(

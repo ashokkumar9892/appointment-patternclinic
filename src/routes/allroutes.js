@@ -6,7 +6,7 @@ import CheckIn from "../component/checkin_process/CheckIn";
 import ReviewAppoinment from "../component/review_appointment/ReviewAppoinment";
 import FamilyForm from "../component/common/FamilyForm";
 import NewAppointment from "../component/appointmentnew";
-import ScheduleAppointmentNew from "../component/scheduleAppointmentnew";
+import ScheduleAppointmentNew from "../component/scheduleAppointmentnew/ScheduleAppointmentnew";
 import ReviewAppoinmentNew from "../component/reviewnew_appointment";
 import CheckInNew from "../component/checkinprocessnew"
 

@@ -123,8 +123,14 @@ const ScheduleAppointment = () => {
         url: `https://appointmentapi.apatternclinic.com/v1/24451/patients`,
         data: formBodydata,
       };
-
+      let requestbestmatch = {
+        url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/enhancedbestmatch`,
+        data: formBodydata,
+      };
       api
+      .getAuth(requestbestmatch)
+      .then((response1) => {
+        api
         .postAuth(request)
         .then((response) => {
           patientContext.update({
@@ -145,6 +151,11 @@ const ScheduleAppointment = () => {
           }, 1000);
         })
         .catch((error) => {});
+        
+      })
+      .catch((error) => {});
+  
+     
     }
   };
 

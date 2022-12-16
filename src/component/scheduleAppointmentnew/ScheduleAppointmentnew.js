@@ -125,45 +125,114 @@ const ScheduleAppointmentNew = () => {
 
     const ScheduleApi = () => {
         if (validation()) {
-            setButtonloading(true);
-            var formBody = [];
-            console.log("details", details);
-            for (var property in details) {
-                var encodedKey = encodeURIComponent(property);
-                var encodedValue = encodeURIComponent(details[property]);
-                formBody.push(encodedKey + "=" + encodedValue);
-            }
-
-            let formBodydata = formBody.join("&");
-            let request = {
-                url: `https://appointmentapi.apatternclinic.com/v1/24451/patients`,
-                data: formBodydata,
-            };
-
-            api
+          setButtonloading(true);
+          var formBody = [];
+          console.log("details", details);
+          for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+          }
+    
+          let formBodydata = formBody.join("&");
+          let request = {
+            url: `https://appointmentapi.apatternclinic.com/v1/24451/patients`,
+            data: formBodydata,
+          };
+          
+          let requestbestmatch = {
+            url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/enhancedbestmatch?firstname=${firstname}&lastname=${lastname}&departmentid=1&dob=${dob}&returnbestmatches=true`,
+         
+          };
+          api
+          .getAuth(requestbestmatch)
+          .then((response1) => {
+            if(response1?.data?.length>0){
+                for (let i = 0; i < response1?.data?.length; i++) {
+                    console.log(dob,'dob');
+                    if(response1.data[i].firstname.toLowerCase()===firstname.toLowerCase() && response1.data[i].lastname.toLowerCase()===lastname.toLowerCase() && response1.data[i].dob===dob){
+                        
+                        let putrequest = {
+                            url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${response1.data[i].patientid}`,
+                            data: formBodydata,
+                        };
+                        api
+            .putAuth(putrequest)
+            .then((response) => {
+              patientContext.update({
+                ...patientContext.patientDetails,
+                dob: dob,
+                sex: sex,
+                email: email,
+                phone: phone,
+                firstname: firstname,
+                lastname: lastname,
+                insurance: insurance,
+                additional: additional,
+                patientid: response.data[0].patientid,
+              });
+              setTimeout(() => {
+                history.push("/reviewnew");
+                setButtonloading(false);
+              }, 1000);
+            })
+            .catch((error) => {});
+                    }else{
+                        api
+                        .postAuth(request)
+                        .then((response) => {
+                          patientContext.update({
+                            ...patientContext.patientDetails,
+                            dob: dob,
+                            sex: sex,
+                            email: email,
+                            phone: phone,
+                            firstname: firstname,
+                            lastname: lastname,
+                            insurance: insurance,
+                            additional: additional,
+                            patientid: response.data[0].patientid,
+                          });
+                          setTimeout(() => {
+                            history.push("/reviewnew");
+                            setButtonloading(false);
+                          }, 1000);
+                        })
+                        .catch((error) => {});
+                    }
+                  }
+            }else{
+                api
                 .postAuth(request)
                 .then((response) => {
-                    patientContext.update({
-                        ...patientContext.patientDetails,
-                        dob: dob,
-                        sex: sex,
-                        email: email,
-                        phone: phone,
-                        firstname: firstname,
-                        lastname: lastname,
-                        insurance: insurance,
-                        additional: additional,
-                        patientid: response.data[0].patientid,
-                    });
-                    setTimeout(() => {
-                        history.push("/reviewnew");
-                        setButtonloading(false);
-                    }, 1000);
+                  patientContext.update({
+                    ...patientContext.patientDetails,
+                    dob: dob,
+                    sex: sex,
+                    email: email,
+                    phone: phone,
+                    firstname: firstname,
+                    lastname: lastname,
+                    insurance: insurance,
+                    additional: additional,
+                    patientid: response.data[0].patientid,
+                  });
+                  setTimeout(() => {
+                    history.push("/reviewnew");
+                    setButtonloading(false);
+                  }, 1000);
                 })
-                .catch((error) => { });
+                .catch((error) => {});
+            }
+            
+            
+          })
+          .catch((error) => {});
+      
+         
         }
-    };
-
+      };
+    
     return (<>
         <section className="appointmentrow mx-0">
             <div className="left-sidebar">
