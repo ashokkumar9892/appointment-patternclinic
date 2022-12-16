@@ -255,35 +255,43 @@ export default function CovidForm(props) {
 
         <div className='form-group mb-3 row g-0 w-100'>
           <label className="label d-block col-12">In the past 10 days, have you been tested for COVID-19?</label>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className='optionList'>
+       
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="inlineRadioOptions" onChange={(e) => {buildCovidDetails('covidTest', e.target.value)}} id="inlineRadio1" value="no" checked={patientContext?.patientDetails?.covidData?.covidDetails?.covidTest == 'no'}/>
-            <label className="form-check-label" htmlFor="inlineRadio1">No, I have not been tested</label>
+            <span className="optionListName" htmlFor="inlineRadio1">No, I have not been tested</span>
           </div>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="inlineRadioOptions" onChange={(e) => {buildCovidDetails('covidTest', e.target.value)}}  id="inlineRadio2" value="yesTestedAndWaitingForResults" checked={patientContext?.patientDetails?.covidData?.covidDetails?.covidTest == 'yesTestedAndWaitingForResults'}/>
-            <label className="form-check-label" htmlFor="inlineRadio2">Yes, I have been tested and i am waiting for my results</label>
+            <span className="optionListName" htmlFor="inlineRadio2">Yes, I have been tested and i am waiting for my results</span>
           </div>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="inlineRadioOptions" onChange={(e) => {buildCovidDetails('covidTest', e.target.value)}}  id="inlineRadio3" value="positive" checked={patientContext?.patientDetails?.covidData?.covidDetails?.covidTest == 'positive'}/>
-            <label className="form-check-label" htmlFor="inlineRadio3">Yes, I tested positive</label>
+            <span className="optionListName" htmlFor="inlineRadio3">Yes, I tested positive</span>
           </div>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="inlineRadioOptions" onChange={(e) => {buildCovidDetails('covidTest', e.target.value)}}  id="inlineRadio4" value="negative" checked={patientContext?.patientDetails?.covidData?.covidDetails?.covidTest == 'negative'}/>
-            <label className="form-check-label" htmlFor="inlineRadio2">Yes, I tested negative</label>
+            <span className="optionListName" htmlFor="inlineRadio2">Yes, I tested negative</span>
+          </div>
+               
           </div>
         </div>
 
         <div className='form-group mb-3'>
           <label className="label d-block">In the past 10 days, areyou experiencing any NEW symptom(s) listed below that is not due to another health problem? Please select all that apply:*</label>
-          <MultiSelect
+        <div> <MultiSelect
+        
             options={symptomsOptions}
             value={patientContext?.patientDetails?.covidData?.covidDetails?.pastSymptoms || []}
             onChange={(e) =>  {buildCovidDetails('pastSymptoms', e)}}
             labelledBy="Select"
-          />
+          /></div> 
         </div>
       </div>
-      <button className='btn btn-primary' onClick={() => generateDocs(1)}  disabled={isLoading || checkFormStep1}>{isLoading ? (<span class="spinner-border spinner-border-sm"></span>) :'Continue'}</button>
+      <div style={{width:"100%", display:"flex",flexDireaction:"row-reverse"}}>
+      <button className='buttonDiv' onClick={() => generateDocs(1)}  disabled={isLoading || checkFormStep1}>{isLoading ? (<span class="spinner-border spinner-border-sm"></span>) :'Continue'}</button>
+      </div>
+     
       </>
     : formStep == 2 ? 
       <>
