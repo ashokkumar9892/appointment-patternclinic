@@ -1,6 +1,8 @@
 .label {
     font-weight: 500;
     margin-bottom: 0.5rem;
+    font-size: 16px;
+    line-height: 1.8;
 }
 
 .form-control {
@@ -88,14 +90,26 @@ label {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 8px;
 }
 
 .optionListName {
     position: relative;
-    margin-bottom: 4px;
-    margin-left: 4px;
+    margin-left: 8px;
     cursor: pointer;
     font-weight: 500;
-    font-size: 1rem;
     color: #808080;
+}
+
+.singleButtondiv{
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.noticeDiv{
+    height: 120px;
+    width: 100%;
+    overflow-y: auto;
+    border: 1px solid rgba(0, 0, 0, 0.2);;
 }

@@ -375,7 +375,7 @@ button:focus {
 	display: none;
 }
 
-.form-select {
+.formselectdiv {
 	width: 92%;
 }
 
@@ -807,7 +807,7 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 
 @media (max-width:575px) {
 
-	.form-select {
+	.formselectdiv {
 		width: 98%;
 	}
 	

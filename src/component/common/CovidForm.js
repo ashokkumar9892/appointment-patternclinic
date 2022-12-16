@@ -243,20 +243,19 @@ export default function CovidForm(props) {
 
         <div className='form-group mb-3'>
           <label className="label d-block">In the past 10 days, did you have close(within 6 feet for at least 15 minutes) with someone woth symptoms of COVID-19 or who tested positive for COVID-19?</label>
-          <div className="form-check form-check-inline">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="closeContactWithCovidPatient" id="closeContactWithCovidPatientNo" value="no" onChange={(e) => {buildCovidDetails('closeContactWithCovidPatient', e.target.value)}} checked={patientContext?.patientDetails?.covidData?.covidDetails?.closeContactWithCovidPatient == 'no'}/>
-            <label className="form-check-label" htmlFor="closeContactWithCovidPatientNo">No</label>
+            <span className="optionListName" htmlFor="closeContactWithCovidPatientNo">No</span>
           </div>
-          <div className="form-check form-check-inline">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="closeContactWithCovidPatient" id="closeContactWithCovidPatientYes" value="yes" onChange={(e) => {buildCovidDetails('closeContactWithCovidPatient', e.target.value)}} checked={patientContext?.patientDetails?.covidData?.covidDetails?.closeContactWithCovidPatient == 'yes'}/>
-            <label className="form-check-label" htmlFor="closeContactWithCovidPatientYes" >Yes</label>
+            <span className="optionListName" htmlFor="closeContactWithCovidPatientYes" >Yes</span>
           </div>
         </div>
 
         <div className='form-group mb-3 row g-0 w-100'>
           <label className="label d-block col-12">In the past 10 days, have you been tested for COVID-19?</label>
           <div className='optionList'>
-       
           <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="inlineRadioOptions" onChange={(e) => {buildCovidDetails('covidTest', e.target.value)}} id="inlineRadio1" value="no" checked={patientContext?.patientDetails?.covidData?.covidDetails?.covidTest == 'no'}/>
             <span className="optionListName" htmlFor="inlineRadio1">No, I have not been tested</span>
@@ -288,7 +287,7 @@ export default function CovidForm(props) {
           /></div> 
         </div>
       </div>
-      <div style={{width:"100%", display:"flex",flexDireaction:"row-reverse"}}>
+      <div className='singleButtondiv'>
       <button className='buttonDiv' onClick={() => generateDocs(1)}  disabled={isLoading || checkFormStep1}>{isLoading ? (<span class="spinner-border spinner-border-sm"></span>) :'Continue'}</button>
       </div>
      
@@ -319,59 +318,59 @@ export default function CovidForm(props) {
         <div className='form-group mb-3 row g-0 w-100'>
           <label className='fw-bold  fw-bold mb-1 d-block'>Ethnicity *</label>
           <label className="label d-block col-12">What's the patient's ethnicity?</label>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="ethnicityRadio" onChange={(e) => {buildPersonalDetails('ethnicity', e.target.value)}} id="ethnicityRadio1" checked={patientContext?.patientDetails?.covidData?.personalDetails?.ethnicity == 'hispanicOrLatino'} value="hispanicOrLatino" />
-            <label className="form-check-label" htmlFor="ethnicityRadio1">Hispanic or Latino</label>
+            <span className="optionListName" htmlFor="ethnicityRadio1">Hispanic or Latino</span>
           </div>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="ethnicityRadio" onChange={(e) => {buildPersonalDetails('ethnicity', e.target.value)}}  id="ethnicityRadio2" checked={patientContext?.patientDetails?.covidData?.personalDetails?.ethnicity == 'notHispanicOrLatino'} value="notHispanicOrLatino" />
-            <label className="form-check-label" htmlFor="ethnicityRadio2">Hispanic or Latino</label>
+            <span className="optionListName" htmlFor="ethnicityRadio2">Hispanic or Latino</span>
           </div>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="ethnicityRadio" onChange={(e) => {buildPersonalDetails('ethnicity', e.target.value)}} id="ethnicityRadio3" checked={patientContext?.patientDetails?.covidData?.personalDetails?.ethnicity == 'declineToAnswer'} value="declineToAnswer" />
-            <label className="form-check-label" htmlFor="ethnicityRadio3">Decline to Answer</label>
+            <span className="optionListName" htmlFor="ethnicityRadio3">Decline to Answer</span>
           </div>
         </div>
 
         <div className='form-group mb-3 row g-0 w-100'>
           <label className='fw-bold  fw-bold mb-1 d-block'>MaritalStatus *</label>
           <label className="label d-block col-12">Select the patient's martial status</label>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="maritalRadio" onChange={(e) => {buildPersonalDetails('martialStatus', e.target.value)}} id="maritalRadio1"  value="single" checked={patientContext?.patientDetails?.covidData?.personalDetails?.martialStatus == 'single'} />
-            <label className="form-check-label" htmlFor="maritalRadio1">Single</label>
+            <span className="optionListName" htmlFor="maritalRadio1">Single</span>
           </div>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="maritalRadio" onChange={(e) => {buildPersonalDetails('martialStatus', e.target.value)}} id="maritalRadio2" value="married" checked={patientContext?.patientDetails?.covidData?.personalDetails?.martialStatus == 'married'} />
-            <label className="form-check-label" htmlFor="maritalRadio2">Married</label>
+            <span className="optionListName" htmlFor="maritalRadio2">Married</span>
           </div>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="maritalRadio" onChange={(e) => {buildPersonalDetails('martialStatus', e.target.value)}}  id="maritalRadio3" value="partner" checked={patientContext?.patientDetails?.covidData?.personalDetails?.martialStatus == 'partner'}/>
-            <label className="form-check-label" htmlFor="maritalRadio3">Partner</label>
+            <span className="optionListName" htmlFor="maritalRadio3">Partner</span>
           </div>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="maritalRadio" onChange={(e) => {buildPersonalDetails('martialStatus', e.target.value)}}id="maritalRadio4" value="divorced" checked={patientContext?.patientDetails?.covidData?.personalDetails?.martialStatus == 'divorced'}/>
-            <label className="form-check-label" htmlFor="maritalRadio4">Divorced</label>
+            <span className="optionListName" htmlFor="maritalRadio4">Divorced</span>
           </div>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="maritalRadio" onChange={(e) => {buildPersonalDetails('martialStatus', e.target.value)}}  id="maritalRadio5" value="seprate" checked={patientContext?.patientDetails?.covidData?.personalDetails?.martialStatus == 'seprate'}/>
-            <label className="form-check-label" htmlFor="maritalRadio5">Seprate</label>
+            <span className="optionListName" htmlFor="maritalRadio5">Seprate</span>
           </div>
-          <div className="form-check form-check col-lg-4 col-md-6 col-12">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="maritalRadio" onChange={(e) => {buildPersonalDetails('martialStatus', e.target.value)}} id="maritalRadio6" value="widowed" checked={patientContext?.patientDetails?.covidData?.personalDetails?.martialStatus == 'widowed'}/>
-            <label className="form-check-label" htmlFor="maritalRadio6">windowed</label>
+            <span className="optionListName" htmlFor="maritalRadio6">windowed</span>
           </div>
         </div>
         
       </div>
         <div className='text-end'>
-          <button className='btn btn-primary me-2' onClick={() => setFormStep(1)}> Back </button>
-          <button className='btn btn-primary' onClick={() => generateDocs(2)} disabled={checkFormStep2}>Continue</button>
+          <button className='buttonDiv' onClick={() => setFormStep(1)}> Back </button>
+          <button className='buttonDiv nextButton' onClick={() => generateDocs(2)} disabled={checkFormStep2}>Continue</button>
         </div>
       </>
     :  formStep == 3 ? 
       <>
       <div className='mb-3' id='pdf-ref-3'>
-         <div className='form-group mb-3 col-lg-4 col-12'>
+         <div>
             <label className="label fw-bold d-block">Emergency Contact Name*</label>
             <label className="label d-block">Enter the name of an emergency contact person*</label>
             <input className='form-control' placeholder='name' value={patientContext?.patientDetails?.covidData?.emergencyContact?.name} type='text' onInput={(e) => buildEmergencyContact('name', e.target.value)} />
@@ -399,8 +398,8 @@ export default function CovidForm(props) {
           
       </div>
           <div className='text-end'>
-            <button className='btn btn-primary me-2' onClick={() => setFormStep(2)} disabled={checkFormStep3}>Back</button>
-            <button className='btn btn-primary' onClick={() => generateDocs(3)} disabled={checkFormStep3}>Continue</button>
+            <button className='buttonDiv' onClick={() => setFormStep(2)} disabled={checkFormStep3}>Back</button>
+            <button className='buttonDiv nextButton' onClick={() => generateDocs(3)} disabled={checkFormStep3}>Continue</button>
           </div>
       </>
     : formStep == 4 ?
@@ -409,13 +408,13 @@ export default function CovidForm(props) {
         <div className='form-group mb-3 w-100'>
           <label className='fw-bold  fw-bold mb-1 d-block'>Medical Content Permission *</label>
           <label className="label d-block col-12">Is there someone we hae permission to contact or share medcial information with on the patient's behalf?</label>
-          <div className="form-check form-check-inline ">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="medicalContactRadio" onClick={(e) => {buildMedicalContact('medicalContactPermission', e.target.value)}} id="medicalContactRadio1" checked={patientContext?.patientDetails?.covidData?.medicalContact?.medicalContactPermission == 'yes'} value="yes" />
-            <label className="form-check-label" htmlFor="medicalContactRadio">Yes</label>
+            <span className="optionListName" htmlFor="medicalContactRadio">Yes</span>
           </div>
-          <div className="form-check form-check-inline">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="medicalContactRadio" onClick={(e) => {buildMedicalContact('medicalContactPermission', e.target.value)}}  id="medicalContactRadio2" checked={patientContext?.patientDetails?.covidData?.medicalContact?.medicalContactPermission == 'no'} value="no" />
-            <label className="form-check-label" htmlFor="medicalContactRadio2">No</label>
+            <span className="optionListName" htmlFor="medicalContactRadio2">No</span>
           </div>
         </div>
         <div className='form-group mb-3'>
@@ -429,9 +428,9 @@ export default function CovidForm(props) {
           <label className="label d-block col-12">Select the patient's relationShip to the first Individual to whom the doctor and staff have permission to release information</label>
               {firstIndividualRelationShipOptions.map((item, index) =>  { 
                 return (
-                  <div className="form-check form-check col-lg-4 col-md-6 col-12">
+                  <div className="optionListDiv">
                     <input className="form-check-input" type="radio" name="firstIndividualRelationShip" onChange={(e) => {buildMedicalContact('firstIndividualRelationShip', e.target.value)}}  id={`firstIndividualRelationShip${index}`} value={item.value} checked={patientContext?.patientDetails?.covidData?.medicalContact?.firstIndividualRelationShip == item.value}/>
-                    <label className="form-check-label" htmlFor={`firstIndividualRelationShip${index}`}>{item.label}</label>
+                    <span className="optionListName" htmlFor={`firstIndividualRelationShip${index}`}>{item.label}</span>
                   </div>
                 )
               })}
@@ -439,19 +438,19 @@ export default function CovidForm(props) {
         <div className='form-group mb-3 w-100'>
           <label className='fw-bold  fw-bold mb-1 d-block'>Release of Information - Addtional Individuals *</label>
           <label className="label d-block col-12">Are there any other individuals who the patient gives permission to the doctor and staff to release information to</label>
-          <div className="form-check form-check-inline ">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="informationReleaseAdditionaltRadio" onChange={(e) => {buildMedicalContact('informationReleaseAdditional', e.target.value)}} id="informationReleaseAdditionalRadio1" checked={patientContext?.patientDetails?.covidData?.medicalContact?.informationReleaseAdditional == 'yes'} value="yes" />
-            <label className="form-check-label" htmlFor="informationReleaseAdditionalRadio1">Yes</label>
+            <span className="optionListName" htmlFor="informationReleaseAdditionalRadio1">Yes</span>
           </div>
-          <div className="form-check form-check-inline">
+          <div className="optionListDiv">
             <input className="form-check-input" type="radio" name="informationReleaseAdditionalRadio" onChange={(e) =>  {buildMedicalContact('informationReleaseAdditional', e.target.value)}}  id="informationReleaseAdditionalRadio2" checked={patientContext?.patientDetails?.covidData?.medicalContact?.informationReleaseAdditional == 'no'} value="no" />
-            <label className="form-check-label" htmlFor="informationReleaseAdditionalRadio2">No</label>
+            <span className="optionListName" htmlFor="informationReleaseAdditionalRadio2">No</span>
           </div>
         </div>
       </div>
         <div className='text-end'>
-          <button className='btn btn-primary me-2' onClick={() => setFormStep(3)} disabled={checkFormStep4}>Back</button>
-          <button className='btn btn-primary' onClick={() => generateDocs(4)} disabled={checkFormStep4}>Continue</button>
+          <button className='buttonDiv' onClick={() => setFormStep(3)} disabled={checkFormStep4}>Back</button>
+          <button className='buttonDiv nextButton' onClick={() => generateDocs(4)} disabled={checkFormStep4}>Continue</button>
         </div>
       </>
     : formStep == 5 ? 
@@ -459,17 +458,19 @@ export default function CovidForm(props) {
       <div className='mb-3' id='pdf-ref-5'>
         <label className='fw-bold  fw-bold mb-1 d-block'>Release of Information</label>
         <label className="label d-block col-12">Please Confirm the sign below</label>
-        <div className='p-3 mb-3 border  rounded-3'>
+        <div className='noticeDiv'>
+          <span>
           AUTHORIZATION TO RELEASE INFORMATION Your signature on this form authorizes The Doc's Here LLC and your designee(s) specified below to communicate (disclose) health information related to your care at The Doc's Here LLC. Disclosures to Friends and/or Family Members DO YOU WANT TO DESIGNATE A FAMILY MEMBER OR OTHER INDIVIDUAL WITH WHOM THE PROVIDER MAY DISCUSS YOUR MEDICAL CONDITION? IF YES, WHOM? I give permission for my Protected Health Information to be disclosed for purposes of communicating results, findings and care decisions to the family members and others listed below: Privacy Options I want NO ONE to receive my personal health information [X] I want the following person(s) BE ALLOWED to access my Personal health information: Tester Spouse / Partner This information about you is protected under federal law, and may be revoked/changed as noted above Please be advised, however, that any revocation/change will be effective only to the extent we have not already token action in reliance on your authorization By signing below, you recognize that the protected health information used or disclosed pursuant to this authorization may be subject to re-disclosure by the recipient of this disclosure and may no longer be protected under federal law. We will not condition treatment based on your authorization. You may refuse to sign the authorization. Patient Name: TEST TEST Date of Birth: 01/01/1990 Date: 09/21/2022
+          </span>
         </div>
         <div className='form-group mb-3 w-100'>
           <div className="form-check form-check-inline ">
             <input className="form-check-input" type="radio" name="releaseOfInformaionAcceptance" onChange={(e) =>  {buildInformationRelease('acceptance', e.target.value)}} id="releaseOfInformaionAcceptanceRadio1" checked={patientContext?.patientDetails?.covidData?.informationRelease?.acceptance == 'accept'} value="accept" />
-            <label className="form-check-label" htmlFor="releaseOfInformaionAcceptanceRadio1">I Accept</label>
+            <span className="optionListName" htmlFor="releaseOfInformaionAcceptanceRadio1">I Accept</span>
           </div>
           <div className="form-check form-check-inline">
             <input className="form-check-input" type="radio" name="releaseOfInformaionAcceptance" onChange={(e) =>  {buildInformationRelease('acceptance', e.target.value)}}  id="releaseOfInformaionAcceptanceRadio2" checked={patientContext?.patientDetails?.covidData?.informationRelease?.acceptance == 'decline'} value="decline" />
-            <label className="form-check-label" htmlFor="releaseOfInformaionAcceptanceRadio2">I Decline</label>
+            <span className="optionListName" htmlFor="releaseOfInformaionAcceptanceRadio2">I Decline</span>
           </div>
         </div>
         <div className='form-group mb-3'>
@@ -479,13 +480,13 @@ export default function CovidForm(props) {
         <div className='form-group mb-3'>
           <div class="form-check form-check-inline">
             <input className="form-check-input" type="checkbox" id="TermAndConditions" defaultChecked={patientContext?.patientDetails?.covidData?.informationRelease?.termAndConditions } onChange={(e) =>  {buildInformationRelease('termAndConditions', e.target.checked)}} />
-            <label className="form-check-label" htmlFor="TermAndConditions">I understand that by typing my name and clicking on 'continue', I am electronically signing this document</label>
+            <span className="optionListName" htmlFor="TermAndConditions">I understand that by typing my name and clicking on 'continue', I am electronically signing this document</span>
           </div>
         </div>
       </div>
       <div className='text-end'>
-        <button className='btn btn-primary me-2' onClick={() => setFormStep(4)}>Back</button>
-        <button className='btn btn-primary' onClick={() => {generateDocs(5)}} disabled={checkFormStep5 || isLoading}>{isLoading ? (<span class="spinner-border spinner-border-sm"></span>) :'Continue'}</button>
+        <button className='buttonDiv' onClick={() => setFormStep(4)}>Back</button>
+        <button className='buttonDiv nextButton' onClick={() => {generateDocs(5)}} disabled={checkFormStep5 || isLoading}>{isLoading ? (<span class="spinner-border spinner-border-sm"></span>) :'Continue'}</button>
        </div>
       </>
     :

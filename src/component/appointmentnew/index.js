@@ -228,7 +228,7 @@ const AppointmentNew = () => {
 								<div style={{marginTop:"8px"}}>
 									<select
 										disabled={!patientType}
-										className="form-select"
+										className="formselectdiv"
 										onChange={(event) => {
 											setSpecialty(event.target.value);
 										}}
@@ -249,7 +249,7 @@ const AppointmentNew = () => {
 								<div style={{marginTop:"8px"}}>
 									<select
 										disabled={!specialty}
-										className="form-select"
+										className="formselectdiv"
 										onChange={(event) => {
 											setReason(event.target.value);
 										}}
@@ -269,7 +269,7 @@ const AppointmentNew = () => {
 								<label>Provider</label>
 								<div style={{marginTop:"8px"}}>
 									<select
-										className="form-select"
+										className="formselectdiv"
 										disabled={!specialty}
 										onChange={(event) => {
 											setProvider(event.target.value);
