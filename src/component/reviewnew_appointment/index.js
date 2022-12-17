@@ -126,7 +126,7 @@ const ReviewAppoinmentNew = () => {
 
   const Preview = () => {
     setTimeout(() => {
-      history.push("/schedule/");
+      history.push("/schedule");
     }, 500);
   };
   const ShaduleAppointment = () => {

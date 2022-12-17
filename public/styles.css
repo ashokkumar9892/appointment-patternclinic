@@ -1590,7 +1590,7 @@ button{outline:initial!important;box-shadow:initial!important;text-decoration:in
 .dropdown-submenu.dropend>.dropdown-toggle{display:flex;justify-content:space-between;align-items:center;width:100%}
 .dropdown-header,.dropdown-item,.dropdown-item-text{padding:.5rem 1.5rem}
 .dropend.dropdown-submenu .dropdown-menu{bottom:initial}
-.custom-select,.form-control,.form-select{font-size:1em;height:auto;min-height:var(--input-height);color:var(--body);box-shadow:initial!important;background-color:var(--foreground);border-color:var(--separator);border-radius:var(--border-radius-md);filter:none;transition:border-color .15s ease-in-out}
+.custom-select,.form-control,.form-select{font-size:1em;height:auto;min-height:var(--input-height);color:var(--body);box-shadow:initial!important;background-color:var(--foreground);border-color:var(--separator);filter:none;transition:border-color .15s ease-in-out}
 .custom-select.borderless,.form-control.borderless,.form-select.borderless{border:initial;box-shadow:initial}
 .custom-select:focus,.form-control:focus,.form-select:focus{background-color:var(--foreground);color:var(--body);border-color:rgba(var(--primary-rgb),1)}
 .custom-select.shadow,.form-control.shadow,.form-select.shadow{border:initial;box-shadow:0 4px 10px rgba(0,0,0,.03)!important}
@@ -1726,7 +1726,7 @@ textarea{resize:none}
 .input-group>.custom-file:not(:first-child) .custom-file-label{border-top-left-radius:0;border-bottom-left-radius:0}
 .custom-file-label::after{border-radius:var(--border-radius-md);border-top-left-radius:0;border-bottom-left-radius:0;height:34px;background-color:var(--primary);border-color:var(--primary);color:var(--light-text)}
 .input-group-lg>.btn,.input-group-lg>.form-control,.input-group-lg>.form-select,.input-group-lg>.input-group-text{height:44px;font-size:1.25em;line-height:1.5}
-.input-group-sm>.btn,.input-group-sm>.form-control,.input-group-sm>.form-select,.input-group-sm>.input-group-text{border-radius:var(--border-radius-md);font-size:.9em;padding:.25rem .75rem;height:28px;min-height:28px}
+.input-group-sm>.btn,.input-group-sm>.form-control,.input-group-sm>.form-select,.input-group-sm>.input-group-text{font-size:.9em;padding:.25rem .75rem;height:28px;min-height:28px}
 .input-group-lg>.btn,.input-group-lg>.form-control,.input-group-lg>.form-select,.input-group-lg>.input-group-text{border-radius:var(--border-radius-md)}
 .input-group-text .form-check-input{margin-top:1px!important}
 .input-group .form-control[type=file]{padding-left:.75rem;padding-right:.75rem;line-height:1.6}
