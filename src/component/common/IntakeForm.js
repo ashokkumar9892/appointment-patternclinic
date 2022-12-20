@@ -530,7 +530,7 @@ export default function IntakeForm(props) {
 
                     <button
                       type="button"
-                      className="btn btn-sm btn-primary"
+                      className='buttonDiv'
                       onClick={() => {
                         authToBillSign.current.clear();
                         buildAuthForm("signature", "");
@@ -572,7 +572,7 @@ export default function IntakeForm(props) {
                       generateDocs(1);
                       setMultiFormStep(2);
                     }}
-                    className="btn btn-primary "
+                    className='buttonDiv nextButton'
                   >
                     Continue
                   </button>
@@ -704,7 +704,7 @@ export default function IntakeForm(props) {
                     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
                     setMultiFormStep(1);
                   }}
-                  className="btn btn-primary me-2"
+                  className='buttonDiv'
                 >
                   Back
                 </button>
@@ -714,7 +714,7 @@ export default function IntakeForm(props) {
                     generateDocs(2);
                     setMultiFormStep(3);
                   }}
-                  className="btn btn-primary "
+                  className='buttonDiv nextButton'
                 >
                   Continue
                 </button>
@@ -782,7 +782,7 @@ export default function IntakeForm(props) {
                     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
                     setMultiFormStep(2);
                   }}
-                  className="btn btn-primary me-2"
+                  className='buttonDiv'
                 >
                   Back
                 </button>
@@ -791,7 +791,7 @@ export default function IntakeForm(props) {
                     generateDocs(3);
                     setMultiFormStep(4)
                   }}
-                  className="btn btn-primary "
+                  className='buttonDiv nextButton'
                 >
                   Continue
                 </button>
@@ -890,7 +890,7 @@ export default function IntakeForm(props) {
                   </div>
                   <button
                     type="button"
-                    className="btn btn-sm btn-primary"
+                    className='buttonDiv'
                     onClick={() => {
                       beneficiarySign.current.clear();
                       buildBeneficiaryForm("signature", "");
@@ -984,7 +984,7 @@ export default function IntakeForm(props) {
                   window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
                   setMultiFormStep(3);
                 }}
-                className="btn me-2 btn-primary"
+                className='buttonDiv'
               >
                 Back
               </button>
@@ -994,7 +994,7 @@ export default function IntakeForm(props) {
                   generateDocs(4);
                   setMultiFormStep(5)
                 }}
-                className="btn btn-primary"
+                className='buttonDiv nextButton'
               >
                 Continue
               </button>
@@ -1126,7 +1126,7 @@ export default function IntakeForm(props) {
                   window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
                   setMultiFormStep(4);
                 }}
-                className="btn me-2 btn-primary"
+                className='buttonDiv'
               >
                 Back
               </button>
@@ -1136,7 +1136,7 @@ export default function IntakeForm(props) {
                   generateDocs(5);
                   setMultiFormStep(6)
                 }}
-                className="btn btn-primary"
+                className='buttonDiv nextButton'
               >
                 Continue
               </button>
@@ -1200,7 +1200,7 @@ export default function IntakeForm(props) {
                   </div>
                   <button
                     type="button"
-                    className="btn btn-sm btn-primary"
+                    className='buttonDiv'
                     onClick={() => {
                       consentSign.current.clear();
                       buildConsentForm("signature", "");
@@ -1237,7 +1237,7 @@ export default function IntakeForm(props) {
                   window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
                   setMultiFormStep(5);
                 }}
-                className="btn me-2 btn-primary"
+                className='buttonDiv'
               >
                 Back
               </button>
@@ -1247,7 +1247,7 @@ export default function IntakeForm(props) {
                   generateDocs(6);
                   setMultiFormStep(7)
                 }}
-                className="btn btn-primary"
+                className='buttonDiv nextButton'
               >
                 Continue
               </button>
@@ -1391,7 +1391,7 @@ export default function IntakeForm(props) {
                   </div>
                   <button
                     type="button"
-                    className="btn btn-sm btn-primary"
+                    className='buttonDiv'
                     onClick={() => {
                       adultSign.current.clear();
                       buildRiskAssumptionForm("adultSignature", "");
@@ -1453,7 +1453,7 @@ export default function IntakeForm(props) {
                   </div>
                   <button
                     type="button"
-                    className="btn btn-sm btn-primary"
+                    className='buttonDiv'
                     onClick={() => {
                       parentGuardianSign.current.clear();
                       buildRiskAssumptionForm("parentGuardianSignature", "");
@@ -1493,7 +1493,7 @@ export default function IntakeForm(props) {
                   window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
                   setMultiFormStep(6);
                 }}
-                className="btn me-2 btn-primary"
+                className='buttonDiv'
               >
                 Back
               </button>
@@ -1503,7 +1503,7 @@ export default function IntakeForm(props) {
                   generateDocs(7);
                   setMultiFormStep(8)
                 }}
-                className="btn btn-primary"
+                className='buttonDiv nextButton'
               >
                 Continue
               </button>
@@ -1777,7 +1777,7 @@ export default function IntakeForm(props) {
                   </div>
                   <button
                     type="button"
-                    className="btn btn-sm btn-primary"
+                    className='buttonDiv'
                     onClick={() => {
                       creditCardSign.current.clear();
                       buildCreditCardDetails(
@@ -1836,7 +1836,7 @@ export default function IntakeForm(props) {
                   window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
                   setMultiFormStep(7);
                 }}
-                className="btn me-2 btn-primary"
+                className='buttonDiv'
               >
                 Back
               </button>
@@ -1846,7 +1846,7 @@ export default function IntakeForm(props) {
                   generateDocs(8);
                   setMultiFormStep(9)
                 }}
-                className="btn btn-primary"
+                className='buttonDiv nextButton'
               >
                 {isLoading ? (<span class="spinner-border spinner-border-sm"></span>) :'Continue'}
               </button>
