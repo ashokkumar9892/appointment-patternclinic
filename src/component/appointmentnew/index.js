@@ -100,7 +100,8 @@ const AppointmentNew = () => {
 		// 		)
 		// 	);
 		// });
-		axios.request(`${BASE_URL}/providers`).then(data=>{
+		let reasonresponse=[];
+		axios.request({url:`${BASE_URL}/providers`}).then(data=>{
 			setLoading(false);
 			setProviderList(data.data.providers);
 			setSpecialtyList(
@@ -108,9 +109,54 @@ const AppointmentNew = () => {
 					(a, b) => a.localeCompare(b)
 				)
 			);
+			let reasonPromise = [];
+			for (const el of data.data.providers) {
+				reasonPromise.push(
+					new Promise((resolve, reject) => {
+						let request = {
+							url: `https://appointmentapi.apatternclinic.com/v1/24451/patientappointmentreasons?departmentid=1&providerid=${el.providerid}`,
+						};
+						api
+							.getAuth(request)
+							.then((data) => {
+								for (const element of data.data.patientappointmentreasons){
+									element.providerid = el.providerid;
+									reasonresponse.push(element);
+								}
+								resolve(data.data.patientappointmentreasons);
+							})
+							.catch(reject);
+					})
+				);
+			}
+			Promise.all(reasonPromise).then((res) => {
+				console.log('reason 144');
+				console.log(res);
+				//reasonresponse = res;
+				// const databody = {'patientappointmentreasons':JSON.stringify({patientappointmentreasons:reasonresponse})}
+				// for (const el of res){
+				// 	for(const el2 of el){
+				// 		reasonresponse.push(el2);
+				// 	}
+				// }
+				axios.request({
+					method: 'post',
+					url: `${BASE_URL}/saveappointmentreasons`,
+					contentType: "application/json",
+					data: {
+						'patientappointmentreasons':JSON.stringify({patientappointmentreasons:reasonresponse})
+					}
+				  }).then(data=>{
+					console.log(data);
+				}).catch(err=>{
+					console.log(err);
+				})
+			});
+			
 		}).catch(err=>{
 			console.log(err);
 		})
+		
 	}, []);
 	useEffect(() => {
 		setReasonLabel(reasonList.find((el) => el.reasonid === +reason)?.reason);
@@ -124,16 +170,61 @@ const AppointmentNew = () => {
 			);
 			console.log(filteredList);
 			setSelectedProviderList(filteredList);
-			// axios.request(`${BASE_URL}/appointmentreasons/${specialty}`).then(data=>{
-			// 	setLoading(false);
-			// 	console.log('reason ');
-			// 	console.log(data);
-			// 	reasonPromise = data.data.patientappointmentreasons;
-			// 	console.log('reasonlist');
-			// 	console.log(data.data.patientappointmentreasons);
+			axios.request({
+				method: 'post',
+				url: `${BASE_URL}/appointmentreasons`,
+				contentType: "application/json",
+				data: {
+					'specialty':specialty
+				}
+			  }).then(data=>{
+				setLoading(false);
+				console.log('reason ');
+				console.log(data);
+				reasonPromise = data.data.patientappointmentreasons;
+				console.log('reasonlist');
+				console.log(data.data.patientappointmentreasons);
+				let rList = [];
+				let rIdList = [];
+				console.log(rList);
+				console.log(rIdList);
+				//for (const el of reasonPromise) {
+					for (const item of reasonPromise) {
+						if (
+							!rIdList.includes(item.reasonid) &&
+							(item.reasontype === patientType.toLowerCase() ||
+								item.reasontype === "all")
+						) {
+							rList.push(item);
+							rIdList.push(item.reasonid);
+						}
+					}
+				//}
+				setReasonList(rList.sort((a, b) => a.reason.localeCompare(b.reason)));
+			}).catch(err=>{
+				console.log(err);
+			})
+			// for (const el of filteredList) {
+			// 	reasonPromise.push(
+			// 		new Promise((resolve, reject) => {
+			// 			let request = {
+			// 				url: `https://appointmentapi.apatternclinic.com/v1/24451/patientappointmentreasons?departmentid=1&providerid=${el.providerid}`,
+			// 			};
+			// 			api
+			// 				.getAuth(request)
+			// 				.then((data) => {
+			// 					resolve(data.data.patientappointmentreasons);
+			// 				})
+			// 				.catch(reject);
+			// 		})
+			// 	);
+			// }
+			// Promise.all(reasonPromise).then((res) => {
+			// 	console.log('reason 144');
+			// 	console.log(res);
 			// 	let rList = [];
 			// 	let rIdList = [];
-			// 	for (const el of reasonPromise) {
+			// 	for (const el of res) {
 			// 		for (const item of el) {
 			// 			if (
 			// 				!rIdList.includes(item.reasonid) &&
@@ -146,43 +237,7 @@ const AppointmentNew = () => {
 			// 		}
 			// 	}
 			// 	setReasonList(rList.sort((a, b) => a.reason.localeCompare(b.reason)));
-			// }).catch(err=>{
-			// 	console.log(err);
-			// })
-			for (const el of filteredList) {
-				reasonPromise.push(
-					new Promise((resolve, reject) => {
-						let request = {
-							url: `https://appointmentapi.apatternclinic.com/v1/24451/patientappointmentreasons?departmentid=1&providerid=${el.providerid}`,
-						};
-						api
-							.getAuth(request)
-							.then((data) => {
-								resolve(data.data.patientappointmentreasons);
-							})
-							.catch(reject);
-					})
-				);
-			}
-			Promise.all(reasonPromise).then((res) => {
-				console.log('reason 144');
-				console.log(res);
-				let rList = [];
-				let rIdList = [];
-				for (const el of res) {
-					for (const item of el) {
-						if (
-							!rIdList.includes(item.reasonid) &&
-							(item.reasontype === patientType.toLowerCase() ||
-								item.reasontype === "all")
-						) {
-							rList.push(item);
-							rIdList.push(item.reasonid);
-						}
-					}
-				}
-				setReasonList(rList.sort((a, b) => a.reason.localeCompare(b.reason)));
-			});
+			// });
 		}
 	}, [specialty]);
 	useEffect(() => {
