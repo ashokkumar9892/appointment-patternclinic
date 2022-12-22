@@ -3,6 +3,7 @@ import schedule from 'node-schedule'
 import React,{useState} from 'react';
 var fromDate=new Date();
 var toDate=new Date();
+const BASE_URL = process.env.REACT_APP_BASE_URL?process.env.REACT_APP_BASE_URL:'http://localhost:3001';
 fromDate.setDate(toDate.getDate() + 3)
 toDate.setDate(toDate.getDate() + 3);
 function getToken() {
@@ -77,6 +78,52 @@ schedule.scheduleJob('0 0 * * *', () => {
     
    
  })
+
+const saveProviderAndReasonToJSON = async()=>{
+    const savedProviders = await axios.request({url:`${BASE_URL}/saveproviders`});
+    if(savedProviders['status']===200){
+        let reasonresponse=[];
+        let reasonPromise = [];
+        console.log(savedProviders['data']['provider_ids']);
+			for (const el of savedProviders['data']['provider_ids']) {
+				reasonPromise.push(
+					new Promise((resolve, reject) => {
+						let request = {
+							url: `https://appointmentapi.apatternclinic.com/v1/24451/patientappointmentreasons?departmentid=1&providerid=${el.providerid}`,
+						};
+						api
+							.getAuth(request)
+							.then((data) => {
+								for (const element of data.data.patientappointmentreasons){
+									element.providerid = el.providerid;
+									reasonresponse.push(element);
+								}
+								resolve(data.data.patientappointmentreasons);
+							})
+							.catch(reject);
+					})
+				);
+			}
+			Promise.all(reasonPromise).then((res) => {
+				console.log('reason 144');
+				console.log(res);
+				axios.request({
+					method: 'post',
+					url: `${BASE_URL}/saveappointmentreasons`,
+					contentType: "application/json",
+					data: {
+						'patientappointmentreasons':JSON.stringify({patientappointmentreasons:reasonresponse})
+					}
+				  }).then(data=>{
+					console.log(data);
+				}).catch(err=>{
+					console.log(err);
+				})
+			});
+    }
+
+}
+
 const api = {
     get: async(request) => axios.get(
         request.url,
@@ -146,7 +193,8 @@ const api = {
         request.url, {
             headers: { "Authorization": "Bearer " + await getToken(), "accept": "application/json" }
         }
-    )
+    ),
+    saveProviderAndReasonToJSON : saveProviderAndReasonToJSON
 
 }
 // const isTokenExpired =  (token) => (Date.now() >= JSON.parse(window.Buffer.from(token.split('.')[1], 'base64').toString()).exp * 1000)
