@@ -141,7 +141,7 @@ const ScheduleAppointmentNew = () => {
           };
           
           let requestbestmatch = {
-            url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/enhancedbestmatch?firstname=${firstname}&lastname=${lastname}&departmentid=1&dob=${dob}&returnbestmatches=true`,
+            url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/enhancedbestmatch?firstname=${firstname}&lastname=${lastname}&departmentid=1&dob=${dob}&sex=${sex}&returnbestmatches=true`,
          
           };
           api
@@ -150,7 +150,7 @@ const ScheduleAppointmentNew = () => {
             if(response1?.data?.length>0){
                 for (let i = 0; i < response1?.data?.length; i++) {
                     console.log(dob,'dob');
-                    if(response1.data[i].firstname.toLowerCase()===firstname.toLowerCase() && response1.data[i].lastname.toLowerCase()===lastname.toLowerCase() && response1.data[i].dob===dob){
+                    if(response1.data[i].firstname.toLowerCase()===firstname.toLowerCase() && response1.data[i].lastname.toLowerCase()===lastname.toLowerCase() && response1.data[i].dob===dob && response1.data[i].sex===sex){
                         
                         let putrequest = {
                             url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${response1.data[i].patientid}`,
@@ -177,7 +177,9 @@ const ScheduleAppointmentNew = () => {
               }, 1000);
             })
             .catch((error) => {});
+                break;
                     }else{
+                        
                         api
                         .postAuth(request)
                         .then((response) => {
@@ -197,11 +199,14 @@ const ScheduleAppointmentNew = () => {
                             history.push("/reviewnew");
                             setButtonloading(false);
                           }, 1000);
+                          return
                         })
                         .catch((error) => {});
+                        break;
                     }
                   }
             }else{
+                
                 api
                 .postAuth(request)
                 .then((response) => {
