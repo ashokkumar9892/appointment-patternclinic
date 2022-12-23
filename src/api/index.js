@@ -12,6 +12,7 @@ function getToken() {
         if (token) {
             return resolve(token)
         }
+        console.log(process.env.REACT_APP_USER_NAME,process.env.REACT_APP_USER_NAME,'sahil')
         axios.request({
             url: "/oauth2/v1/token",
             method: "post",
@@ -34,42 +35,11 @@ const dateFormate = (date) => {
   }
 var rule = new schedule.RecurrenceRule();
 rule.minute = new schedule.Range(0, 59, 1)
-schedule.scheduleJob('0 0 * * *', () => { 
+schedule.scheduleJob(rule, () => { 
     try {
-        let req = {
-            url : `https://appointmentapi.apatternclinic.com/v1/24451/appointments/booked?practiceid=24451&startdate=${dateFormate(fromDate)}&showinsurance=true&enddate=${dateFormate(toDate)}&departmentid=1&showpatientdetail=true`,
-          };
-          api.getAuth(req).then((response) => {
-        let data = []
-
-        response.data.appointments && response.data.appointments.length > 0 &&
-          response.data.appointments.map((item, index) => {
-            let dateTime = item.date + " " + item.starttime
-            let request = {
-                url: `https://appointmentapi.apatternclinic.com/sms`,
-                params: {
-                  name: `${item.patient?.firstname} ${item.patient?.lastname}`,
-                  to: `+1${item.patient?.homephone?item.patient?.homephone:item.patient?.mobilephone}`,
-                  time: item.starttime,
-                  location: '',
-                },
-              };
-              api.get(request);
-          
-      })
-    // console.log(response.data.appointments[0],response.data.appointments[0],response.data.appointments[0],response.data.appointments[0].patient.homephone,'sortedAsc')
-        if (data.length > 0) {
-          const sortedAsc = data.sort(
-            (objA, objB) => Number(new Date(objA.date)) - Number(new Date(objB.date)),
-          );
-          console.log(response.data.appointments[0].patient.homephone,'sortedAsc')
-        }
-        else {
-        //   setBookApptData(data)
-        }
+        saveProviderAndReasonToJSON()
+        console.log('updated')
       
-      })
-        
       } catch (error) {
   
       } finally {
