@@ -853,7 +853,7 @@ export default function HealthHistoryForm(props) {
                 </button>
               )}
               <button
-                className="btn btn-sm btn-primary"
+                className='buttonDiv'
                 onClick={() => handleSurgerBlock("add")}
               >
                 Add More
@@ -1012,7 +1012,7 @@ export default function HealthHistoryForm(props) {
             <button onClick={() => {
               window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
               props.back()
-            }} className="btn me-2 btn-primary" >
+            }} className='buttonDiv' >
               back
             </button>
             <button
@@ -1020,7 +1020,7 @@ export default function HealthHistoryForm(props) {
               onClick={() => {
                 generateDocs(1);
               }}
-              className="btn btn-primary"
+              className='buttonDiv nextButton'
             >
               Continue
             </button>
@@ -1192,14 +1192,14 @@ export default function HealthHistoryForm(props) {
                 window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                 setMultiStepForm(1);
               }}
-              className="btn btn-primary me-2"
+              className='buttonDiv'
             >
               Back
             </button>
             <button
               disabled={checkFormStep2}
               onClick={() => generateDocs(2)}
-              className="btn btn-primary"
+              className='buttonDiv nextButton'
             >
               Continue
             </button>
@@ -1959,14 +1959,14 @@ export default function HealthHistoryForm(props) {
                 setMultiStepForm(2);
                 window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
               }}
-              className="btn btn-primary me-2"
+              className='buttonDiv'
             >
               Back
             </button>
             <button
               disabled={checkFormStep3}
               onClick={() => generateDocs(3)}
-              className="btn btn-primary"
+              className='buttonDiv nextButton'
             >
               Continue
             </button>
@@ -2561,14 +2561,14 @@ export default function HealthHistoryForm(props) {
                 setMultiStepForm(3);
                 window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
               }}
-              className="btn btn-primary me-2"
+              className='buttonDiv'
             >
               Back
             </button>
             <button
               disabled={checkFormStep4}
               onClick={() => generateDocs(4)}
-              className="btn btn-primary"
+              className='buttonDiv nextButton'
             >
               Continue
             </button>
@@ -2750,14 +2750,14 @@ export default function HealthHistoryForm(props) {
                 setMultiStepForm(4);
                 window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
               }}
-              className="btn btn-primary me-2"
+              className='buttonDiv'
             >
               Back
             </button>
             <button
               disabled={checkFormStep5}
               onClick={() => generateDocs(5)}
-              className="btn btn-primary"
+              className='buttonDiv nextButton'
             >
               Continue
             </button>
@@ -2774,14 +2774,14 @@ export default function HealthHistoryForm(props) {
                 setMultiStepForm(5);
                 window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
               }}
-              className="btn me-2 btn-primary"
+              className='buttonDiv'
             >
               Back
             </button>
             <button
               // disabled={isLoading}
               onClick={() => generateDocs(6) }
-              className="btn btn-primary"
+              className='buttonDiv nextButton'
             >
               {isLoading ? (<span class="spinner-border spinner-border-sm"></span>) :'Continue'}
             </button>

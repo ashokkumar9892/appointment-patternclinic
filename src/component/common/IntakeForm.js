@@ -530,7 +530,7 @@ export default function IntakeForm(props) {
 
                     <button
                       type="button"
-                      className='buttonDiv'
+                      className='buttonDiv mt-2'
                       onClick={() => {
                         authToBillSign.current.clear();
                         buildAuthForm("signature", "");
@@ -871,7 +871,7 @@ export default function IntakeForm(props) {
                 >
                   Beneficiary/Responsible Party Signature::
                 </label>
-                <div className="col-sm-12 px-0">
+                <div className="col-sm-12 px-0  text-end">
                   <div className="border mt-2 mb-1 border-dark rounded-1">
                     <SignatureCanvas
                       ref={beneficiarySign}
@@ -890,7 +890,7 @@ export default function IntakeForm(props) {
                   </div>
                   <button
                     type="button"
-                    className='buttonDiv'
+                    className='buttonDiv mt-2 mb-3'
                     onClick={() => {
                       beneficiarySign.current.clear();
                       buildBeneficiaryForm("signature", "");
@@ -1174,7 +1174,7 @@ export default function IntakeForm(props) {
               services
             </div>
             <div className="row">
-              <div className="form-group col-md-8 row align-items-start mb-2">
+              <div className="form-group  row align-items-start mb-2">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-3 col-form-label py-0"
@@ -1200,7 +1200,7 @@ export default function IntakeForm(props) {
                   </div>
                   <button
                     type="button"
-                    className='buttonDiv'
+                    className='buttonDiv mt-2 mb-3'
                     onClick={() => {
                       consentSign.current.clear();
                       buildConsentForm("signature", "");
@@ -1231,7 +1231,7 @@ export default function IntakeForm(props) {
               </div>
             </div>
           </div>
-            <div className="mt-3 text-end" type="button">
+            <div className="mt-3 px-2 text-end" type="button">
               <button
                 onClick={() => {
                   window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
@@ -1391,7 +1391,7 @@ export default function IntakeForm(props) {
                   </div>
                   <button
                     type="button"
-                    className='buttonDiv'
+                    className='buttonDiv mt-2 mb-3'
                     onClick={() => {
                       adultSign.current.clear();
                       buildRiskAssumptionForm("adultSignature", "");
@@ -1453,7 +1453,7 @@ export default function IntakeForm(props) {
                   </div>
                   <button
                     type="button"
-                    className='buttonDiv'
+                    className='buttonDiv mt-2 mb-3'
                     onClick={() => {
                       parentGuardianSign.current.clear();
                       buildRiskAssumptionForm("parentGuardianSignature", "");
@@ -1487,7 +1487,7 @@ export default function IntakeForm(props) {
               </div>
             </div>
           </div>
-            <div className="mt-3 text-end" type="button">
+            <div className="mt-3 text-end px-3" type="button">
               <button
                 onClick={() => {
                   window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
@@ -1777,7 +1777,7 @@ export default function IntakeForm(props) {
                   </div>
                   <button
                     type="button"
-                    className='buttonDiv'
+                    className='buttonDiv mt-2 mb-3'
                     onClick={() => {
                       creditCardSign.current.clear();
                       buildCreditCardDetails(

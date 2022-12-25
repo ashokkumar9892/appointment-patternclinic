@@ -1785,8 +1785,8 @@ export default function FamilyForm(props) {
                   </div>
                 </div>
               </div>
-              <div className="mt-3 text-end">
-                <button onClick={() => { props.back() }} className="btn me-2 btn-primary" >
+              <div className="buttonmaindiv" type="button">
+                <button onClick={() => { props.back() }} className='buttonDivfamily' >
                   back
                 </button>
                 <button
@@ -1794,7 +1794,7 @@ export default function FamilyForm(props) {
                   onClick={() => {
                     generateDocs(1)
                   }}
-                  className="btn btn-primary"
+                  className='buttonDivfamily nextButtonfamily'
                 >
                   Continue
                 </button>
@@ -3163,13 +3163,13 @@ export default function FamilyForm(props) {
                 </div>
 
               </div>
-              <div className="mt-3 text-end">
-                <button onClick={() => { setMultiStepForm(1) }} className="btn me-2 btn-primary" >
+              <div className="mt-3 text-end" type="button">
+                <button onClick={() => { setMultiStepForm(1) }} className='buttonDivfamily' >
                   back
                 </button>
                 <button
                   disabled={checkFormStep2}
-                  onClick={() => { setMultiStepForm(3) }} className="btn btn-primary" >
+                  onClick={() => { setMultiStepForm(3) }} className='buttonDivfamily nextButtonfamily' >
 
                   Continue
                 </button>
@@ -3264,13 +3264,13 @@ export default function FamilyForm(props) {
 
                 </div>
               </div>
-              <div className="mt-3 text-end">
-                <button onClick={() => { setMultiStepForm(2) }} className="btn me-2 btn-primary" >
+              <div className="mt-3 text-end" type="button">
+                <button onClick={() => { setMultiStepForm(2) }} className='buttonDivfamily' >
                   back
                 </button>
                 <button onClick={() => { generateDocs(3) }}
                   disabled={checkFormStep3}
-                  className="btn btn-primary" >
+                  className='buttonDivfamily nextButtonfamily' >
                   Continue
                 </button>
               </div>
@@ -3458,11 +3458,11 @@ export default function FamilyForm(props) {
 
 
               </div>
-              <div className="mt-3 text-end">
-                <button onClick={() => { setMultiStepForm(3) }} className="btn me-2 btn-primary" >
+              <div className="mt-3 text-end" type="button">
+                <button onClick={() => { setMultiStepForm(3) }} className='buttonDivfamily' >
                   back
                 </button>
-                <button className="btn btn-primary" onClick={() => { generateDocs(4) }} disabled={isLoading && checkFormStep4} >
+                <button className='buttonDivfamily nextButtonfamily' onClick={() => { generateDocs(4) }} disabled={isLoading && checkFormStep4} >
                   {isLoading ? (<span class="spinner-border spinner-border-sm"></span>) :'Continue'}
                 </button>
               </div>

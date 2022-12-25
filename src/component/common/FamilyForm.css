@@ -14,7 +14,7 @@
     border-radius: 8px;
 }
 
-.buttonDiv {
+.buttonDivfamily {
     border: 1px solid #0052CC;
     width: 120px;
     height: 36px;
@@ -22,7 +22,35 @@
 
 }
 
-.buttonDiv:hover {
+.buttonDivfamily:hover {
     background: #0052CC;
     color: #FFFFFF;
 }
+.nextButtonfamily {
+    margin-left: 20px;
+    width: 161px;
+    border: 1px solid #0052CC;
+    height: 36px;
+    color: #0052CC;
+}
+
+.buttonmaindiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+@media screen and (max-width: 572px) {
+    .buttonmaindiv{
+        display: flex;
+        flex-direction: column;
+    }
+    .buttonDivfamily {
+        width: 100%;
+    }
+    .nextButtonfamily {
+        width: 100%;
+        margin-top: 10px;
+        margin-left: 0px;
+    }
+  }
