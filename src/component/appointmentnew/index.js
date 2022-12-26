@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
 import "./appointmentnew.css"
 import logo from "../../assets/Appointment/logo.svg";
 import leftQuote from "../../assets/Appointment/left-quote.svg";
@@ -30,7 +31,7 @@ const AppointmentNew = () => {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-
+	const BASE_URL = process.env.REACT_APP_BASE_URL?process.env.REACT_APP_BASE_URL:'http://localhost:3001';
 	const selectedDay = (val) => {
 		console.log(val)
 		onChange(val)
@@ -85,50 +86,70 @@ const AppointmentNew = () => {
 		}
 	}, [provider]);
 	useEffect(() => {
-		let request = {
-			url: `https://appointmentapi.apatternclinic.com/v1/24451/providers`,
-		};
-		api.getAuth(request).then((data) => {
-			setLoading(false);
-			setProviderList(data.data.providers);
-			setSpecialtyList(
-				[...new Set(data.data.providers.map((el) => el.specialty))].sort(
-					(a, b) => a.localeCompare(b)
-				)
-			);
-		});
+		// let request = {
+		// 	url: `https://appointmentapi.apatternclinic.com/v1/24451/providers`,
+		// };
+		// api.getAuth(request).then((data) => {
+		// 	setLoading(false);
+		// 	console.log('providers '+data);
+		// 	console.log(data);
+		// 	setProviderList(data.data.providers);
+		// 	setSpecialtyList(
+		// 		[...new Set(data.data.providers.map((el) => el.specialty))].sort(
+		// 			(a, b) => a.localeCompare(b)
+		// 		)
+		// 	);
+		// });
+		//let reasonresponse=[];
+		
+			axios.request({url:`${BASE_URL}/providers`}).then(data=>{
+				setLoading(false);
+				setProviderList(data.data.providers);
+				setSpecialtyList(
+					[...new Set(data.data.providers.map((el) => el.specialty))].sort(
+						(a, b) => a.localeCompare(b)
+					)
+				);
+				
+			}).catch(err=>{
+				console.log(err);
+			})
+		
+		
+		
 	}, []);
 	useEffect(() => {
 		setReasonLabel(reasonList.find((el) => el.reasonid === +reason)?.reason);
 	}, [reason]);
 	useEffect(() => {
 		if (specialty) {
-			const reasonPromise = [];
+
+			let reasonPromise = [];
 			const filteredList = providerList.filter(
 				(el) => el.specialty === specialty
 			);
 			console.log(filteredList);
 			setSelectedProviderList(filteredList);
-			for (const el of filteredList) {
-				reasonPromise.push(
-					new Promise((resolve, reject) => {
-						let request = {
-							url: `https://appointmentapi.apatternclinic.com/v1/24451/patientappointmentreasons?departmentid=1&providerid=${el.providerid}`,
-						};
-						api
-							.getAuth(request)
-							.then((data) => {
-								resolve(data.data.patientappointmentreasons);
-							})
-							.catch(reject);
-					})
-				);
-			}
-			Promise.all(reasonPromise).then((res) => {
+			axios.request({
+				method: 'post',
+				url: `${BASE_URL}/appointmentreasons`,
+				contentType: "application/json",
+				data: {
+					'specialty':specialty
+				}
+			  }).then(data=>{
+				setLoading(false);
+				console.log('reason ');
+				console.log(data);
+				reasonPromise = data.data.patientappointmentreasons;
+				console.log('reasonlist');
+				console.log(data.data.patientappointmentreasons);
 				let rList = [];
 				let rIdList = [];
-				for (const el of res) {
-					for (const item of el) {
+				console.log(rList);
+				console.log(rIdList);
+				//for (const el of reasonPromise) {
+					for (const item of reasonPromise) {
 						if (
 							!rIdList.includes(item.reasonid) &&
 							(item.reasontype === patientType.toLowerCase() ||
@@ -138,9 +159,45 @@ const AppointmentNew = () => {
 							rIdList.push(item.reasonid);
 						}
 					}
-				}
+				//}
 				setReasonList(rList.sort((a, b) => a.reason.localeCompare(b.reason)));
-			});
+			}).catch(err=>{
+				console.log(err);
+			})
+			// for (const el of filteredList) {
+			// 	reasonPromise.push(
+			// 		new Promise((resolve, reject) => {
+			// 			let request = {
+			// 				url: `https://appointmentapi.apatternclinic.com/v1/24451/patientappointmentreasons?departmentid=1&providerid=${el.providerid}`,
+			// 			};
+			// 			api
+			// 				.getAuth(request)
+			// 				.then((data) => {
+			// 					resolve(data.data.patientappointmentreasons);
+			// 				})
+			// 				.catch(reject);
+			// 		})
+			// 	);
+			// }
+			// Promise.all(reasonPromise).then((res) => {
+			// 	console.log('reason 144');
+			// 	console.log(res);
+			// 	let rList = [];
+			// 	let rIdList = [];
+			// 	for (const el of res) {
+			// 		for (const item of el) {
+			// 			if (
+			// 				!rIdList.includes(item.reasonid) &&
+			// 				(item.reasontype === patientType.toLowerCase() ||
+			// 					item.reasontype === "all")
+			// 			) {
+			// 				rList.push(item);
+			// 				rIdList.push(item.reasonid);
+			// 			}
+			// 		}
+			// 	}
+			// 	setReasonList(rList.sort((a, b) => a.reason.localeCompare(b.reason)));
+			// });
 		}
 	}, [specialty]);
 	useEffect(() => {

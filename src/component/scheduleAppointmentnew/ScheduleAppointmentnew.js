@@ -19,9 +19,10 @@ const ScheduleAppointmentNew = () => {
     const [viewDob, setViewDob] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [phonetype, setPhonetype] = useState("HOMEPHONE");
     const [insurance, setInsurance] = useState("");
     const [additional, setAdditional] = useState("");
-    const [sex, setSex] = useState("male");
+    const [sex, setSex] = useState("M");
     const [buttonloading, setButtonloading] = useState(false);
 
     var details = {
@@ -30,10 +31,16 @@ const ScheduleAppointmentNew = () => {
         departmentid: 1,
         dob: dob,
         email: email,
-        guarantoremail: email,
-        ssn: 178988977,
-        mobilephone: phone
+        mobilephone: phone,
+        sex:sex,
+        contactpreference:phonetype,
+        
     };
+    if(phonetype==='WORKPHONE'){
+        details.workphone=phone
+    }else{
+        details.homephone=phone
+    }
 
     const dobMax = moment().subtract(2, "days").format("YYYY-MM-DD");
 
@@ -118,45 +125,119 @@ const ScheduleAppointmentNew = () => {
 
     const ScheduleApi = () => {
         if (validation()) {
-            setButtonloading(true);
-            var formBody = [];
-            console.log("details", details);
-            for (var property in details) {
-                var encodedKey = encodeURIComponent(property);
-                var encodedValue = encodeURIComponent(details[property]);
-                formBody.push(encodedKey + "=" + encodedValue);
-            }
-
-            let formBodydata = formBody.join("&");
-            let request = {
-                url: `https://appointmentapi.apatternclinic.com/v1/24451/patients`,
-                data: formBodydata,
-            };
-
-            api
+          setButtonloading(true);
+          var formBody = [];
+          console.log("details", details);
+          for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+          }
+    
+          let formBodydata = formBody.join("&");
+          let request = {
+            url: `https://appointmentapi.apatternclinic.com/v1/24451/patients`,
+            data: formBodydata,
+          };
+          
+          let requestbestmatch = {
+            url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/enhancedbestmatch?firstname=${firstname}&lastname=${lastname}&departmentid=1&dob=${dob}&sex=${sex}&returnbestmatches=true`,
+         
+          };
+          api
+          .getAuth(requestbestmatch)
+          .then((response1) => {
+            if(response1?.data?.length>0){
+                for (let i = 0; i < response1?.data?.length; i++) {
+                    console.log(dob,'dob');
+                    if(response1.data[i].firstname.toLowerCase()===firstname.toLowerCase() && response1.data[i].lastname.toLowerCase()===lastname.toLowerCase() && response1.data[i].dob===dob && response1.data[i].sex===sex){
+                        
+                        let putrequest = {
+                            url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${response1.data[i].patientid}`,
+                            data: formBodydata,
+                        };
+                        api
+            .putAuth(putrequest)
+            .then((response) => {
+              patientContext.update({
+                ...patientContext.patientDetails,
+                dob: dob,
+                sex: sex,
+                email: email,
+                phone: phone,
+                firstname: firstname,
+                lastname: lastname,
+                insurance: insurance,
+                additional: additional,
+                patientid: response.data[0].patientid,
+              });
+              setTimeout(() => {
+                history.push("/reviewnew");
+                setButtonloading(false);
+              }, 1000);
+            })
+            .catch((error) => {});
+                break;
+                    }else{
+                        
+                        api
+                        .postAuth(request)
+                        .then((response) => {
+                          patientContext.update({
+                            ...patientContext.patientDetails,
+                            dob: dob,
+                            sex: sex,
+                            email: email,
+                            phone: phone,
+                            firstname: firstname,
+                            lastname: lastname,
+                            insurance: insurance,
+                            additional: additional,
+                            patientid: response.data[0].patientid,
+                          });
+                          setTimeout(() => {
+                            history.push("/reviewnew");
+                            setButtonloading(false);
+                          }, 1000);
+                          return
+                        })
+                        .catch((error) => {});
+                        break;
+                    }
+                  }
+            }else{
+                
+                api
                 .postAuth(request)
                 .then((response) => {
-                    patientContext.update({
-                        ...patientContext.patientDetails,
-                        dob: dob,
-                        sex: sex,
-                        email: email,
-                        phone: phone,
-                        firstname: firstname,
-                        lastname: lastname,
-                        insurance: insurance,
-                        additional: additional,
-                        patientid: response.data[0].patientid,
-                    });
-                    setTimeout(() => {
-                        history.push("/reviewnew");
-                        setButtonloading(false);
-                    }, 1000);
+                  patientContext.update({
+                    ...patientContext.patientDetails,
+                    dob: dob,
+                    sex: sex,
+                    email: email,
+                    phone: phone,
+                    firstname: firstname,
+                    lastname: lastname,
+                    insurance: insurance,
+                    additional: additional,
+                    patientid: response.data[0].patientid,
+                  });
+                  setTimeout(() => {
+                    history.push("/reviewnew");
+                    setButtonloading(false);
+                  }, 1000);
                 })
-                .catch((error) => { });
+                .catch((error) => {});
+            }
+            
+            
+          })
+          .catch((error) => {});
+      
+         
         }
-    };
-
+      };
+    
     return (<>
         <section className="appointmentrow mx-0">
             <div className="left-sidebar">
@@ -218,8 +299,8 @@ const ScheduleAppointmentNew = () => {
                             className="inputBox"
                             onChange={(e) => setSex(e.target.value)}
                         >
-                            <option>Male</option>
-                            <option>Female</option>
+                            <option value='M'>Male</option>
+                            <option value='F'>Female</option>
                         </select>
 
 
@@ -239,10 +320,10 @@ const ScheduleAppointmentNew = () => {
                         </div>
                         <div className="width45">
                             <p className="labelName">Phone Type</p>
-                            <select className="inputBox">
+                            <select className="inputBox" onChange={(e) => setPhonetype(e.target.value)}>
                                 <option selected="selected">Choose...</option>
-                                <option>Home</option>
-                                <option>Office</option>
+                                <option value='HOMEPHONE'>Home</option>
+                                <option value='WORKPHONE'>Office</option>
                             </select>
                         </div>
                     </div>
