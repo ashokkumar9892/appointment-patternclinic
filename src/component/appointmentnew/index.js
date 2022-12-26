@@ -24,14 +24,14 @@ const AppointmentNew = () => {
 	const [reasonList, setReasonList] = useState([]);
 	const [provider, setProvider] = useState("");
 	const [providerList, setProviderList] = useState([]);
-	const [selectedProviderList, setSelectedProviderList] = useState([]);
+	// const [selectedProviderList, setSelectedProviderList] = useState([]);
 	const [location, setLoction] = useState("OOLTEWAH CLINIC (EDT)");
 	const [timeData, setTimeData] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	const BASE_URL = process.env.REACT_APP_BASE_URL?process.env.REACT_APP_BASE_URL:'http://localhost:3001';
+	const BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : 'http://localhost:3001';
 	const selectedDay = (val) => {
 		console.log(val)
 		onChange(val)
@@ -72,7 +72,7 @@ const AppointmentNew = () => {
 	}
 
 	useEffect(() => {
-		if (reason) {
+		if (provider) {
 			setLoading(true);
 			let request = {
 				url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${provider}`,
@@ -84,7 +84,7 @@ const AppointmentNew = () => {
 				}
 			});
 		}
-	}, [provider]);
+	}, [reason]);
 	useEffect(() => {
 		// let request = {
 		// 	url: `https://appointmentapi.apatternclinic.com/v1/24451/providers`,
@@ -101,105 +101,73 @@ const AppointmentNew = () => {
 		// 	);
 		// });
 		//let reasonresponse=[];
-		
-			axios.request({url:`${BASE_URL}/providers`}).then(data=>{
-				setLoading(false);
-				setProviderList(data.data.providers);
-				setSpecialtyList(
-					[...new Set(data.data.providers.map((el) => el.specialty))].sort(
-						(a, b) => a.localeCompare(b)
-					)
-				);
-				
-			}).catch(err=>{
-				console.log(err);
-			})
-		
-		
-		
+
+		axios.request({ url: `${BASE_URL}/providers` }).then(data => {
+			setLoading(false);
+			setProviderList(data.data.providers);
+			setSpecialtyList(
+				[...new Set(data.data.providers.map((el) => el.specialty))].sort(
+					(a, b) => a.localeCompare(b)
+				)
+			);
+
+		}).catch(err => {
+			console.log(err);
+		})
+
+
+
 	}, []);
 	useEffect(() => {
 		setReasonLabel(reasonList.find((el) => el.reasonid === +reason)?.reason);
 	}, [reason]);
 	useEffect(() => {
 		if (specialty) {
-
 			let reasonPromise = [];
-			const filteredList = providerList.filter(
-				(el) => el.specialty === specialty
-			);
-			console.log(filteredList);
-			setSelectedProviderList(filteredList);
 			axios.request({
 				method: 'post',
 				url: `${BASE_URL}/appointmentreasons`,
 				contentType: "application/json",
 				data: {
-					'specialty':specialty
+					'specialty': specialty
 				}
-			  }).then(data=>{
+			}).then(data => {
 				setLoading(false);
-				console.log('reason ');
-				console.log(data);
 				reasonPromise = data.data.patientappointmentreasons;
-				console.log('reasonlist');
-				console.log(data.data.patientappointmentreasons);
 				let rList = [];
 				let rIdList = [];
-				console.log(rList);
-				console.log(rIdList);
-				//for (const el of reasonPromise) {
-					for (const item of reasonPromise) {
-						if (
-							!rIdList.includes(item.reasonid) &&
-							(item.reasontype === patientType.toLowerCase() ||
-								item.reasontype === "all")
-						) {
-							rList.push(item);
-							rIdList.push(item.reasonid);
-						}
+				for (const item of reasonPromise) {
+					if (
+						!rIdList.includes(item.reasonid) &&
+						(item.reasontype === patientType.toLowerCase() ||
+							item.reasontype === "all")
+					) {
+						rList.push(item);
+						rIdList.push(item.reasonid);
 					}
+				}
 				//}
 				setReasonList(rList.sort((a, b) => a.reason.localeCompare(b.reason)));
-			}).catch(err=>{
+			}).catch(err => {
 				console.log(err);
 			})
-			// for (const el of filteredList) {
-			// 	reasonPromise.push(
-			// 		new Promise((resolve, reject) => {
-			// 			let request = {
-			// 				url: `https://appointmentapi.apatternclinic.com/v1/24451/patientappointmentreasons?departmentid=1&providerid=${el.providerid}`,
-			// 			};
-			// 			api
-			// 				.getAuth(request)
-			// 				.then((data) => {
-			// 					resolve(data.data.patientappointmentreasons);
-			// 				})
-			// 				.catch(reject);
-			// 		})
-			// 	);
-			// }
-			// Promise.all(reasonPromise).then((res) => {
-			// 	console.log('reason 144');
-			// 	console.log(res);
-			// 	let rList = [];
-			// 	let rIdList = [];
-			// 	for (const el of res) {
-			// 		for (const item of el) {
-			// 			if (
-			// 				!rIdList.includes(item.reasonid) &&
-			// 				(item.reasontype === patientType.toLowerCase() ||
-			// 					item.reasontype === "all")
-			// 			) {
-			// 				rList.push(item);
-			// 				rIdList.push(item.reasonid);
-			// 			}
-			// 		}
-			// 	}
-			// 	setReasonList(rList.sort((a, b) => a.reason.localeCompare(b.reason)));
-			// });
+
 		}
 	}, [specialty]);
+
+	useEffect(() => {
+		if (provider) {
+			console.log(provider ,providerList,"provider")
+			const setSpecialtydata = providerList.find(
+				(el) => el.providerid == provider
+			);
+			console.log(setSpecialtydata,"setSpecialtydata")
+			if(Object.keys(setSpecialtydata).length>0){
+				setSpecialty(setSpecialtydata.specialty)
+			}
+		}
+
+	}, [provider])
 	useEffect(() => {
 		if (rawInformation.length > 0) {
 			const yyyy = value.getFullYear();
@@ -236,20 +204,19 @@ const AppointmentNew = () => {
 
 	const isFound = (arr, num1, num2) => {
 		console.log("check in ", arr, num1, num2)
-		if(arr?.length >0){
-		arr.some(element => {
-			console.log(Number((element.starttime).split(":")[0]),num1, num2,"jshjdjkdfjk")
-			if (Number((element.starttime).split(":")[0]) > num1 && Number((element.starttime).split(":")[0]) < num2) {
-				return false;
-			}
-			return true;
-		})
+		if (arr?.length > 0) {
+			arr.some(element => {
+				console.log(Number((element.starttime).split(":")[0]), num1, num2, "jshjdjkdfjk")
+				if (Number((element.starttime).split(":")[0]) > num1 && Number((element.starttime).split(":")[0]) < num2) {
+					return false;
+				}
+				return true;
+			})
+		}
+		else {
+			return true
+		}
 	}
-	else{
-		return true
-	}
-	}
-
 
 	return (<>
 		<section className="appointmentrow mx-0">
@@ -280,15 +247,37 @@ const AppointmentNew = () => {
 					<div className="appointmentcard">
 						<h2 className="card-heading mb-30px">Make a Appointment</h2>
 						<div className="appointmentrow mb-30px">
+							<div className="col-4">
+								<label>Provider</label>
+								<div style={{ marginTop: "8px" }}>
+									<select
+										className="formselectdiv"
+										disabled={!providerList}
+										onChange={(event) => {
+											setProvider(event.target.value);
+										}}
+									>
+										<option value="" hidden>
+											-Select-
+										</option>
+										{providerList.map((el) => (
+											<option value={el.providerid} key={el.providerid}>
+												{el.displayname || el.firstname}
+											</option>
+										))}
+									</select>
+								</div>
+							</div>
 							<div className="col-4 ">
 								<label>Speciality</label>
-								<div style={{marginTop:"8px"}}>
+								<div style={{ marginTop: "8px" }}>
 									<select
-										disabled={!patientType}
+										disabled={true}
+										value={specialty}
 										className="formselectdiv"
-										onChange={(event) => {
-											setSpecialty(event.target.value);
-										}}
+										// onChange={(event) => {
+										// 	setSpecialty(event.target.value);
+										// }}
 									>
 										<option value="" hidden>
 											-Select-
@@ -303,7 +292,7 @@ const AppointmentNew = () => {
 							</div>
 							<div className="col-4" >
 								<label>Reason for visit</label>
-								<div style={{marginTop:"8px"}}>
+								<div style={{ marginTop: "8px" }}>
 									<select
 										disabled={!specialty}
 										className="formselectdiv"
@@ -322,27 +311,7 @@ const AppointmentNew = () => {
 									</select>
 								</div>
 							</div>
-							<div className="col-4">
-								<label>Provider</label>
-								<div style={{marginTop:"8px"}}>
-									<select
-										className="formselectdiv"
-										disabled={!specialty}
-										onChange={(event) => {
-											setProvider(event.target.value);
-										}}
-									>
-										<option value="" hidden>
-											-Select-
-										</option>
-										{selectedProviderList.map((el) => (
-											<option value={el.providerid} key={el.providerid}>
-												{el.displayname || el.firstname}
-											</option>
-										))}
-									</select>
-								</div>
-							</div>
+
 						</div>
 						<div className="appointmentrow">
 							<div className="appointmentcol-12">
