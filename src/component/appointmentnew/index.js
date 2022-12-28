@@ -103,7 +103,7 @@ const AppointmentNew = () => {
     });
     setTimeout(() => {
       setSheduleObj(obj);
-    }, [5000]);
+    }, [10000]);
   }, [reason]);
 
   //   useEffect(() => {
