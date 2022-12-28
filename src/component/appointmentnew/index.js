@@ -284,41 +284,41 @@ const AppointmentNew = () => {
                   {Object.keys(sheduleobj).length > 0 && (
                     <div className="timing-cards-wrap">
                       {sheduleobj[Number(item.providerid)]?.length > 0 &&
-                        getdateData(sheduleobj[Number(item.providerid)])?.map(
-                          (item, index) => (
-                            <>
-                              {
-                                <div
-                                  className="catappointment action"
-                                  data-toggle="tooltip"
-                                  title={
-                                    item.patientappointmenttypename +
-                                    " " +
-                                    item.date
-                                  }
-                                  onClick={() => {
-                                    UpdateData(
-                                      item.starttime,
-                                      item.appointmentid,
-                                      item.appointmenttypeid
-                                    );
-                                  }}
-                                >
-                                  <a href="javascript:;">
-                                    <div className="timing-cards">
-                                      <p style={{ marginBottom: "0px" }}>
-                                        {formatAMPM(
-                                          item.date + " " + item.starttime
-                                        )}
-                                      </p>
-                                      <span>{item.count}</span>
-                                    </div>
-                                  </a>
-                                </div>
-                              }
-                            </>
-                          )
-                        )}
+                        removeDuplicatedata(
+                          getdateData(sheduleobj[Number(item.providerid)])
+                        )?.map((item, index) => (
+                          <>
+                            {
+                              <div
+                                className="catappointment action"
+                                data-toggle="tooltip"
+                                title={
+                                  item.patientappointmenttypename +
+                                  " " +
+                                  item.date
+                                }
+                                onClick={() => {
+                                  UpdateData(
+                                    item.starttime,
+                                    item.appointmentid,
+                                    item.appointmenttypeid
+                                  );
+                                }}
+                              >
+                                <a href="javascript:;">
+                                  <div className="timing-cards">
+                                    <p style={{ marginBottom: "0px" }}>
+                                      {formatAMPM(
+                                        item.date + " " + item.starttime
+                                      )}
+                                    </p>
+                                    <span>{item.count}</span>
+                                  </div>
+                                </a>
+                              </div>
+                            }
+                          </>
+                        ))}
                       {
                         // isFound
                         isFound(
