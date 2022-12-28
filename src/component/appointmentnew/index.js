@@ -296,7 +296,6 @@ const AppointmentNew = () => {
                 </div>
                 <div className="appointmentcol-12">
                   <h4 className="card-heading-small">{item.displayname}</h4>
-                  <label className="mb-30px">9:00 AM to 12:00 PM</label>
                   {console.log(
                     sheduleobj,
                     sheduleobj[Number(item.providerid)],
@@ -346,7 +345,9 @@ const AppointmentNew = () => {
                       )}
                     {
                       // isFound
-                      isFound(information, 12, 16) && <p>No Schedule Found</p>
+                      isFound(sheduleobj[Number(item.providerid)], 12, 16) && (
+                        <p>No Schedule Found</p>
+                      )
                     }
                   </div>
                 </div>
