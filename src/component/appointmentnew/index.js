@@ -16,7 +16,7 @@ const AppointmentNew = () => {
   const patientContext = useContext(PatientContext);
   const [value, onChange] = useState(new Date());
   const [information, setData] = useState([]);
-  const [rawInformation, setRawData] = useState([]);
+  //   const [rawInformation, setRawData] = useState([]);
   const [sheduleobj, setSheduleObj] = useState({});
   const [patientType, setPatientType] = useState("");
   const [reason, setReason] = useState("");
@@ -100,22 +100,36 @@ const AppointmentNew = () => {
         setLoading(false);
         obj[item.providerid] = data.data.appointments;
       });
-      setSheduleObj(obj);
     });
+    setTimeout(() => {
+      setSheduleObj(obj);
+    }, [5000]);
   }, [reason]);
 
-  useEffect(() => {
-    if (rawInformation.length > 0) {
-      const yyyy = value.getFullYear();
-      let mm = value.getMonth() + 1; // Months start at 0!
-      let dd = value.getDate();
-      if (dd < 10) dd = "0" + dd;
-      if (mm < 10) mm = "0" + mm;
-      const date = mm + "/" + dd + "/" + yyyy;
-      const data = rawInformation.filter((el) => el.date === date);
-      setData(removeDuplicatedata([...data]));
-    }
-  }, [value, rawInformation]);
+  //   useEffect(() => {
+  //     if (rawInformation.length > 0) {
+  //       const yyyy = value.getFullYear();
+  //       let mm = value.getMonth() + 1; // Months start at 0!
+  //       let dd = value.getDate();
+  //       if (dd < 10) dd = "0" + dd;
+  //       if (mm < 10) mm = "0" + mm;
+  //       const date = mm + "/" + dd + "/" + yyyy;
+  //       const data = rawInformation.filter((el) => el.date === date);
+  //       setData(removeDuplicatedata([...data]));
+  //     }
+  //   }, [value, rawInformation]);
+
+  const getdateData = (rawInformation) => {
+    const yyyy = value.getFullYear();
+    let mm = value.getMonth() + 1; // Months start at 0!
+    let dd = value.getDate();
+    if (dd < 10) dd = "0" + dd;
+    if (mm < 10) mm = "0" + mm;
+    const date = mm + "/" + dd + "/" + yyyy;
+    const data = rawInformation.filter((el) => el.date === date);
+
+    return data;
+  };
 
   const UpdateData = (starttime, appointmentid, appointmenttypeid) => {
     setTimeData(starttime);
@@ -133,6 +147,10 @@ const AppointmentNew = () => {
       history.push("/schedulenew/");
     }, 500);
   };
+
+  useEffect(() => {
+    console.log("check shedule");
+  }, [sheduleobj]);
 
   const isFound = (arr, num1, num2) => {
     if (arr?.length > 0) {
@@ -152,6 +170,7 @@ const AppointmentNew = () => {
 
   return (
     <>
+      {console.log(sheduleobj, "sheduleobj")}
       <section className="appointmentrow mx-0">
         <div className="left-sidebar">
           <img src={logo} alt="The Patient App" className="logo" />
@@ -168,18 +187,6 @@ const AppointmentNew = () => {
         </div>
 
         <div className="right-content">
-          {/* <div className="card-wrap main-buttonstab">
-					<div className="appointmentcard">
-						<div className="appointmentrow">
-							<div className="col-6 paddingleftright" >
-								<button className={patientType === 'New' ? 'active' : ''} onClick={() => { setPatientType("New") }}>New Patient</button>
-							</div>
-							<div className="col-6 paddingleftright">
-								<button className={patientType === 'Existing' ? 'active' : ''} onClick={() => { setPatientType("Existing") }}>Existing Patient</button>
-							</div>
-						</div>
-					</div>
-				</div> */}
           <div className="card-wrap">
             <div className="appointmentcard">
               <h2 className="card-heading mb-30px">Make a Appointment</h2>
@@ -201,28 +208,6 @@ const AppointmentNew = () => {
                     </select>
                   </div>
                 </div>
-                {/* <div className="col-4 ">
-                  <label>Speciality</label>
-                  <div style={{ marginTop: "8px" }}>
-                    <select
-                      disabled={true}
-                      value={specialty}
-                      className="formselectdiv"
-                      // onChange={(event) => {
-                      // 	setSpecialty(event.target.value);
-                      // }}
-                    >
-                      <option value="" hidden>
-                        -Select-
-                      </option>
-                      {specialtyList.map((el, i) => (
-                        <option value={el} key={i}>
-                          {el}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div> */}
                 <div className="col-4">
                   <label>Reason for visit</label>
                   <div style={{ marginTop: "8px" }}>
@@ -296,19 +281,11 @@ const AppointmentNew = () => {
                 </div>
                 <div className="appointmentcol-12">
                   <h4 className="card-heading-small">{item.displayname}</h4>
-                  {console.log(
-                    sheduleobj,
-                    sheduleobj[Number(item.providerid)],
-                    item.providerid,
-                    item,
-                    "sheduleobj?.providerid"
-                  )}
-                  <div className="timing-cards-wrap">
-                    {sheduleobj[Number(item.providerid)] &&
-                      sheduleobj[Number(item.providerid)].length > 0 &&
-                      sheduleobj[Number(item.providerid)]?.map(
-                        (item, index) => {
-                          return (
+                  {Object.keys(sheduleobj).length > 0 && (
+                    <div className="timing-cards-wrap">
+                      {sheduleobj[Number(item.providerid)]?.length > 0 &&
+                        getdateData(sheduleobj[Number(item.providerid)])?.map(
+                          (item, index) => (
                             <>
                               {
                                 <div
@@ -340,16 +317,18 @@ const AppointmentNew = () => {
                                 </div>
                               }
                             </>
-                          );
-                        }
-                      )}
-                    {
-                      // isFound
-                      isFound(sheduleobj[Number(item.providerid)], 12, 16) && (
-                        <p>No Schedule Found</p>
-                      )
-                    }
-                  </div>
+                          )
+                        )}
+                      {
+                        // isFound
+                        isFound(
+                          sheduleobj[Number(item.providerid)],
+                          12,
+                          16
+                        ) && <p>No Schedule Found</p>
+                      }
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
