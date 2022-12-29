@@ -1,3 +1,9 @@
+.appointmentcolshedule{
+	width: 70%;
+}
+
+
+
 .owl-carousel,
 .owl-carousel .owl-item {
 	-webkit-tap-highlight-color: transparent;
@@ -136,6 +142,8 @@
 .owl-carousel .fadeOut {
 	animation-name: fadeOut
 }
+
+
 
 @keyframes fadeOut {
 	0% {

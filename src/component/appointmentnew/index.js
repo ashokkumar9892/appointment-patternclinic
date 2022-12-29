@@ -191,7 +191,7 @@ const AppointmentNew = () => {
             <div className="appointmentcard">
               <h2 className="card-heading mb-30px">Make a Appointment</h2>
               <div className="appointmentrow mb-30px">
-                <div className="col-4">
+                <div className="col-6">
                   <label>Patient Type</label>
                   <div style={{ marginTop: "8px" }}>
                     <select
@@ -208,7 +208,7 @@ const AppointmentNew = () => {
                     </select>
                   </div>
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                   <label>Reason for visit</label>
                   <div style={{ marginTop: "8px" }}>
                     <select
@@ -253,6 +253,7 @@ const AppointmentNew = () => {
                       selectDate={new Date(value)}
                       labelFormat={"MMMM"}
                       color={"#374e8c"}
+                      className="datapicker"
                     />
                   </div>
                 </div>
@@ -276,59 +277,76 @@ const AppointmentNew = () => {
           {providerList?.map((item, index) => (
             <div className="appointmentcard border-bottom">
               <div className="appointmentrow">
-                <div>
-                  <img src={Icons} />
-                </div>
-                <div className="appointmentcol-12">
-                  <h4 className="card-heading-small">{item.displayname}</h4>
-                  {Object.keys(sheduleobj).length > 0 && (
-                    <div className="timing-cards-wrap">
-                      {sheduleobj[Number(item.providerid)]?.length > 0 &&
-                        removeDuplicatedata(
-                          getdateData(sheduleobj[Number(item.providerid)])
-                        )?.map((item, index) => (
-                          <>
-                            {
-                              <div
-                                className="catappointment action"
-                                data-toggle="tooltip"
-                                title={
-                                  item.patientappointmenttypename +
-                                  " " +
-                                  item.date
-                                }
-                                onClick={() => {
-                                  UpdateData(
-                                    item.starttime,
-                                    item.appointmentid,
-                                    item.appointmenttypeid
-                                  );
-                                }}
-                              >
-                                <a href="javascript:;">
-                                  <div className="timing-cards">
-                                    <p style={{ marginBottom: "0px" }}>
-                                      {formatAMPM(
-                                        item.date + " " + item.starttime
-                                      )}
-                                    </p>
-                                    <span>{item.count}</span>
-                                  </div>
-                                </a>
-                              </div>
-                            }
-                          </>
-                        ))}
-                      {
-                        // isFound
-                        isFound(
-                          sheduleobj[Number(item.providerid)],
-                          12,
-                          16
-                        ) && <p>No Schedule Found</p>
-                      }
-                    </div>
-                  )}
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <div style={{ width: "20%" }}>
+                    <img
+                      src={Icons}
+                      style={{
+                        borderRadius: "4px",
+                        marginRight: "16px",
+                        objectFit: "contain",
+                        height: "auto",
+                      }}
+                      width="100%"
+                    />
+                  </div>
+                  <div className="appointmentcolshedule">
+                    <h4 className="card-heading-small">{item.displayname}</h4>
+                    {Object.keys(sheduleobj).length > 0 && (
+                      <div className="timing-cards-wrap">
+                        {sheduleobj[Number(item.providerid)]?.length > 0 &&
+                          removeDuplicatedata(
+                            getdateData(sheduleobj[Number(item.providerid)])
+                          )?.map((item, index) => (
+                            <>
+                              {
+                                <div
+                                  className="catappointment action"
+                                  data-toggle="tooltip"
+                                  title={
+                                    item.patientappointmenttypename +
+                                    " " +
+                                    item.date
+                                  }
+                                  onClick={() => {
+                                    UpdateData(
+                                      item.starttime,
+                                      item.appointmentid,
+                                      item.appointmenttypeid
+                                    );
+                                  }}
+                                >
+                                  <a href="javascript:;">
+                                    <div className="timing-cards">
+                                      <p style={{ marginBottom: "0px" }}>
+                                        {formatAMPM(
+                                          item.date + " " + item.starttime
+                                        )}
+                                      </p>
+                                      <span>{item.count}</span>
+                                    </div>
+                                  </a>
+                                </div>
+                              }
+                            </>
+                          ))}
+                        {
+                          // isFound
+                          isFound(
+                            sheduleobj[Number(item.providerid)],
+                            12,
+                            16
+                          ) && <p>No Schedule Found</p>
+                        }
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
