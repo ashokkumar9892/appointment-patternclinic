@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./appointmentnew.css";
-import logo from "../../assets/Appointment/logo.svg";
+import Logo from "../../assets/Appointment/logo.svg";
+import Bozzone from "../../assets/drimages/BozzoneDr.jpeg";
+import MitchekkNP from "../../assets/drimages/MitchellNP-removebg.jpeg";
+import Jonthan from "../../assets/drimages/jonthan.png";
 import leftQuote from "../../assets/Appointment/left-quote.svg";
 import rightQuote from "../../assets/Appointment/right-quote.svg";
 import DatePicker from "react-horizontal-datepicker";
@@ -15,8 +18,6 @@ const AppointmentNew = () => {
   const history = useHistory();
   const patientContext = useContext(PatientContext);
   const [value, onChange] = useState(new Date());
-  const [information, setData] = useState([]);
-  //   const [rawInformation, setRawData] = useState([]);
   const [sheduleobj, setSheduleObj] = useState({});
   const [patientType, setPatientType] = useState("");
   const [reason, setReason] = useState("");
@@ -34,7 +35,6 @@ const AppointmentNew = () => {
     onChange(val);
   };
 
-  const keydata = 9;
   const removeDuplicatedata = (arr) => {
     const res = {};
     const data = [];
@@ -106,19 +106,6 @@ const AppointmentNew = () => {
     }, [10000]);
   }, [reason]);
 
-  //   useEffect(() => {
-  //     if (rawInformation.length > 0) {
-  //       const yyyy = value.getFullYear();
-  //       let mm = value.getMonth() + 1; // Months start at 0!
-  //       let dd = value.getDate();
-  //       if (dd < 10) dd = "0" + dd;
-  //       if (mm < 10) mm = "0" + mm;
-  //       const date = mm + "/" + dd + "/" + yyyy;
-  //       const data = rawInformation.filter((el) => el.date === date);
-  //       setData(removeDuplicatedata([...data]));
-  //     }
-  //   }, [value, rawInformation]);
-
   const getdateData = (rawInformation) => {
     const yyyy = value.getFullYear();
     let mm = value.getMonth() + 1; // Months start at 0!
@@ -168,12 +155,30 @@ const AppointmentNew = () => {
     }
   };
 
+  const SetImages = (img) => {
+    switch (img) {
+      case 20: {
+        return Jonthan;
+      }
+      case 10: {
+        return MitchekkNP;
+      }
+
+      case 8: {
+        return Bozzone;
+      }
+
+      default: {
+        return Icons;
+      }
+    }
+  };
+
   return (
     <>
-      {console.log(sheduleobj, "sheduleobj")}
       <section className="appointmentrow mx-0">
         <div className="left-sidebar">
-          <img src={logo} alt="The Patient App" className="logo" />
+          <img src={Logo} alt="The Patient App" className="logo" />
           <div className="quote">
             <img src={leftQuote} className="quote-icon left" />
             <img src={rightQuote} className="quote-icon right" />
@@ -286,7 +291,7 @@ const AppointmentNew = () => {
                 >
                   <div style={{ width: "20%" }}>
                     <img
-                      src={Icons}
+                      src={SetImages(item?.providerid)}
                       style={{
                         borderRadius: "4px",
                         marginRight: "16px",
@@ -298,6 +303,12 @@ const AppointmentNew = () => {
                   </div>
                   <div className="appointmentcolshedule">
                     <h4 className="card-heading-small">{item.displayname}</h4>
+                    {(patientType == "" || reason == "") && (
+                      <h6>
+                        (Choose a "Reason" and "Patient Type" above to see open
+                        slot)
+                      </h6>
+                    )}
                     {Object.keys(sheduleobj).length > 0 && (
                       <div className="timing-cards-wrap">
                         {sheduleobj[Number(item.providerid)]?.length > 0 &&
