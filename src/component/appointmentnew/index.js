@@ -11,6 +11,7 @@ import rightQuote from "../../assets/Appointment/right-quote.svg";
 import DatePicker from "react-horizontal-datepicker";
 import PatientContext from "../../context/patientDetails/patientContext";
 import api from "../../api";
+import { getToken } from "../../api";
 import { useContext } from "react";
 import Loader from "react-js-loader";
 import { useHistory } from "react-router-dom";
@@ -89,6 +90,7 @@ const AppointmentNew = () => {
       });
 
     ReasonApiCall();
+    getToken();
   }, []);
   useEffect(() => {
     let obj = {};
@@ -97,7 +99,7 @@ const AppointmentNew = () => {
       let request = {
         url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${item.providerid}`,
       };
-      api.getAuth(request).then((data) => {
+      api.getShedule(request).then((data) => {
         setLoading(false);
         obj[item.providerid] = data.data.appointments;
       });
