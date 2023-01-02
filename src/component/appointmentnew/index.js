@@ -5,6 +5,7 @@ import Logo from "../../assets/Appointment/logo.svg";
 import Bozzone from "../../assets/drimages/BozzoneDr.jpeg";
 import MitchekkNP from "../../assets/drimages/MitchellNP-removebg.jpeg";
 import Jonthan from "../../assets/drimages/jonthan.png";
+import Lily from "../../assets/drimages/lily.png";
 import leftQuote from "../../assets/Appointment/left-quote.svg";
 import rightQuote from "../../assets/Appointment/right-quote.svg";
 import DatePicker from "react-horizontal-datepicker";
@@ -157,6 +158,9 @@ const AppointmentNew = () => {
 
   const SetImages = (img) => {
     switch (img) {
+      case 3: {
+        return Lily;
+      }
       case 20: {
         return Jonthan;
       }
@@ -347,14 +351,12 @@ const AppointmentNew = () => {
                               }
                             </>
                           ))}
-                        {
-                          // isFound
+                        {(patientType != "" || reason != "") &&
                           isFound(
                             sheduleobj[Number(item.providerid)],
                             12,
                             16
-                          ) && <p>No Schedule Found</p>
-                        }
+                          ) && <p>No Schedule Found</p>}
                       </div>
                     )}
                   </div>
