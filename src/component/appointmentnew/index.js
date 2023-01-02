@@ -29,6 +29,7 @@ const AppointmentNew = () => {
   const [providerList, setProviderList] = useState([]);
   const [location, setLoction] = useState("OOLTEWAH CLINIC (EDT)");
   const [timeData, setTimeData] = useState("");
+  const [openApiCall, setOPenAPiCall] = useState(false);
   const [loading, setLoading] = useState(false);
   const BASE_URL = process.env.REACT_APP_BASE_URL
     ? process.env.REACT_APP_BASE_URL
@@ -101,6 +102,7 @@ const AppointmentNew = () => {
       };
       api.getShedule(request).then((data) => {
         setLoading(false);
+        setOPenAPiCall(true);
         obj[item.providerid] = data.data.appointments;
       });
     });
@@ -286,7 +288,15 @@ const AppointmentNew = () => {
           </div>
 
           {providerList?.map((item, index) => (
-            <div className="appointmentcard border-bottom">
+            <div
+              className="appointmentcard border-bottom"
+              style={{
+                display:
+                  isFound(sheduleobj[Number(item.providerid)], 12, 16) &&
+                  openApiCall &&
+                  "none",
+              }}
+            >
               <div className="appointmentrow">
                 <div
                   style={{
@@ -299,7 +309,7 @@ const AppointmentNew = () => {
                     <img
                       src={SetImages(item?.providerid)}
                       style={{
-                        borderRadius: "4px",
+                        borderRadius: "40%",
                         marginRight: "16px",
                         objectFit: "contain",
                         height: "auto",
@@ -317,6 +327,11 @@ const AppointmentNew = () => {
                     )}
                     {Object.keys(sheduleobj).length > 0 && (
                       <div className="timing-cards-wrap">
+                        {console.log(
+                          Object.keys(sheduleobj),
+                          sheduleobj[Number(item.providerid)],
+                          "sheduleobj[Number(item.providerid)]"
+                        )}
                         {sheduleobj[Number(item.providerid)]?.length > 0 &&
                           removeDuplicatedata(
                             getdateData(sheduleobj[Number(item.providerid)])
