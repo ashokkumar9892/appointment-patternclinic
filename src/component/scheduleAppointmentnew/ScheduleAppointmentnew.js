@@ -234,6 +234,7 @@ const ScheduleAppointmentNew = () => {
 
   return (
     <>
+      <TopHeader />
       <section className="appointmentrow mx-0">
         {/* <div className="left-sidebar">
                 <img src={logo} alt="The Patient App" className="logo" />

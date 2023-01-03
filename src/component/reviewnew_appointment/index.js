@@ -2,16 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import logo from "../../assets/Appointment/logo.svg";
 import leftQuote from "../../assets/Appointment/left-quote.svg";
 import dateLogo from "../../assets/schedule/datelogo.png";
-import location from "../../assets/schedule/location.png"
+import location from "../../assets/schedule/location.png";
 import rightQuote from "../../assets/Appointment/right-quote.svg";
 import person from "../../assets/schedule/person.png";
 import msg from "../../assets/schedule/msg.png";
 import call from "../../assets/schedule/call.png";
 import question from "../../assets/schedule/question.png";
 import insurence from "../../assets/schedule/insurence.png";
-import "./reviewnew.css"
+import "./reviewnew.css";
 import reCAPTCHA from "react-google-recaptcha";
-
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import TopHeader from "../common/topHeader";
@@ -29,7 +28,7 @@ const ReviewAppoinmentNew = () => {
   const [insuranceBtnLoading, setInsuranceBtnLoading] = useState(false);
   const [checkterm, setCheckterm] = useState(false);
   const [insurance, setInsurance] = useState({ departmentid: 1 });
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -130,7 +129,7 @@ const ReviewAppoinmentNew = () => {
     }, 500);
   };
   const ShaduleAppointment = () => {
-    setLoading(true)
+    setLoading(true);
     const formData = new FormData();
     buildFormData(formData, details);
     let request = {
@@ -140,34 +139,41 @@ const ReviewAppoinmentNew = () => {
     api
       .putAuth(request)
       .then((data) => {
-        setLoading(false)
+        setLoading(false);
         if (data.status === 200) {
-         // history.push("/appointment/" + data.data[0].appointmentid);
-         sendSms(data.data[0].appointmentid)
+          // history.push("/appointment/" + data.data[0].appointmentid);
+          sendSms(data.data[0].appointmentid);
         } else {
           swal("Appointment not Booked!", "error");
         }
       })
-      .catch((error) => { setLoading(false) });
+      .catch((error) => {
+        setLoading(false);
+      });
   };
   const sendSms = (appointmentid) => {
     try {
       let request = {
         url: `https://appointmentapi.apatternclinic.com/sms`,
         params: {
-          name: patientContext.patientDetails.firstname + ' ' + patientContext.patientDetails.lastname,
+          name:
+            patientContext.patientDetails.firstname +
+            " " +
+            patientContext.patientDetails.lastname,
           to: patientContext.patientDetails.phone,
-          time: patientContext.patientDetails.value + ' ' + patientContext.patientDetails.timeData,
+          time:
+            patientContext.patientDetails.value +
+            " " +
+            patientContext.patientDetails.timeData,
           location: patientContext.patientDetails.location,
         },
       };
       api.get(request);
     } catch (error) {
-
     } finally {
       history.push("/appointment/" + appointmentid);
     }
-  }
+  };
   const patientInsurance = () => {
     setInsuranceError("");
     const formData = new FormData();
@@ -222,8 +228,10 @@ const ReviewAppoinmentNew = () => {
   };
 
   return (
-    <section className="appointmentrow mx-0">
-      <div className="left-sidebar">
+    <>
+      <TopHeader />
+      <section className="appointmentrow mx-0">
+        {/* <div className="left-sidebar">
         <img src={logo} alt="The Patient App" className="logo" />
         <div className="quote">
           <img src={leftQuote} className="quote-icon left" />
@@ -231,163 +239,158 @@ const ReviewAppoinmentNew = () => {
           <h2>Healthcare You Can Afford</h2>
           <p >Here at A Pattern Medical Clinic, our top priority is patient care. In order to make sure that we can see you, we choose rates that are well below the Emergency Room prices.</p>
         </div>
-      </div>
-      <div className="right-content">
-        <div className="rigthDiv">
-        <div>
-          <p> <span className="patientText"> Review </span> <span className="informationText">Information </span> </p>
-
-        </div>
-        <div className="nameDiv">
-          <div className="imageDiv">
-            <img height={20} width={20} src={person} />
-          </div>
-          <div className="textLocationDiv">
-            <strong>
-              {patientContext.patientDetails.firstname +
-                " " +
-                patientContext.patientDetails.lastname}
-            </strong>
-
-            <div className="">
-              {getAge(patientContext.patientDetails.dob)} |{" "}
-              {patientContext.patientDetails.dob} |
-              {patientContext.patientDetails.sex}
-            </div>
-
-          </div>
-        </div>
-        <div className="nameDiv">
-          <div className="imageDiv">
-            <img height={20} width={20} src={call} />
-          </div>
-          <div className="textLocationDiv">
-            <p className="labelName">Phone </p>
-            <p>{patientContext.patientDetails.phone}</p>
-          </div>
-        </div>
-        <div className="nameDiv">
-          <div className="imageDiv">
-            <img height={20} width={20} src={msg} />
-          </div>
-          <div className="textLocationDiv">
-            <p className="labelName">Email</p>
-            <p>{patientContext.patientDetails.email}</p>
-          </div>
-        </div>
-        <div className="nameRow">
-          <div className="dateTimeDiv">
-            <div className="imageDiv">
-              <img height={20} width={20} src={dateLogo} />
-            </div>
-            <div className="textLocationDiv">
-              <p className="labelName">Day and Time</p>
-              <p> {patientContext.patientDetails.value} <br />
-                {patientContext.patientDetails.timeData}(EDT)</p>
-            </div>
-          </div>
-          <div className="dateTimeDiv">
-            <div className="imageDiv">
-              <img height={20} width={20} src={location} />
-            </div>
-            <div className="textLocationDiv">
-              <p className="labelName">Location</p>
-
-              <p>{patientContext.patientDetails.location}</p>
-            </div>
-          </div>
-        </div>
-        <div className="nameRow" >
-          <div className="dateTimeDiv">
-            <div className="imageDiv">
-              <img height={20} width={20} src={question} />
-            </div>
-            <div className="textLocationDiv">
-              <p className="labelName">Reason for Visit</p>
-              <p>  {patientContext.patientDetails.reason}</p>
-            </div>
-          </div>
-
-          <div className="dateTimeDiv">
-            <div className="imageDiv">
-              <img height={20} width={20} src={insurence} />
-            </div>
-            <div className="textLocationDiv">
-              <p className="labelName">Insurance</p>
-              <p> {patientContext.patientDetails.insurance}</p>
-            </div>
-          </div>
-        </div>
-        <div>
-
-          <div className="row" style={{marginTop:"12px"}}>
-            <div className="col-md-12">
-              <p className="mb-0">
-                <strong>Additional Notes</strong>
+      </div> */}
+        <div className="right-content">
+          <div className="rigthDiv">
+            <div>
+              <p>
+                {" "}
+                <span className="patientText"> Review </span>{" "}
+                <span className="informationText">Information </span>{" "}
               </p>
-              <p>{patientContext.patientDetails.additional}</p>
+            </div>
+            <div className="nameDiv">
+              <div className="imageDiv">
+                <img height={20} width={20} src={person} />
+              </div>
+              <div className="textLocationDiv">
+                <strong>
+                  {patientContext.patientDetails.firstname +
+                    " " +
+                    patientContext.patientDetails.lastname}
+                </strong>
+
+                <div className="">
+                  {getAge(patientContext.patientDetails.dob)} |{" "}
+                  {patientContext.patientDetails.dob} |
+                  {patientContext.patientDetails.sex}
+                </div>
+              </div>
+            </div>
+            <div className="nameDiv">
+              <div className="imageDiv">
+                <img height={20} width={20} src={call} />
+              </div>
+              <div className="textLocationDiv">
+                <p className="labelName">Phone </p>
+                <p>{patientContext.patientDetails.phone}</p>
+              </div>
+            </div>
+            <div className="nameDiv">
+              <div className="imageDiv">
+                <img height={20} width={20} src={msg} />
+              </div>
+              <div className="textLocationDiv">
+                <p className="labelName">Email</p>
+                <p>{patientContext.patientDetails.email}</p>
+              </div>
+            </div>
+            <div className="nameRow">
+              <div className="dateTimeDiv">
+                <div className="imageDiv">
+                  <img height={20} width={20} src={dateLogo} />
+                </div>
+                <div className="textLocationDiv">
+                  <p className="labelName">Day and Time</p>
+                  <p>
+                    {" "}
+                    {patientContext.patientDetails.value} <br />
+                    {patientContext.patientDetails.timeData}(EDT)
+                  </p>
+                </div>
+              </div>
+              <div className="dateTimeDiv">
+                <div className="imageDiv">
+                  <img height={20} width={20} src={location} />
+                </div>
+                <div className="textLocationDiv">
+                  <p className="labelName">Location</p>
+
+                  <p>{patientContext.patientDetails.location}</p>
+                </div>
+              </div>
+            </div>
+            <div className="nameRow">
+              <div className="dateTimeDiv">
+                <div className="imageDiv">
+                  <img height={20} width={20} src={question} />
+                </div>
+                <div className="textLocationDiv">
+                  <p className="labelName">Reason for Visit</p>
+                  <p> {patientContext.patientDetails.reason}</p>
+                </div>
+              </div>
+
+              <div className="dateTimeDiv">
+                <div className="imageDiv">
+                  <img height={20} width={20} src={insurence} />
+                </div>
+                <div className="textLocationDiv">
+                  <p className="labelName">Insurance</p>
+                  <p> {patientContext.patientDetails.insurance}</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="row" style={{ marginTop: "12px" }}>
+                <div className="col-md-12">
+                  <p className="mb-0">
+                    <strong>Additional Notes</strong>
+                  </p>
+                  <p>{patientContext.patientDetails.additional}</p>
+                </div>
+              </div>
+              <div className="col-md-12">
+                <input
+                  type="checkbox"
+                  checked={checkterm}
+                  className=""
+                  onClick={() => {
+                    setCheckterm(!checkterm);
+                  }}
+                />{" "}
+                I agree to the{" "}
+                <span className="text-primary">Terms and Conditions </span>
+                and <span className="text-primary">Privacy policy.</span>
+              </div>
+            </div>
+
+            <div style={{ marginTop: "24px" }}>
+              <button
+                className="buttonDiv"
+                onClick={() => {
+                  Preview();
+                }}
+              >
+                Previous
+              </button>
+
+              {loading == false && (
+                <button
+                  className="nextButton"
+                  type="button"
+                  disabled={!checkterm}
+                  onClick={() => {
+                    ShaduleAppointment();
+                  }}
+                >
+                  Schedule Appointment
+                </button>
+              )}
+              {loading == true && (
+                <button
+                  type="button"
+                  disabled={true}
+                  className=" buttonDiv nextButton btn-primary"
+                >
+                  Loading...
+                </button>
+              )}
             </div>
           </div>
-          <div className="col-md-12">
-            <input
-              type="checkbox"
-              checked={checkterm}
-              className=""
-              onClick={() => {
-                setCheckterm(!checkterm);
-              }}
-
-            />{" "}
-            I agree to the{" "}
-            <span className="text-primary">
-              Terms and Conditions{" "}
-            </span>
-            and{" "}
-            <span className="text-primary">
-              Privacy policy.
-            </span>
-          </div>
         </div>
-
-        <div style={{ marginTop: "24px" }}>
-
-          <button className="buttonDiv"
-            onClick={() => {
-              Preview();
-            }}
-          >
-
-            Previous
-          </button>
-
-
-          {loading == false && (
-            <button className="nextButton"
-              type="button"
-              disabled={!checkterm}
-              onClick={() => {
-                ShaduleAppointment();
-              }}
-
-            >
-              Schedule Appointment
-            </button>)}
-          {loading == true && (
-            <button
-              type="button"
-              disabled={true}
-              className=" buttonDiv nextButton btn-primary"
-            >
-              Loading...
-            </button>
-          )}
-
-
-        </div>
-      </div>
-      </div>
-
-    </section>
-  )
-}
+      </section>
+    </>
+  );
+};
 export default ReviewAppoinmentNew;

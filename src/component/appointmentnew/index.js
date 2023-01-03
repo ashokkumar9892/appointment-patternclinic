@@ -7,6 +7,7 @@ import api from "../../api";
 import { getToken } from "../../api";
 import { useContext } from "react";
 import Loader from "react-js-loader";
+import TopHeader from "../common/topHeader";
 import { useHistory } from "react-router-dom";
 import ProviderListComp from "./prviderlist";
 const AppointmentNew = () => {
@@ -93,6 +94,7 @@ const AppointmentNew = () => {
 
   return (
     <>
+      <TopHeader />
       <section className="appointmentrow mx-0">
         {/* <div className="left-sidebar">
           <img src={Logo} alt="The Patient App" className="logo" />
