@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./appointmentnew.css";
 import { useState } from "react";
 import SheduleData from "./shedule";
@@ -25,6 +25,7 @@ const ProviderList = (props) => {
       return true;
     }
   };
+
   const removeDuplicatedata = (arr) => {
     const res = {};
     const data = [];
@@ -52,7 +53,6 @@ const ProviderList = (props) => {
     if (mm < 10) mm = "0" + mm;
     const date = mm + "/" + dd + "/" + yyyy;
     const data = rawInformation.filter((el) => el.date === date);
-
     return data;
   };
 

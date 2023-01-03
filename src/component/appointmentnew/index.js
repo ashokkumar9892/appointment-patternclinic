@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./appointmentnew.css";
-import Logo from "../../assets/Appointment/logo.svg";
-import leftQuote from "../../assets/Appointment/left-quote.svg";
-import rightQuote from "../../assets/Appointment/right-quote.svg";
 import DatePicker from "react-horizontal-datepicker";
 import PatientContext from "../../context/patientDetails/patientContext";
 import api from "../../api";
@@ -11,7 +8,6 @@ import { getToken } from "../../api";
 import { useContext } from "react";
 import Loader from "react-js-loader";
 import { useHistory } from "react-router-dom";
-import SheduleData from "./shedule";
 import ProviderListComp from "./prviderlist";
 const AppointmentNew = () => {
   const history = useHistory();
@@ -62,20 +58,20 @@ const AppointmentNew = () => {
   }, []);
   useEffect(() => {
     let obj = {};
+    setLoading(true);
     providerList.map((item, index) => {
-      setLoading(true);
       let request = {
         url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${item.providerid}`,
       };
       api.getShedule(request).then((data) => {
-        setLoading(false);
         setOPenAPiCall(true);
         obj[item.providerid] = data.data.appointments;
       });
     });
-    setTimeout(() => {
+    setTimeout(async () => {
       setSheduleObj(obj);
-    }, [10000]);
+      await setLoading(false);
+    }, 10000);
   }, [reason]);
 
   const UpdateData = (starttime, appointmentid, appointmenttypeid) => {
@@ -94,10 +90,6 @@ const AppointmentNew = () => {
       history.push("/schedulenew/");
     }, 500);
   };
-
-  useEffect(() => {
-    console.log("check shedule");
-  }, [sheduleobj]);
 
   return (
     <>
@@ -213,6 +205,7 @@ const AppointmentNew = () => {
               openApiCall={openApiCall}
               value={value}
               UpdateData={UpdateData}
+              setLoading={setLoading}
             />
           ))}
         </div>
