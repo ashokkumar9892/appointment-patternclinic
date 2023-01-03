@@ -592,7 +592,7 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 
 
 .right-content {
-	width: calc(100% - 500px);
+	width: 100%;
 	height: 100vh;
 	padding: 60px;
 	overflow-y: auto;
@@ -606,6 +606,8 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 
 .appointmentcard {
 	padding: 35px;
+	padding-top: 28px;
+	padding-bottom: 18px;
 	background: white;
 }
 
@@ -743,9 +745,9 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 		width: 400px;
 	}
 
-	.right-content {
+	/* .right-content {
 		width: calc(100% - 400px);
-	}
+	} */
 }
 
 @media (max-width: 1160px) {
