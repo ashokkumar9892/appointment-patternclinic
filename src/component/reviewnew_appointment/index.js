@@ -139,6 +139,7 @@ const ReviewAppoinmentNew = () => {
     api
       .putAuth(request)
       .then((data) => {
+        console.log("data", data);
         setLoading(false);
         if (data.status === 200) {
           // history.push("/appointment/" + data.data[0].appointmentid);
@@ -149,6 +150,11 @@ const ReviewAppoinmentNew = () => {
       })
       .catch((error) => {
         setLoading(false);
+        if (error?.response?.status == 400) {
+          swal("Appointment not Booked!", "error").then((value) => {
+            history.push("/appointment/");
+          });
+        }
       });
   };
   const sendSms = (appointmentid) => {
