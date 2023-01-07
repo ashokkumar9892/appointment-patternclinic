@@ -1,9 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
-import logo from "../../assets/Appointment/logo.svg";
-import leftQuote from "../../assets/Appointment/left-quote.svg";
+import swal from "sweetalert";
 import dateLogo from "../../assets/schedule/datelogo.png";
 import location from "../../assets/schedule/location.png";
-import rightQuote from "../../assets/Appointment/right-quote.svg";
 import "./shedule_appointmentnew.css";
 import PatientContext from "../../context/patientDetails/patientContext";
 import api from "../../api";
@@ -176,7 +174,11 @@ const ScheduleAppointmentNew = () => {
                       setButtonloading(false);
                     }, 1000);
                   })
-                  .catch((error) => {});
+                  .catch((error) => {
+                    swal("Invalid Imformation ", "error").then((value) => {
+                      history.push("/appointment/");
+                    });
+                  });
                 break;
               } else {
                 api
@@ -200,7 +202,11 @@ const ScheduleAppointmentNew = () => {
                     }, 1000);
                     return;
                   })
-                  .catch((error) => {});
+                  .catch((error) => {
+                    swal("Invalid Imformation ", "error").then((value) => {
+                      history.push("/appointment/");
+                    });
+                  });
                 break;
               }
             }
@@ -225,10 +231,18 @@ const ScheduleAppointmentNew = () => {
                   setButtonloading(false);
                 }, 1000);
               })
-              .catch((error) => {});
+              .catch((error) => {
+                swal("Invalid Imformation ", "error").then((value) => {
+                  history.push("/appointment/");
+                });
+              });
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          swal("Invalid Imformation", "error").then((value) => {
+            history.push("/appointment/");
+          });
+        });
     }
   };
 

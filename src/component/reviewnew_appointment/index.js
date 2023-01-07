@@ -236,15 +236,6 @@ const ReviewAppoinmentNew = () => {
     <>
       <TopHeader />
       <section className="appointmentrow mx-0">
-        {/* <div className="left-sidebar">
-        <img src={logo} alt="The Patient App" className="logo" />
-        <div className="quote">
-          <img src={leftQuote} className="quote-icon left" />
-          <img src={rightQuote} className="quote-icon right" />
-          <h2>Healthcare You Can Afford</h2>
-          <p >Here at A Pattern Medical Clinic, our top priority is patient care. In order to make sure that we can see you, we choose rates that are well below the Emergency Room prices.</p>
-        </div>
-      </div> */}
         <div className="right-content">
           <div className="rigthDiv">
             <div>
