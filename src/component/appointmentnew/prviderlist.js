@@ -152,15 +152,23 @@ const ProviderList = (props) => {
                         16
                       ) && <p>No Schedule Found</p>}
                   </div>
-                  <button
-                    className="buttonDiv"
-                    style={{ marginTop: "8px" }}
-                    onClick={() => {
-                      setShow(!show);
-                    }}
-                  >
-                    {show ? "show less" : "show more"}
-                  </button>
+                  {removeDuplicatedata(
+                    getdateData(
+                      props?.sheduleobj[Number(props?.item.providerid)]
+                    )
+                  )?.length > 0 ? (
+                    <button
+                      className="buttonDiv"
+                      style={{ marginTop: "8px" }}
+                      onClick={() => {
+                        setShow(!show);
+                      }}
+                    >
+                      {show ? "show less" : "show more"}
+                    </button>
+                  ) : (
+                    "Slots available for other dates."
+                  )}
                 </>
               )}
             </div>

@@ -3,8 +3,6 @@ import "./appointmentnew.css";
 import { useState } from "react";
 
 const SheduleData = (props) => {
-  const [showMore, setShowMore] = useState(false);
-
   function formatAMPM(date) {
     let dat = new Date(date);
     var hours = dat.getHours();
