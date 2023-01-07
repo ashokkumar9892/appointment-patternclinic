@@ -30,7 +30,7 @@ const ProviderList = (props) => {
     const res = {};
     const data = [];
     const originalArr = [];
-    arr.forEach((obj) => {
+    arr?.forEach((obj) => {
       const key = `${obj.starttime}`;
       if (!res[key]) {
         res[key] = { ...obj, count: 1 };
@@ -39,7 +39,7 @@ const ProviderList = (props) => {
         res[key].count = res[key].count + 1;
       }
     });
-    data.forEach((item, index) => {
+    data?.forEach((item, index) => {
       originalArr[index] = res[item];
     });
     return originalArr;
