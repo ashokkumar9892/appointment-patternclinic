@@ -176,7 +176,7 @@ const ScheduleAppointmentNew = () => {
                   })
                   .catch((error) => {
                     swal("Invalid Imformation ", "error").then((value) => {
-                      history.push("/appointment/");
+                      setButtonloading(false);
                     });
                   });
                 break;
@@ -204,7 +204,7 @@ const ScheduleAppointmentNew = () => {
                   })
                   .catch((error) => {
                     swal("Invalid Imformation ", "error").then((value) => {
-                      history.push("/appointment/");
+                      setButtonloading(false);
                     });
                   });
                 break;
@@ -233,14 +233,14 @@ const ScheduleAppointmentNew = () => {
               })
               .catch((error) => {
                 swal("Invalid Imformation ", "error").then((value) => {
-                  history.push("/appointment/");
+                  setButtonloading(false);
                 });
               });
           }
         })
         .catch((error) => {
-          swal("Invalid Imformation", "error").then((value) => {
-            history.push("/appointment/");
+          swal("Invalid Imformation ", "error").then((value) => {
+            setButtonloading(false);
           });
         });
     }

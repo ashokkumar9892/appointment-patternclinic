@@ -149,7 +149,7 @@ const ViewAppointment = () => {
     <div style={{ background: "#fff", minHeight: "100vh" }}>
       <TopHeader />
       <main>
-        {videoComplete !== true ? (
+        {videoComplete !== true && (
           <div className="text-center">
             <div className="confetti-wrapper">
               <img className="left" src="/confetti2.gif" alt="" />
@@ -165,83 +165,12 @@ const ViewAppointment = () => {
               <video
                 style={{ width: "100%" }}
                 src="/promo.mp4"
-                onEnded={() => setVideoComplete(true)}
+                // onEnded={() => setVideoComplete(true)}
                 controls
                 autoPlay
               ></video>
               {/* <ResponsivePlayer afterComplete={setVideoComplete} /> */}
             </div>
-          </div>
-        ) : (
-          <div id="ViewComplete" className="row mt-50 text-center">
-            <div style={{ maxWidth: "600px", margin: "auto" }}>
-              <div className="nameDiv">
-                <div className="imageDiv">
-                  <img height={20} width={20} src={typeImg} />
-                </div>
-                <div className="labelList">
-                  <p className="labelName">Appointment No.: </p>
-                  <p>{appointment?.appointmentid}</p>
-                </div>
-              </div>
-              <div className="nameDiv">
-                <div className="imageDiv">
-                  <img height={20} width={20} src={personImg} />
-                </div>
-                <div className="labelList">
-                  <p className="labelName">Patient Name : </p>
-                  <p>
-                    {patientContext.patientDetails.firstname}{" "}
-                    {patientContext.patientDetails.lastname}
-                  </p>
-                </div>
-              </div>
-              <div className="nameDiv">
-                <div className="imageDiv">
-                  <img height={20} width={20} src={calenderImg} />
-                </div>
-                <div className="labelList">
-                  <p className="labelName">Appointment Date & Time </p>
-                  <p>
-                    <span>
-                      {appointment?.date} {appointment?.starttime}
-                    </span>
-                  </p>
-                </div>
-              </div>
-              <div className="nameDiv">
-                <div className="imageDiv">
-                  <img height={20} width={20} src={questionImg} />
-                </div>
-                <div className="labelList">
-                  <p className="labelName">Type </p>
-                  <p>{appointment?.appointmenttype}</p>
-                </div>
-              </div>
-            </div>
-            {/* <div className="col-12 mb-3 py-5">
-              <label className="mb-3">
-                <p style={{ fontSize: "26px", fontWeight: "bold" }}>
-                  Would you like to proceed with check in process?
-                </p>
-              </label>
-              <br />
-
-              <button
-                type="button"
-                className="buttonDiv"
-                onClick={checkInsurance}
-              >
-                Yes
-              </button>
-              <button
-                type="button"
-                onClick={checkLater}
-                className="buttonDiv nextButton"
-              >
-                Later
-              </button>
-            </div> */}
           </div>
         )}
       </main>
