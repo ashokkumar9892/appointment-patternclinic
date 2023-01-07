@@ -150,11 +150,10 @@ const ReviewAppoinmentNew = () => {
       })
       .catch((error) => {
         setLoading(false);
-        if (error?.response?.status == 400) {
-          swal("Appointment not Booked!", "error").then((value) => {
-            history.push("/appointment/");
-          });
-        }
+
+        swal("Appointment not Booked!", "error").then((value) => {
+          history.push("/appointment/");
+        });
       });
   };
   const sendSms = (appointmentid) => {
