@@ -234,6 +234,7 @@ const ReviewAppoinmentNew = () => {
 
   return (
     <>
+      {console.log(patientContext, "patientContext")}
       <TopHeader />
       <section className="appointmentrow mx-0">
         <div className="right-content">
@@ -313,7 +314,16 @@ const ReviewAppoinmentNew = () => {
                 </div>
                 <div className="textLocationDiv">
                   <p className="labelName">Reason for Visit</p>
-                  <p> {patientContext.patientDetails.reason}</p>
+                  <p>
+                    {" "}
+                    {
+                      patientContext?.patientDetails?.reasonList?.find(
+                        (item, index) =>
+                          item?.reasonid ==
+                          patientContext?.patientDetails?.reason
+                      )?.reason
+                    }
+                  </p>
                 </div>
               </div>
 

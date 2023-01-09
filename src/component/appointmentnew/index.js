@@ -81,6 +81,7 @@ const AppointmentNew = () => {
       location: location,
       timeData: starttime,
       reason: reason,
+      reasonList: reasonList,
       reasonLabel: reasonLabel,
       appointmenttypeid: appointmenttypeid,
       appointmentid: appointmentid,
@@ -115,8 +116,10 @@ const AppointmentNew = () => {
             <div className="appointmentcard">
               <h2 className="card-heading mb-30px">Make a Appointment</h2>
               <div className="appointmentrow mb-30px">
-                <div className="col-6">
-                  <label>Patient Type</label>
+                <div className="col-6 appointmentTypeDiv">
+                  <label>
+                    <span className="step"> Step 1 : </span> Patient Type
+                  </label>
                   <div style={{ marginTop: "8px" }}>
                     <select
                       className="formselectdiv"
@@ -132,8 +135,10 @@ const AppointmentNew = () => {
                     </select>
                   </div>
                 </div>
-                <div className="col-6">
-                  <label>Reason for visit</label>
+                <div className="col-6 appointmentTypeDiv">
+                  <label>
+                    <span className="step"> Step 2 : </span> Reason for visit
+                  </label>
                   <div style={{ marginTop: "8px" }}>
                     <select
                       disabled={!patientType}
@@ -163,7 +168,11 @@ const AppointmentNew = () => {
               </div>
               <div className="appointmentrow">
                 <div className="appointmentcol-12">
-                  <label>{value.toDateString()}</label>
+                  <label>
+                    {" "}
+                    <span className="step"> Step 3 : </span>{" "}
+                    {value.toDateString()}
+                  </label>
                   <div
                     style={{
                       fontSize: "14px",
