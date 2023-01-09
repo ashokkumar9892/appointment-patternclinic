@@ -3,6 +3,11 @@
 }
 
 
+.step{
+	font-weight: 700;
+    font-size: 16px;
+    color: #0058DC;
+}
 
 .owl-carousel,
 .owl-carousel .owl-item {
@@ -265,8 +270,7 @@ button:focus {
 .appointmentrow {
 	display: flex;
 	flex-wrap: wrap;
-	margin-left: -25px;
-	margin-right: -27px;
+	
 }
 
 .d-flex {
@@ -837,12 +841,18 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 	.formselectdiv {
 		width: 98%;
 	}
-	
-	.appointmentrow {
-		margin-left: -25px;
-		margin-right: -27px;
+
+	.appointmentTypeDiv{
+		width: 100%;
+		max-width: 100%;
+		margin-top: 8px;
 	}
 
+	.appointmentrow{
+		flex-direction: column;
+	}
+	
+	
 	[class*="col-"] {
 		padding-left: 10px;
 		padding-right: 10px;

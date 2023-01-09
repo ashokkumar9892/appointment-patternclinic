@@ -175,7 +175,10 @@ const ScheduleAppointmentNew = () => {
                     }, 1000);
                   })
                   .catch((error) => {
-                    swal("Invalid Imformation ", "error").then((value) => {
+                    swal(
+                      "Invalid Information ",
+                      "Please enter valid Mobile number / Date Of Birth. "
+                    ).then((value) => {
                       setButtonloading(false);
                     });
                   });
@@ -203,7 +206,10 @@ const ScheduleAppointmentNew = () => {
                     return;
                   })
                   .catch((error) => {
-                    swal("Invalid Imformation ", "error").then((value) => {
+                    swal(
+                      "Invalid Information ",
+                      "Please enter valid Mobile number / Date Of Birth. "
+                    ).then((value) => {
                       setButtonloading(false);
                     });
                   });
@@ -232,14 +238,20 @@ const ScheduleAppointmentNew = () => {
                 }, 1000);
               })
               .catch((error) => {
-                swal("Invalid Imformation ", "error").then((value) => {
+                swal(
+                  "Invalid Information ",
+                  "Please enter valid Mobile number / Date Of Birth. "
+                ).then((value) => {
                   setButtonloading(false);
                 });
               });
           }
         })
         .catch((error) => {
-          swal("Invalid Imformation ", "error").then((value) => {
+          swal(
+            "Invalid Information ",
+            "Please enter valid Mobile number / Date Of Birth. "
+          ).then((value) => {
             setButtonloading(false);
           });
         });
