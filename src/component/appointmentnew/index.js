@@ -63,7 +63,7 @@ const AppointmentNew = () => {
     setLoading(true);
     providerList.map((item, index) => {
       let request = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${item.providerid}&enddate=${moment(new Date()).add(15,'d').format("MM/DD/YYYY")}`,
+        url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${item.providerid}&enddate=${moment(new Date()).add(30,'d').format("MM/DD/YYYY")}`,
       };
       api.getShedule(request).then((data) => {
         setOPenAPiCall(true);
@@ -174,7 +174,7 @@ const AppointmentNew = () => {
                   >
                     <DatePicker
                       getSelectedDay={selectedDay}
-                      endDate={15}
+                      endDate={30}
                       selectDate={new Date(value)}
                       labelFormat={"MMMM"}
                       color={"#374e8c"}
