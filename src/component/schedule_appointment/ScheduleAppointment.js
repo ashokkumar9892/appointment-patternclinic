@@ -120,11 +120,11 @@ const ScheduleAppointment = () => {
 
       let formBodydata = formBody.join("&");
       let request = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/patients`,
+        url: `https://appointmentdemoapi.apatternclinic.com/v1/24451/patients`,
         data: formBodydata,
       };
       let requestbestmatch = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/enhancedbestmatch`,
+        url: `https://appointmentdemoapi.apatternclinic.com/v1/24451/patients/enhancedbestmatch`,
         data: formBodydata,
       };
       api

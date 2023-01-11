@@ -377,7 +377,7 @@ export default function IntakeForm(props) {
     formData.append('priority', '1')
     formData.append('providerid', '1')
     let request = {
-      url: `https://appointmentapi.apatternclinic.com//v1/24451/patients/${props.patientid}/documents/admin`,
+      url: `https://appointmentdemoapi.apatternclinic.com//v1/24451/patients/${props.patientid}/documents/admin`,
       data: formData,
     };
     api

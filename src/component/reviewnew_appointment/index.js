@@ -23,16 +23,40 @@ import { useHistory } from "react-router-dom";
 const ReviewAppoinmentNew = () => {
   const history = useHistory();
   const patientContext = useContext(PatientContext);
+  const [insuranceImg, setInsuranceImg] = useState("");
   const [show, setShow] = useState(false);
   const [insuranceError, setInsuranceError] = useState("");
   const [insuranceBtnLoading, setInsuranceBtnLoading] = useState(false);
   const [checkterm, setCheckterm] = useState(false);
   const [insurance, setInsurance] = useState({ departmentid: 1 });
   const [loading, setLoading] = useState(false);
-
+  const [insuranceList, setInsuranceList] = useState([]);  
+	const [policyNumber, setPolicyNumber] = useState(628);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const selectInsuranceImage = (event) => {
+		let reader = new FileReader();
+		reader.readAsDataURL(event.target.files[0]);
+		reader.onload = function () {
+			setInsuranceImg(reader.result);
+			console.log(reader.result);
+		};
+		reader.onerror = function (error) {
+			console.log("Error: ", error);
+		};
+	};
+  const checkInsurance = () =>{
+    const request={
+      url: 'https://appointmentdemoapi.apatternclinic.com/v1/24451/misc/topinsurancepackages'
+    }
+    api.getAuth(request).then((res)=>{
+      setInsuranceList(res.data.insurancepackages)
 
+    })
+    
+  }
+
+	const minExpireDate = moment().add(1, "days").format("YYYY-MM-DD");
   function getAge(dateString) {
     var now = new Date();
     var today = new Date(now.getYear(), now.getMonth(), now.getDate());
@@ -133,7 +157,7 @@ const ReviewAppoinmentNew = () => {
     const formData = new FormData();
     buildFormData(formData, details);
     let request = {
-      url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/${patientContext.patientDetails.appointmentid}`,
+      url: `https://appointmentdemoapi.apatternclinic.com/v1/24451/appointments/${patientContext.patientDetails.appointmentid}`,
       data: new URLSearchParams(formData),
     };
     api
@@ -159,7 +183,7 @@ const ReviewAppoinmentNew = () => {
   const sendSms = (appointmentid) => {
     try {
       let request = {
-        url: `https://appointmentapi.apatternclinic.com/sms`,
+        url: `https://appointmentdemoapi.apatternclinic.com/sms`,
         params: {
           name:
             patientContext.patientDetails.firstname +
@@ -180,34 +204,72 @@ const ReviewAppoinmentNew = () => {
     }
   };
   const patientInsurance = () => {
-    setInsuranceError("");
-    const formData = new FormData();
-    const data = {
-      ...insurance,
-      expirationdate: moment(insurance.expirationdate).format("MM/DD/YYYY"),
-      issuedate: moment(insurance.issuedate).format("MM/DD/YYYY"),
-    };
-    setInsuranceBtnLoading(true);
-    buildFormData(formData, data);
-    let request = {
-      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
-      data: new URLSearchParams(formData),
-    };
-    api
-      .postAuth(request)
-      .then((data) => {
-        if (data.status === 200) {
-          handleClose();
-        }
-        console.log("data", data);
-      })
-      .catch((error) => {
-        setInsuranceError(error.response.data);
-      })
-      .finally(() => {
-        setInsuranceBtnLoading(false);
-      });
-  };
+		setInsuranceError("");
+
+		const formData = new FormData();
+		const data = {
+			...insurance,
+			expirationdate: moment(insurance.expirationdate).format("MM/DD/YYYY"),
+			issuedate: moment(insurance.issuedate).format("MM/DD/YYYY"),
+      relationshiptoinsuredid:1,
+      sequencenumber: 1
+		};
+		setInsuranceBtnLoading(true);
+		buildFormData(formData, data);
+		let request = {
+			url: `https://appointmentdemoapi.apatternclinic.com/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
+			data: new URLSearchParams(formData),
+		};
+		api
+			.postAuth(request)
+			.then((res) => {
+				if (res.status === 200) {
+					let patientId = patientContext.patientDetails.patientid;
+					console.log(insurance.insuranceidnumber);
+					let request = {
+						url: `https://appointmentdemoapi.apatternclinic.com/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
+						data: new URLSearchParams(formData),
+					};
+					api.getAuth(request).then((res) => {
+						if (res.status === 200) {
+							console.log(res.data.insurances);
+							setPolicyNumber(res.data.insurances[0].insuranceid);
+							const insuranceImageasbase64 = {
+								image: insuranceImg.split("base64,")[1],
+							};
+              
+							let getInsuranceRes = res.data;
+							//console.log("insuranceImageasbase64", insuranceImageasbase64);
+							const formData = new FormData();
+							buildFormData(formData, insuranceImageasbase64);
+							let request = {
+								url: `https://appointmentdemoapi.apatternclinic.com/v1/24451/patients/${patientId}/insurances/${res.data.insurances[0].insuranceid}/image`,
+								data: new URLSearchParams(formData),
+							};
+							api
+								.postAuth(request)
+								.then((res) => {
+									console.log(res);
+									setInsuranceImg("");
+									setInsuranceBtnLoading(false);
+									handleClose();
+								
+									swal("Insurance has been added successfully", "success");
+								})
+								.catch((err) => {
+									setInsuranceBtnLoading(false);
+									console.log(err);
+								});
+						}
+					});
+				}
+			})
+			.catch((error) => {
+				setInsuranceBtnLoading(false);
+				setInsuranceError(error.response.data);
+			})
+			.finally(() => { });
+	};
   const buildFormData = (formData, data, parentKey) => {
     if (
       data &&
@@ -321,21 +383,46 @@ const ReviewAppoinmentNew = () => {
                 <div className="imageDiv">
                   <img height={20} width={20} src={insurence} />
                 </div>
-                <div className="textLocationDiv">
-                  <p className="labelName">Insurance</p>
-                  <p> {patientContext.patientDetails.insurance}</p>
+                <div className="textLocationDiv" style={{display:'flex',flexDirection:'column'}}>
+                  <div><p className="labelName">Would You like to add your Insurance?</p></div>
+                  
+                  <div  style={{display:'flex'}}>
+                  <div>
+                    <button
+                    style={{border:'1px solid #0052CC',width:'40px',color:'#0052CC'}}
+                      onClick={() => {
+                        handleShow();checkInsurance();
+                      }}
+                    >
+                      Yes
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                    style={{marginLeft:'5px',width:'40px',border:'1px solid #0052CC',color:'#0052CC'}}
+                      onClick={() => {
+                        Preview();
+                      }}
+                    >
+                      No
+                    </button>
+                
+                  </div>
                 </div>
+                  </div>
+                  
               </div>
             </div>
             <div>
-              <div className="row" style={{ marginTop: "12px" }}>
+              {/* <div className="row" style={{ marginTop: "12px" }}>
                 <div className="col-md-12">
                   <p className="mb-0">
                     <strong>Additional Notes</strong>
                   </p>
                   <p>{patientContext.patientDetails.additional}</p>
                 </div>
-              </div>
+              </div> */}
+              
               <div className="col-md-12">
                 <input
                   type="checkbox"
@@ -385,6 +472,204 @@ const ReviewAppoinmentNew = () => {
             </div>
           </div>
         </div>
+        <Modal size="lg" show={show} onHide={handleClose}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            patientInsurance();
+          }}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Insurance</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="row">
+              {insuranceError && (
+                <div className="col-12">
+                  <div className="alert alert-danger">{insuranceError}</div>
+                </div>
+              )}
+              <div className="col-6">
+                <div className="mb-3">
+                  <label className="form-label">Insurance ID Number</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="insuranceidnumber"
+                    value={insurance.insuranceidnumber}
+                    onInput={(e) => onInputChange(e.target)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="mb-3">
+                  <label className="form-label">Insurance Name</label>
+                  <select
+                    type="number"
+                    className="form-select"
+                    name="insurancepackageid"
+                    value={insurance.insurancepackageid}
+                    onInput={(e) => onInputChange(e.target)}
+                    required
+                  >
+                    <option value=""></option>
+                    {insuranceList.map((curr)=>{
+                      return(
+                      <option value={curr.insurancepackageid}>{curr.name}</option>)
+                    })}
+                  </select>
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="mb-3">
+                  <label className="form-label">Issue Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    name="issuedate"
+                    value={insurance.issuedate}
+                    onInput={(e) => onInputChange(e.target)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="mb-3">
+                  <label className="form-label">Expiration Date</label>
+                  <input
+                    type="date"
+                    min={minExpireDate}
+                    className="form-control"
+                    name="expirationdate"
+                    value={insurance.expirationdate}
+                    onInput={(e) => onInputChange(e.target)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="mb-3">
+                  <label className="form-label">Policyholder First Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="insurancepolicyholderfirstname"
+                    value={insurance.insurancepolicyholderfirstname}
+                    onInput={(e) => onInputChange(e.target)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="mb-3">
+                  <label className="form-label">Policyholder Last Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="insurancepolicyholderlastname"
+                    value={insurance.insurancepolicyholderlastname}
+                    onInput={(e) => onInputChange(e.target)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="mb-3">
+                  <label className="form-label">Policy Holder Sex</label>
+                  <select
+                    className="form-select"
+                    name="insurancepolicyholdersex"
+                    value={insurance.insurancepolicyholdersex}
+                    onChange={(e) => onInputChange(e.target)}
+                    required
+                  >
+                    <option value=""></option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                  </select>
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="mb-3">
+                  <label className="form-label">Insured Entity type Id</label>
+                  <select
+                    className="form-select"
+                    name="insuredentitytypeid"
+                    value={insurance.insuredentitytypeid}
+                    onChange={(e) => onInputChange(e.target)}
+                    required
+                  >
+                    <option value=""></option>
+                    <option value="1">Primary</option>
+                    <option value="2">Secondary</option>
+                  </select>
+                </div>
+              </div>
+              {/* <div className="col-6">
+                <div className="mb-3">
+                  <label className="form-label">
+                    Relationship to Insured id
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="relationshiptoinsuredid"
+                    value={insurance.relationshiptoinsuredid}
+                    onInput={(e) => onInputChange(e.target)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="mb-3">
+                  <label className="form-label">Sequence Number</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="sequencenumber"
+                    value={insurance.sequencenumber}
+                    onInput={(e) => onInputChange(e.target)}
+                    required
+                  />
+                </div>
+              </div> */}
+              <div className="col-6">
+                <div className="mb-3">
+                  <label className="form-label">Insurance Image</label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    name="sequencenumber"
+                    onChange={selectInsuranceImage}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="mb-3">
+                  <label className="form-label">Preview</label>
+                  <div>
+                    <img src={insuranceImg} className="w-100" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="buttonDiv" variant="secondary" onClick={handleClose}>
+              Close
+            </button>
+            <button
+              className="nextButton"
+              type="submit"
+              disabled={insuranceBtnLoading}
+            >
+              {insuranceBtnLoading ? "Saving" : "Save"}
+            </button>
+          </Modal.Footer>
+        </form>
+      </Modal>
       </section>
     </>
   );

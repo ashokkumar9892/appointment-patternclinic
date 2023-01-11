@@ -18,7 +18,7 @@ export const getToken = () => {
       .request({
         url: "/oauth2/v1/token",
         method: "post",
-        baseURL: "https://appointmentapi.apatternclinic.com/",
+        baseURL: "https://appointmentdemoapi.apatternclinic.com/",
         auth: {
           username: process.env.REACT_APP_USER_NAME,
           password: process.env.REACT_APP_PASSWORD,
@@ -69,7 +69,7 @@ const saveProviderAndReasonToJSON = async () => {
       reasonPromise.push(
         new Promise((resolve, reject) => {
           let request = {
-            url: `https://appointmentapi.apatternclinic.com/v1/24451/patientappointmentreasons?departmentid=1&providerid=${el.providerid}`,
+            url: `https://appointmentdemoapi.apatternclinic.com/v1/24451/patientappointmentreasons?departmentid=1&providerid=${el.providerid}`,
           };
           api
             .getAuth(request)

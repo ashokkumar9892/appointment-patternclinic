@@ -62,7 +62,7 @@ const AppointmentNew = () => {
     setLoading(true);
     providerList.map((item, index) => {
       let request = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${item.providerid}`,
+        url: `https://appointmentdemoapi.apatternclinic.com/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${item.providerid}`,
       };
       api.getShedule(request).then((data) => {
         setOPenAPiCall(true);

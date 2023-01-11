@@ -32,7 +32,7 @@
 	margin-bottom: 0;
 }
 
-.options .select-selected,
+.options .select-selected,.form-select,
 input[type="text"],
 input[type="tel"],
 input[type="email"],
