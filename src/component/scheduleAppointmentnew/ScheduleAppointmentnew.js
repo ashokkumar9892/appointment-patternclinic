@@ -311,7 +311,8 @@ const ScheduleAppointmentNew = () => {
                 />
               </div>
             </div>
-            <div style={{ marginTop: "12px" }}>
+            <div className="nameRow" style={{ marginTop: "12px" }}>
+            <div className="width45" style={{ marginTop: "12px" }}>
               <p className="labelName">
                 {" "}
                 Date of Birth <span style={{ color: "red" }}>*</span>
@@ -325,7 +326,7 @@ const ScheduleAppointmentNew = () => {
                 onChange={createDob}
               />
             </div>
-            <div style={{ marginTop: "12px" }}>
+            <div className="width45" style={{ marginTop: "12px" }}>
               <p className="labelName">
                 {" "}
                 Legal Sex <span style={{ color: "red" }}>*</span>
@@ -337,6 +338,7 @@ const ScheduleAppointmentNew = () => {
                 <option value="M">Male</option>
                 <option value="F">Female</option>
               </select>
+            </div>
             </div>
             <div className="nameRow" style={{ marginTop: "12px" }}>
               <div className="width45">

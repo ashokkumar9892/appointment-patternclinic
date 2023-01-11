@@ -183,7 +183,7 @@ const AppointmentNew = () => {
                   >
                     <DatePicker
                       getSelectedDay={selectedDay}
-                      endDate={30}
+                      endDate={31}
                       selectDate={new Date(value)}
                       labelFormat={"MMMM"}
                       color={"#374e8c"}
