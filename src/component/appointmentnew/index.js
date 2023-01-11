@@ -10,6 +10,7 @@ import Loader from "react-js-loader";
 import TopHeader from "../common/topHeader";
 import { useHistory } from "react-router-dom";
 import ProviderListComp from "./prviderlist";
+import moment from "moment";
 const AppointmentNew = () => {
   const history = useHistory();
   const patientContext = useContext(PatientContext);
@@ -62,7 +63,7 @@ const AppointmentNew = () => {
     setLoading(true);
     providerList.map((item, index) => {
       let request = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${item.providerid}`,
+        url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${item.providerid}&enddate=${moment(new Date()).add(15,'d').format("MM/DD/YYYY")}`,
       };
       api.getShedule(request).then((data) => {
         setOPenAPiCall(true);
@@ -173,11 +174,12 @@ const AppointmentNew = () => {
                   >
                     <DatePicker
                       getSelectedDay={selectedDay}
-                      endDate={100}
+                      endDate={15}
                       selectDate={new Date(value)}
                       labelFormat={"MMMM"}
                       color={"#374e8c"}
                       className="datapicker"
+                      
                     />
                   </div>
                 </div>
