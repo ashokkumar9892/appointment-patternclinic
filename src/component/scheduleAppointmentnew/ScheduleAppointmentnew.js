@@ -17,7 +17,8 @@ const ScheduleAppointmentNew = () => {
   const [viewDob, setViewDob] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [phonetype, setPhonetype] = useState("HOMEPHONE");
+  const [address1, setaddress1] = useState("");
+  const [address2, setaddress2] = useState("");
   const [insurance, setInsurance] = useState("");
   const [additional, setAdditional] = useState("");
   const [sex, setSex] = useState("M");
@@ -31,13 +32,11 @@ const ScheduleAppointmentNew = () => {
     email: email,
     mobilephone: phone,
     sex: sex,
-    contactpreference: phonetype,
+    address11:address1,
+    address12:address2,
+    notes: additional
   };
-  if (phonetype === "WORKPHONE") {
-    details.workphone = phone;
-  } else {
-    details.homephone = phone;
-  }
+ 
 
   const dobMax = moment().subtract(2, "days").format("YYYY-MM-DD");
 
@@ -357,18 +356,6 @@ const ScheduleAppointmentNew = () => {
                 />
               </div>
               <div className="width45">
-                <p className="labelName">Phone Type</p>
-                <select
-                  className="inputBox"
-                  onChange={(e) => setPhonetype(e.target.value)}
-                >
-                  <option selected="selected">Choose...</option>
-                  <option value="HOMEPHONE">Home</option>
-                  <option value="WORKPHONE">Office</option>
-                </select>
-              </div>
-            </div>
-            <div style={{ marginTop: "12px" }}>
               <p className="labelName">
                 Email <span style={{ color: "red" }}>*</span>
               </p>
@@ -381,7 +368,35 @@ const ScheduleAppointmentNew = () => {
                   setEmail(e.target.value);
                 }}
               />
+              </div>
             </div>
+            <div className="nameRow" style={{ marginTop: "12px" }}>
+            <div className="width45">
+            <p className="labelName">Address Line 1</p>
+                <input
+                  className="inputBox"
+                  onChange={(e) => setaddress1(e.target.value)}
+                />
+                </div>
+                <div className="width45">
+            <p className="labelName">Address Line 2</p>
+                <input
+                  className="inputBox"
+                  onChange={(e) => setaddress2(e.target.value)}
+                />
+                </div>
+            </div>
+            <div style={{ marginTop: "24px" }}>
+              <p className="labelName">Additional Notes</p>
+              <input
+                className="inputBox"
+                value={additional}
+                onChange={(e) => {
+                  setAdditional(e.target.value);
+                }}
+              />
+            </div>
+
             <div className="nameRow">
               <div className="dateTimeDiv">
                 <div className="imageDiv">
@@ -411,17 +426,7 @@ const ScheduleAppointmentNew = () => {
                 </div>
               </div>
             </div>
-            <div style={{ marginTop: "24px" }}>
-              <p className="labelName">Additional Notes</p>
-              <input
-                className="inputBox"
-                value={additional}
-                onChange={(e) => {
-                  setAdditional(e.target.value);
-                }}
-              />
-            </div>
-
+            
             <div style={{ marginTop: "24px" }}>
               <button
                 className="buttonDiv"

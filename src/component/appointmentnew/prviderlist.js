@@ -6,6 +6,9 @@ import Bozzone from "../../assets/drimages/BozzoneDr.jpeg";
 import MitchekkNP from "../../assets/drimages/MitchellNP-removebg.jpeg";
 import Jonthan from "../../assets/drimages/jonthan.png";
 import Lily from "../../assets/drimages/lily.png";
+import Calella from "../../assets/drimages/Calella.jpeg";
+import Casey from "../../assets/drimages/Casey.jpeg";
+import Sherrie from "../../assets/drimages/Sherrie.jpeg"
 import Icons from "../../assets/favicon.jpg";
 
 const ProviderList = (props) => {
@@ -71,6 +74,15 @@ const ProviderList = (props) => {
       case 8: {
         return Bozzone;
       }
+      case 4: {
+        return Calella;
+      }
+      case 23: {
+        return Casey;
+      }
+      case 15: {
+        return Sherrie;
+      }
 
       default: {
         return Icons;
@@ -108,6 +120,7 @@ const ProviderList = (props) => {
                   marginRight: "1rem",
                   objectFit: "contain",
                   height: "5rem",
+                  width: '5rem'
                 }}
                 width="100%"
               />
