@@ -27,7 +27,7 @@ const ScheduleAppointmentNew = () => {
   var details = {
     firstname: firstname,
     lastname: lastname,
-    departmentid: 1,
+    departmentid: patientContext.patientDetails.department,
     dob: dob,
     email: email,
     mobilephone: phone,
@@ -133,7 +133,7 @@ const ScheduleAppointmentNew = () => {
       };
 
       let requestbestmatch = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/enhancedbestmatch?firstname=${firstname}&lastname=${lastname}&departmentid=1&dob=${dob}&sex=${sex}&returnbestmatches=true`,
+        url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/enhancedbestmatch?firstname=${firstname}&lastname=${lastname}&departmentid=${patientContext.patientDetails.department}&dob=${dob}&sex=${sex}&returnbestmatches=true`,
       };
       api
         .getAuth(requestbestmatch)

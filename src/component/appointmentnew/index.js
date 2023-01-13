@@ -25,6 +25,9 @@ const AppointmentNew = () => {
   const [location, setLoction] = useState("OOLTEWAH CLINIC (EDT)");
   const [timeData, setTimeData] = useState("");
   const [openApiCall, setOPenAPiCall] = useState(false);
+  const [department, setDepartment] = useState("");
+  
+  const [departmentList, setDepartmentList] = useState([]);
   const [loading, setLoading] = useState(false);
   const BASE_URL = process.env.REACT_APP_BASE_URL
     ? process.env.REACT_APP_BASE_URL
@@ -44,7 +47,19 @@ const AppointmentNew = () => {
         console.log(err);
       });
   };
+  const departmentApiCall = () => {
+    axios
+      .request({ url: `${BASE_URL}/departments` })
+      .then((data) => {
+        setLoading(false);
+        setDepartmentList(data.data?.departments);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
+    departmentApiCall();
     axios
       .request({ url: `${BASE_URL}/providers` })
       .then((data) => {
@@ -63,7 +78,7 @@ const AppointmentNew = () => {
     setLoading(true);
     providerList.map((item, index) => {
       let request = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${item.providerid}&enddate=${moment(new Date()).add(30,'d').format("MM/DD/YYYY")}`,
+        url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/open?practiceid=24451&departmentid=${department}&reasonid=${reason}&providerid=${item.providerid}&enddate=${moment(new Date()).add(30,'d').format("MM/DD/YYYY")}`,
       };
       api.getShedule(request).then((data) => {
         setOPenAPiCall(true);
@@ -88,6 +103,7 @@ const AppointmentNew = () => {
       appointmentid: appointmentid,
       value: value.toDateString(),
       providerid: provider,
+      department: department
     });
     setTimeout(() => {
       history.push("/schedulenew/");
@@ -117,9 +133,37 @@ const AppointmentNew = () => {
             <div className="appointmentcard">
               <h2 className="card-heading mb-30px">Make a Appointment</h2>
               <div className="appointmentrow mb-30px">
+              <div className="col-6 appointmentTypeDiv">
+                  <label>
+                    <span className="step"> Step 1 : </span> Location
+                  </label>
+                  <div style={{ marginTop: "8px" }}>
+                    <select
+                      className="formselectdiv"
+                      onChange={(event) => {
+                        setDepartment(event.target.value);
+                      }}
+                    >
+                      <option value="" hidden>
+                        -Select-
+                      </option>
+                      {departmentList.map((el) => {
+                        return (
+                          <>
+                            {(
+                              <option value={el.departmentid} key={el.departmentid}>
+                                {el.patientdepartmentname}
+                              </option>
+                            )}
+                          </>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
                 <div className="col-6 appointmentTypeDiv">
                   <label>
-                    <span className="step"> Step 1 : </span> Patient Type
+                    <span className="step"> Step 2 : </span> Patient Type
                   </label>
                   <div style={{ marginTop: "8px" }}>
                     <select
@@ -138,7 +182,7 @@ const AppointmentNew = () => {
                 </div>
                 <div className="col-6 appointmentTypeDiv">
                   <label>
-                    <span className="step"> Step 2 : </span> Reason for visit
+                    <span className="step"> Step 3 : </span> Reason for visit
                   </label>
                   <div style={{ marginTop: "8px" }}>
                     <select
@@ -171,7 +215,7 @@ const AppointmentNew = () => {
                 <div className="appointmentcol-12">
                   <label>
                     {" "}
-                    <span className="step"> Step 3 : </span>{" "}
+                    <span className="step"> Step 4 : </span>{" "}
                     {value.toDateString()}
                   </label>
                   <div

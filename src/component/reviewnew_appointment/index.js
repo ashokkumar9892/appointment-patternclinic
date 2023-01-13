@@ -119,7 +119,7 @@ const ReviewAppoinmentNew = () => {
     patientid: patientContext.patientDetails.patientid,
     appointmenttypeid: patientContext.patientDetails.appointmenttypeid,
     appointmentid: patientContext.patientDetails.appointmentid,
-    departmentid: 1,
+    departmentid: patientContext.patientDetails.department,
     ignoreschedulablepermission: true,
   };
 
