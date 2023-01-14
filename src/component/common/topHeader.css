@@ -1,0 +1,10 @@
+@media screen and (max-width: 594px) {
+	.home-screen-icon
+	{
+		display: none;
+	}
+	.logo-section
+	{
+		font-size: 18px!important;
+	}
+}

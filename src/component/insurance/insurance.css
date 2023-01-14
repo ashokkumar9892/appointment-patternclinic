@@ -307,3 +307,20 @@ textarea {
 {
 	border: none;
 }
+
+.insuranceDataSelect  .css-13cymwt-control
+{
+	background: #F3F3F5;
+	border-radius: 0;
+}
+
+.insuranceDataSelect .insuranceDataSelectInner__value-container
+{
+height: 42px;
+border-radius: 2px;
+}
+
+.insuranceDataSelect .insuranceDataSelectInner__input-container
+{
+	margin: 0;
+}

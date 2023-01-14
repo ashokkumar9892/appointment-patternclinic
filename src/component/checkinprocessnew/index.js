@@ -39,6 +39,9 @@ const CheckInNew = () => {
 	const [appointmentData, setAppointmentData] = useState({});
 	const [cardDetails, setCardDetails] = useState({});
 	const [showCardDetails, setShowCardDetails] = useState(false);
+	const BASE_URL = process.env.REACT_APP_BASE_URL
+		? process.env.REACT_APP_BASE_URL
+		: "http://localhost:3001";
 	const patientContext = useContext(PatientContext);
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
@@ -82,8 +85,6 @@ const CheckInNew = () => {
 	const [nameoncard, setNameoncard] = useState("");
 	const [otheramount, setOtheramount] = useState("");
 	const [balance, setBalance] = useState("");
-
-
 
 	useEffect(() => {
 		loadData();

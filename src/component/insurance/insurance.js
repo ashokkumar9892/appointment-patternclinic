@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {useHistory} from "react-router-dom";
 import mergeImages from 'merge-base64';
@@ -9,6 +9,8 @@ import swal from "sweetalert";
 import "./insurance.css";
 import PatientContext from "../../context/patientDetails/patientContext";
 import TopHeader from "../common/topHeader";
+import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import Select from "react-select";
 
 const Insurance = () =>{
 	const history = useHistory();
@@ -19,16 +21,21 @@ const Insurance = () =>{
 	const [insuranceError, setInsuranceError] = useState("");
 	const [showWarningModal, setWarningShow] = useState(false);
 	const [docImage, setDocImage] = useState({});
-	const onInputChange = (e) => {
-		setInsurance({ ...insurance, [e.name]: e.value });
+	const onInputChange = (e, name) => {
+		setInsurance({ ...insurance, [name || e.name]: e.value });
 	};
+
+	const BASE_URL = process.env.REACT_APP_BASE_URL
+		? process.env.REACT_APP_BASE_URL
+		: "http://localhost:3001";
 	const [show, setShow] = useState(false);
 	const checkInsurance = () =>{
 		const request={
-			url: 'https://appointmentdemoapi.apatternclinic.com/v1/24451/misc/topinsurancepackages'
+			url: `${BASE_URL}/v1/24451/misc/topinsurancepackages`
 		}
 		api.getAuth(request).then((res)=>{
-			setInsuranceList(res.data.insurancepackages)
+			let insuranceOptions = res.data.insurancepackages.sort((a, b) => a.name.localeCompare(b.name));
+			setInsuranceList(insuranceOptions);
 		})
 
 	}
@@ -77,6 +84,15 @@ const Insurance = () =>{
 		};
 	};
 
+	const searchList = insuranceList.map(
+		(cur, index) => {
+			return{
+				value: cur.insurancepackageid,
+				label: cur.name
+			}
+		}
+	);
+
 	function showInsuranceFormToUser(confirmation)
 	{
 		if(confirmation)
@@ -106,6 +122,9 @@ const Insurance = () =>{
 			console.log(error);
 		}
 	}
+	const options = [
+		'one', 'two', 'three'
+	];
 	const patientInsurance = () => {
 		setInsuranceError("");
 		const formData = new FormData();
@@ -119,7 +138,7 @@ const Insurance = () =>{
 		setInsuranceBtnLoading(true);
 		buildFormData(formData, data);
 		let request = {
-			url: `https://appointmentdemoapi.apatternclinic.com/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
+			url: `${BASE_URL}/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
 			data: new URLSearchParams(formData),
 		};
 		api
@@ -129,7 +148,7 @@ const Insurance = () =>{
 					let patientId = patientContext.patientDetails.patientid;
 					console.log(insurance.insuranceidnumber);
 					let request = {
-						url: `https://appointmentdemoapi.apatternclinic.com/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
+						url: `${BASE_URL}/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
 						data: new URLSearchParams(formData),
 					};
 					api.getAuth(request).then((res) => {
@@ -146,7 +165,7 @@ const Insurance = () =>{
 							const formData = new FormData();
 							buildFormData(formData, insuranceImageasbase64);
 							let request = {
-								url: `https://appointmentdemoapi.apatternclinic.com/v1/24451/patients/${patientId}/insurances/${res.data.insurances[0].insuranceid}/image`,
+								url: `${BASE_URL}/v1/24451/patients/${patientId}/insurances/${res.data.insurances[0].insuranceid}/image`,
 								data: new URLSearchParams(formData),
 							};
 							api
@@ -213,20 +232,15 @@ const Insurance = () =>{
 							</div>
 							<div className="field">
 								<label>Insurance Name</label>
-								<select
-									type="number"
-									className="form-select"
-									name="insurancepackageid"
-									value={insurance.insurancepackageid}
-									onInput={(e) => onInputChange(e.target)}
-									required
-								>
-									<option value=""></option>
-									{insuranceList.map((curr)=>{
-										return(
-											<option value={curr.insurancepackageid}>{curr.name}</option>)
-									})}
-								</select>
+								<Select
+									value={insurance.label}
+									options={searchList}
+									onChange={(e) => onInputChange(e, 'insurancepackageid')}
+									placeholder= ""
+									className={'insuranceDataSelect'}
+									classNamePrefix={'insuranceDataSelectInner'}
+									openMenuOnClick={true}
+								/>
 							</div>
 							<div className="field">
 								<label>Issue Date</label>

@@ -36,7 +36,9 @@ export default function FamilyForm(props) {
   const [personalAndFamilyHistoryContinue, setPersonalAndFamilyHistoryContinue] = useState(patientContext?.patientDetails?.familyData?.personalAndFamilyHistoryContinue ?? {})
   const [providerUpdatesComments, setProviderUpdatesComments] = useState(patientContext?.patientDetails?.familyData?.providerUpdatesComments)
   const [stepCanvas, setStepCanvas] = useState({});
-
+	const BASE_URL = process.env.REACT_APP_BASE_URL
+		? process.env.REACT_APP_BASE_URL
+		: "http://localhost:3001";
   const familyFormData = {
     patientProvidedInformation: patientProvidedInformation,
     pastMedicalHistory: pastMedicalHistory,
@@ -566,7 +568,7 @@ export default function FamilyForm(props) {
     formData.append('priority', '1')
     formData.append('providerid', '1')
     let request = {
-      url: `https://appointmentapi.apatternclinic.com//v1/24451/patients/${props.patientid}/documents/admin`,
+      url: `${BASE_URL}//v1/24451/patients/${props.patientid}/documents/admin`,
       data: formData,
     };
     api

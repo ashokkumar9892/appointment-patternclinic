@@ -236,9 +236,8 @@ const ScheduleAppointmentNew = () => {
                   patientid: response.data[0].patientid,
                 });
                 setTimeout(() => {
+					history.push('/insurance-confirmation');
                   // history.push("/reviewnew");
-					history.push('/insurance-confirmation',{params: response.data[0].patientid});
-					// history.push("/insurance-confirmation");
                   setButtonloading(false);
                 }, 1000);
               })

@@ -44,7 +44,9 @@ export default function IntakeForm(props) {
   const [historyCanvas, setHistoryCanvas] = useState({});
   const [familyCanvas, setFamilyCanvas] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
+	const BASE_URL = process.env.REACT_APP_BASE_URL
+		? process.env.REACT_APP_BASE_URL
+		: "http://localhost:3001";
   const config = {
     angle: 90,
     spread: 360,
@@ -377,7 +379,7 @@ export default function IntakeForm(props) {
     formData.append('priority', '1')
     formData.append('providerid', '1')
     let request = {
-      url: `https://appointmentapi.apatternclinic.com//v1/24451/patients/${props.patientid}/documents/admin`,
+      url: `${BASE_URL}//v1/24451/patients/${props.patientid}/documents/admin`,
       data: formData,
     };
     api

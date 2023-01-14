@@ -24,7 +24,9 @@ const ScheduleAppointment = () => {
   const [sex, setSex] = useState("male");
   const [buttonloading, setButtonloading] = useState(false);
   const [insuranceImage, setInsuranceImage] = useState("");
-
+	const BASE_URL = process.env.REACT_APP_BASE_URL
+		? process.env.REACT_APP_BASE_URL
+		: "http://localhost:3001";
   var details = {
     firstname: firstname,
     lastname: lastname,

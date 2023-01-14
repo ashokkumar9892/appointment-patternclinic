@@ -124,7 +124,7 @@ const ProviderList = (props) => {
               justifyContent: "space-around",
             }}
           >
-            <div style={{ width: "16%" }}>
+            <div style={{ width: "auto" }}>
               <img
                 src={SetImages(props?.item?.providerid)}
                 alt=''

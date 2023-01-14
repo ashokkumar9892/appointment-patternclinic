@@ -29,7 +29,9 @@ const ReviewAppoinmentNew = () => {
   const [checkterm, setCheckterm] = useState(false);
   const [insurance, setInsurance] = useState({ departmentid: 1 });
   const [loading, setLoading] = useState(false);
-
+	const BASE_URL = process.env.REACT_APP_BASE_URL
+		? process.env.REACT_APP_BASE_URL
+		: "http://localhost:3001";
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -133,7 +135,7 @@ const ReviewAppoinmentNew = () => {
     const formData = new FormData();
     buildFormData(formData, details);
     let request = {
-      url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/${patientContext.patientDetails.appointmentid}`,
+      url: `${BASE_URL}/v1/24451/appointments/${patientContext.patientDetails.appointmentid}`,
       data: new URLSearchParams(formData),
     };
     api
@@ -159,7 +161,7 @@ const ReviewAppoinmentNew = () => {
   const sendSms = (appointmentid) => {
     try {
       let request = {
-        url: `https://appointmentapi.apatternclinic.com/sms`,
+        url: `${BASE_URL}/sms`,
         params: {
           name:
             patientContext.patientDetails.firstname +
@@ -190,7 +192,7 @@ const ReviewAppoinmentNew = () => {
     setInsuranceBtnLoading(true);
     buildFormData(formData, data);
     let request = {
-      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
+      url: `${BASE_URL}/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
       data: new URLSearchParams(formData),
     };
     api

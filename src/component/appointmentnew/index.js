@@ -79,7 +79,7 @@ const AppointmentNew = () => {
     setLoading(true);
     providerList.map((item, index) => {
       let request = {
-        url: `${BASE_URL}/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${item.providerid}&enddate=${moment(new Date()).add(30,'d').format("MM/DD/YYYY")}`,
+        url: `${BASE_URL}/v1/24451/appointments/open?practiceid=24451&departmentid=${department}&reasonid=${reason}&providerid=${item.providerid}&enddate=${moment(new Date()).add(30,'d').format("MM/DD/YYYY")}`,
       };
       api.getShedule(request).then((data) => {
         setOPenAPiCall(true);
@@ -134,7 +134,7 @@ const AppointmentNew = () => {
             <div className="appointmentcard">
               <h2 className="card-heading mb-30px">Make a Appointment</h2>
               <div className="appointmentrow mb-30px">
-              <div className="col-6 appointmentTypeDiv">
+              <div className="col appointmentTypeDiv">
                   <label>
                     <span className="step"> Step 1 : </span> Location
                   </label>
@@ -162,7 +162,7 @@ const AppointmentNew = () => {
                     </select>
                   </div>
                 </div>
-                <div className="col-6 appointmentTypeDiv">
+                <div className="col appointmentTypeDiv">
                   <label>
                     <span className="step"> Step 2 : </span> Patient Type
                   </label>
@@ -181,7 +181,7 @@ const AppointmentNew = () => {
                     </select>
                   </div>
                 </div>
-                <div className="col-6 appointmentTypeDiv">
+                <div className="col appointmentTypeDiv">
                   <label>
                     <span className="step"> Step 3 : </span> Reason for visit
                   </label>
@@ -269,8 +269,8 @@ const AppointmentNew = () => {
             ))
             )}
           </div>
-          
-          
+
+
         </div>
       </section>
     </>

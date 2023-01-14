@@ -59,7 +59,7 @@ const saveProviderAndReasonToJSON = async () => {
       reasonPromise.push(
         new Promise((resolve, reject) => {
           let request = {
-            url: `https://appointmentapi.apatternclinic.com/v1/24451/patientappointmentreasons?departmentid=1&providerid=${el.providerid}`,
+            url: `${BASE_URL}/v1/24451/patientappointmentreasons?departmentid=1&providerid=${el.providerid}`,
           };
           api
             .getAuth(request)
