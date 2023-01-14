@@ -4,6 +4,7 @@ import NewAppointment from "../component/appointmentnew";
 import ScheduleAppointmentNew from "../component/scheduleAppointmentnew/ScheduleAppointmentnew";
 import ReviewAppoinmentNew from "../component/reviewnew_appointment";
 import CheckInNew from "../component/checkinprocessnew";
+import Insurance from "../component/insurance/insurance";
 
 const routes = [
   { path: "/", exact: true, strict: true, component: NewAppointment },
@@ -13,6 +14,12 @@ const routes = [
     exact: true,
     strict: true,
     component: ReviewAppoinmentNew,
+  },
+  {
+	path: "/insurance-confirmation",
+	exact: true,
+	strict: true,
+	component: Insurance,
   },
   {
     path: "/appointment/:id",
