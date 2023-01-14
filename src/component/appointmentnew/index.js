@@ -29,6 +29,7 @@ const AppointmentNew = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL
     ? process.env.REACT_APP_BASE_URL
     : "http://localhost:3001";
+
   const selectedDay = (val) => {
     onChange(val);
   };
@@ -63,7 +64,7 @@ const AppointmentNew = () => {
     setLoading(true);
     providerList.map((item, index) => {
       let request = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${item.providerid}&enddate=${moment(new Date()).add(30,'d').format("MM/DD/YYYY")}`,
+        url: `${BASE_URL}/v1/24451/appointments/open?practiceid=24451&departmentid=1&reasonid=${reason}&providerid=${item.providerid}&enddate=${moment(new Date()).add(30,'d').format("MM/DD/YYYY")}`,
       };
       api.getShedule(request).then((data) => {
         setOPenAPiCall(true);
@@ -208,19 +209,24 @@ const AppointmentNew = () => {
               </div>
             )}
           </div>
-
-          {providerList?.map((item, index) => (
-            <ProviderListComp
-              item={item}
-              sheduleobj={sheduleobj}
-              patientType={patientType}
-              reason={reason}
-              openApiCall={openApiCall}
-              value={value}
-              UpdateData={UpdateData}
-              setLoading={setLoading}
-            />
-          ))}
+          <div>
+          {!loading && (
+            providerList?.map((item, index) => (
+              <ProviderListComp
+                item={item}
+                sheduleobj={sheduleobj}
+                patientType={patientType}
+                reason={reason}
+                openApiCall={openApiCall}
+                value={value}
+                UpdateData={UpdateData}
+                setLoading={setLoading}
+              />
+            ))
+            )}
+          </div>
+          
+          
         </div>
       </section>
     </>

@@ -17,6 +17,9 @@ import images from "react-payment-inputs/images";
 import CovidForm from "../common/CovidForm";
 import Navbarcomponent from "../common/Navbar";
 import IntakeForm from "../common/IntakeForm";
+const BASE_URL = process.env.REACT_APP_BASE_URL
+    ? process.env.REACT_APP_BASE_URL
+    : "http://localhost:3001";
 
 const CheckInNew = () => {
 	const [deviceType, setDeviceType] = useState("");
@@ -105,7 +108,7 @@ const CheckInNew = () => {
 
 	const loadData = () => {
 		let request = {
-			url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/${id}`,
+			url: `${BASE_URL}/v1/24451/appointments/${id}`,
 		};
 		api.getAuth(request).then((res) => {
 			if (res.data && res.data.length) {
@@ -116,7 +119,7 @@ const CheckInNew = () => {
 
 	const checkInsurance = () => {
 		let request = {
-			url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointmentData.patientid}/insurances`,
+			url: `${BASE_URL}/v1/24451/patients/${appointmentData.patientid}/insurances`,
 		};
 		api.checkInsurances(request).then((res) => {
 			if (res.data.insurances.length > 0) {
@@ -137,7 +140,7 @@ const CheckInNew = () => {
 		setInsuranceBtnLoading(true);
 		buildFormData(formData, data);
 		let request = {
-			url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointmentData.patientid}/insurances`,
+			url: `${BASE_URL}/v1/24451/patients/${appointmentData.patientid}/insurances`,
 			data: new URLSearchParams(formData),
 		};
 		api
@@ -147,7 +150,7 @@ const CheckInNew = () => {
 					let patientId = appointmentData.patientid;
 					console.log(insurance.insuranceidnumber);
 					let request = {
-						url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointmentData.patientid}/insurances`,
+						url: `${BASE_URL}/v1/24451/patients/${appointmentData.patientid}/insurances`,
 						data: new URLSearchParams(formData),
 					};
 					api.getAuth(request).then((res) => {
@@ -162,7 +165,7 @@ const CheckInNew = () => {
 							const formData = new FormData();
 							buildFormData(formData, insuranceImageasbase64);
 							let request = {
-								url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${patientId}/insurances/${res.data.insurances[0].insuranceid}/image`,
+								url: `${BASE_URL}/v1/24451/patients/${patientId}/insurances/${res.data.insurances[0].insuranceid}/image`,
 								data: new URLSearchParams(formData),
 							};
 							api
@@ -220,7 +223,7 @@ const CheckInNew = () => {
 		};
 		buildFormData(formData, data);
 		let request = {
-			url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointmentData.patientid}/collectpayment`,
+			url: `${BASE_URL}/v1/24451/patients/${appointmentData.patientid}/collectpayment`,
 			data: new URLSearchParams(formData),
 		};
 		api
@@ -289,7 +292,7 @@ const CheckInNew = () => {
 		buildFormData(formData, details);
 		console.log(details, "details");
 		let request = {
-			url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointmentData.patientid}/recordpayment`,
+			url: `${BASE_URL}/v1/24451/patients/${appointmentData.patientid}/recordpayment`,
 			data: new URLSearchParams(formData),
 		};
 		api
@@ -324,7 +327,7 @@ const CheckInNew = () => {
 	};
 	const checkBalance = () => {
 		let request = {
-			url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointmentData.patientid}?showbalancedetails=true&departmentid=1`,
+			url: `${BASE_URL}/v1/24451/patients/${appointmentData.patientid}?showbalancedetails=true&departmentid=1`,
 		};
 		api
 			.getBalance(request)

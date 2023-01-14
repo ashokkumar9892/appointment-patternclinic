@@ -4,6 +4,10 @@ import api from "../../api";
 import TopHeader from "../common/topHeader";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
+const BASE_URL = process.env.REACT_APP_BASE_URL
+    ? process.env.REACT_APP_BASE_URL
+    : "http://localhost:3001";
+
 
 const ScheduleAppointment = () => {
   const history = useHistory();
@@ -120,11 +124,11 @@ const ScheduleAppointment = () => {
 
       let formBodydata = formBody.join("&");
       let request = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/patients`,
+        url: `${BASE_URL}/v1/24451/patients`,
         data: formBodydata,
       };
       let requestbestmatch = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/enhancedbestmatch`,
+        url: `${BASE_URL}/v1/24451/patients/enhancedbestmatch`,
         data: formBodydata,
       };
       api

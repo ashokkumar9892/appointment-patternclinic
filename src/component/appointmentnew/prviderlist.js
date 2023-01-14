@@ -13,6 +13,18 @@ import Icons from "../../assets/favicon.jpg";
 
 const ProviderList = (props) => {
   const [show, setShow] = useState(false);
+  const[isMobile,setMobile] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('resize', setWindowDimensions);
+    return () => {
+      window.removeEventListener('resize', setWindowDimensions)
+    }
+  }, [])
+  const setWindowDimensions = () => {
+    setMobile(window.innerWidth<600 );
+  }
+  
   const isFound = (arr, num1, num2) => {
     if (arr?.length > 0) {
       arr.some((element) => {
@@ -115,6 +127,7 @@ const ProviderList = (props) => {
             <div style={{ width: "16%" }}>
               <img
                 src={SetImages(props?.item?.providerid)}
+                alt=''
                 style={{
                   borderRadius: "50%",
                   marginRight: "1rem",
@@ -170,7 +183,11 @@ const ProviderList = (props) => {
                       props?.sheduleobj[Number(props?.item.providerid)]
                     )
                   )?.length > 0 ? (
-                    <button
+                    (removeDuplicatedata(
+                      getdateData(
+                        props?.sheduleobj[Number(props?.item.providerid)]
+                      )
+                    )?.length > 2 && isMobile ) ? (<button
                       className="buttonDiv"
                       style={{ marginTop: "8px" }}
                       onClick={() => {
@@ -178,7 +195,21 @@ const ProviderList = (props) => {
                       }}
                     >
                       {show ? "show less" : "show more"}
-                    </button>
+                    </button>) : 
+                    (removeDuplicatedata(
+                      getdateData(
+                        props?.sheduleobj[Number(props?.item.providerid)]
+                      )
+                    )?.length > 7 ? (<button
+                      className="buttonDiv"
+                      style={{ marginTop: "8px" }}
+                      onClick={() => {
+                        setShow(!show);
+                      }}
+                    >
+                      {show ? "show less" : "show more"}
+                    </button>) : null)
+                    
                   ) : (
                     "Slots available for other dates."
                   )}

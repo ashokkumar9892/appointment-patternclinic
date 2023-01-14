@@ -8,6 +8,10 @@ import api from "../../api";
 import TopHeader from "../common/topHeader";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
+const BASE_URL = process.env.REACT_APP_BASE_URL
+    ? process.env.REACT_APP_BASE_URL
+    : "http://localhost:3001";
+
 const ScheduleAppointmentNew = () => {
   const history = useHistory();
   const patientContext = useContext(PatientContext);
@@ -128,12 +132,12 @@ const ScheduleAppointmentNew = () => {
 
       let formBodydata = formBody.join("&");
       let request = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/patients`,
+        url: `${BASE_URL}/v1/24451/patients`,
         data: formBodydata,
       };
 
       let requestbestmatch = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/enhancedbestmatch?firstname=${firstname}&lastname=${lastname}&departmentid=1&dob=${dob}&sex=${sex}&returnbestmatches=true`,
+        url: `${BASE_URL}/v1/24451/patients/enhancedbestmatch?firstname=${firstname}&lastname=${lastname}&departmentid=1&dob=${dob}&sex=${sex}&returnbestmatches=true`,
       };
       api
         .getAuth(requestbestmatch)
@@ -150,7 +154,7 @@ const ScheduleAppointmentNew = () => {
                 response1.data[i].sex === sex
               ) {
                 let putrequest = {
-                  url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${response1.data[i].patientid}`,
+                  url: `${BASE_URL}/v1/24451/patients/${response1.data[i].patientid}`,
                   data: formBodydata,
                 };
                 api

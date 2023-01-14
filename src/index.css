@@ -22,9 +22,40 @@ code {
   background: linear-gradient(180.02deg, #0058DC 7.41%, #003584 98.04%);
   margin-bottom: 15px;
 }
-.top-header img {
-  height: 40px;
+
+
+/* @media (max-width: 1400px) { */
+  .top-image {
+    height: 40px;
+  }
+  .top-head {
+    color:#ffffff !important;
+    font-size:30px;
+    align-self:end;
+    margin-top:5px;
+    margin-left:15px;
+    font-weight:bold;
+    padding-bottom:1px;
+  
+  }
+/* } */
+
+
+@media (max-width: 575px) {
+  .top-image {
+    height: 36px;
+  }
+  .top-head {
+    color:#ffffff;
+    font-size: 24px;
+    margin-top: 10px;
+    margin-left: 16px;
+    font-weight: bold;
+    padding-bottom: 5px;
+
+  }
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
