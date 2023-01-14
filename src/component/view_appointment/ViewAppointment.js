@@ -9,6 +9,10 @@ import typeImg from "../../assets/confirm/type.png";
 import personImg from "../../assets/confirm/person.png";
 import calenderImg from "../../assets/confirm/calender.png";
 import questionImg from "../../assets/confirm/question.png";
+const BASE_URL = process.env.REACT_APP_BASE_URL
+    ? process.env.REACT_APP_BASE_URL
+    : "http://localhost:3001";
+
 
 const ViewAppointment = () => {
   const history = useHistory();
@@ -71,7 +75,7 @@ const ViewAppointment = () => {
   const checkInsurance = () => {
     //history.push("/checkin/")
     let request = {
-      url: `https://appointmentapi.apatternclinic.com/v1/24451/patients/${appointment.patientid}/insurances`,
+      url: `${BASE_URL}/v1/24451/patients/${appointment.patientid}/insurances`,
     };
     api.checkInsurances(request).then((res) => {
       console.log(res);
@@ -86,7 +90,7 @@ const ViewAppointment = () => {
   const checkLater = () => {
     try {
       let request = {
-        url: `https://appointmentapi.apatternclinic.com/sms`,
+        url: `${BASE_URL}/sms`,
         params: {
           type: "checkLater",
           to: patient.mobilephone,
@@ -100,7 +104,7 @@ const ViewAppointment = () => {
 
   const loadData = () => {
     let request = {
-      url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/${id}`,
+      url: `${BASE_URL}/v1/24451/appointments/${id}`,
     };
     api.getAuth(request).then((res) => {
       let data = res.data[0];
@@ -111,7 +115,7 @@ const ViewAppointment = () => {
       }
     });
     let request2 = {
-      url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/${id}/checkin`,
+      url: `${BASE_URL}/v1/24451/appointments/${id}/checkin`,
     };
     api.getAuth(request2).then((res) => {
       const data = (res.data || []).filter((el) => !el.complete && el.required);
@@ -121,7 +125,7 @@ const ViewAppointment = () => {
 
   const getPatient = () => {
     let request = {
-      url: `https://appointmentapi.apatternclinic.com//v1/24451/patients/${appointment.patientid}`,
+      url: `${BASE_URL}/v1/24451/patients/${appointment.patientid}`,
     };
     api.getAuth(request).then((res) => {
       if (res.data && res.data.length) {
@@ -134,7 +138,7 @@ const ViewAppointment = () => {
     if (appointment) {
       setBtnLoading(true);
       let request = {
-        url: `https://appointmentapi.apatternclinic.com/v1/24451/appointments/${appointment.appointmentid}/checkin`,
+        url: `${BASE_URL}/v1/24451/appointments/${appointment.appointmentid}/checkin`,
       };
       api
         .postAuth(request)

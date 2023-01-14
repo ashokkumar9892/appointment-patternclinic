@@ -598,7 +598,7 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 .right-content {
 	width: 100%;
 	height: 100vh;
-	padding: 60px;
+	padding: 20px;
 	overflow-y: auto;
 	background: linear-gradient(0deg, rgba(218, 230, 247, 0.64), rgba(218, 230, 247, 0.64)), #FFFFFF;
 }
@@ -608,12 +608,13 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 	margin-bottom: 30px;
 }
 
-.appointmentcard {
+ .appointmentcard {
 	padding: 35px;
 	padding-top: 28px;
 	padding-bottom: 18px;
 	background: white;
-}
+	margin-bottom:4px;
+} 
 
 .card-wrap:nth-last-child(1) {
 	margin-bottom: 0;
@@ -749,6 +750,32 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 		width: 400px;
 	}
 
+	.appointmentcard {
+		padding: 35px;
+		padding-top: 28px;
+		padding-bottom: 18px;
+		background: white;
+		margin-bottom:4px;
+	}
+
+	/* .right-content {
+		width: calc(100% - 400px);
+	} */
+}
+
+@media (max-width: 1400px) {
+	.left-sidebar {
+		width: 400px;
+	}
+
+	.appointmentcard {
+		padding: 35px;
+		padding-top: 28px;
+		padding-bottom: 18px;
+		background: white;
+		margin-bottom:4px;
+	}
+
 	/* .right-content {
 		width: calc(100% - 400px);
 	} */
@@ -756,7 +783,9 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 
 @media (max-width: 1160px) {
 
-	.right-content,
+	.right-content {
+		padding: 12px;
+	}
 	.left-sidebar {
 		padding: 40px;
 	}
@@ -769,7 +798,9 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 
 @media (max-width: 992px) {
 
-	.right-content,
+	.right-content {
+		padding: 12px;
+	}
 	.left-sidebar {
 		width: 100%;
 		max-width: 100%;
@@ -798,7 +829,9 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 		font-size: 14px;
 	}
 
-	.right-content,
+	.right-content {
+		padding: 12px;
+	}
 	.left-sidebar,
 	
 
@@ -908,5 +941,17 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 
 	.quote-icon.right {
 		right: 2px;
+	}
+
+	.appointmentcard {
+		padding: 5px;
+		padding-top: 2px;
+		padding-bottom: 2px;
+		background: white;
+		margin-bottom:4px;
+	}
+
+	.buttonDiv{
+		width:50%;
 	}
 }
