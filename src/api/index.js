@@ -46,16 +46,6 @@ const dateFormate = (date) => {
     datt.getFullYear()
   );
 };
-var rule = new schedule.RecurrenceRule();
-rule.minute = new schedule.Range(0, 59, 1);
-schedule.scheduleJob("0 0 * * *", () => {
-  try {
-    saveProviderAndReasonToJSON();
-    console.log("updated");
-  } catch (error) {
-  } finally {
-  }
-});
 
 const saveProviderAndReasonToJSON = async () => {
   const savedProviders = await axios.request({
