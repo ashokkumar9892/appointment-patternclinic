@@ -18,8 +18,41 @@ const Insurance = () =>{
 	const patientContext = useContext(PatientContext);
 	const [insuranceImg, setInsuranceImg] = useState("");
 	const [insuranceList, setInsuranceList] = useState([]);
+	const [relationshipList, setRelationshipList] = useState([
+		{value: 1, text: "Self"},
+		{value: 2, text: "Spouse"},
+		{value: 3, text: "Child"},
+		{value: 4, text: "Other"},
+		{value: 5, text: "Grandparent"},
+		{value: 6, text: "Grandchild"},
+		{value: 7, text: "Nephew or Niece"},
+		{value: 9, text: "Foster Child"},
+		{value: 10, text: "Ward"},
+		{value: 11, text: "Stepson or Stepdaughter"},
+		{value: 12, text: "Employee"},
+		{value: 13, text: "Unknown"},
+		{value: 14, text: "Handicapped Dependent"},
+		{value: 15, text: "Sponsored Dependent"},
+		{value: 16, text: "Dependent of a Minor Dependent"},
+		{value: 17, text: "Significant Other"},
+		{value: 18, text: "Mother"},
+		{value: 19, text: "Father"},
+		{value: 21, text: "Emancipated Minor"},
+		{value: 22, text: "Organ Donor"},
+		{value: 23, text: "Cadaver Donor"},
+		{value: 24, text: "Injured Plaintiff"},
+		{value: 25, text: "Child (Ins. not Financially Respons.)"},
+		{value: 26, text: "Life Partner"},
+		{value: 27, text: "Child (Mother's Insurance)"},
+		{value: 28, text: "Child (Father's Insurance)"},
+		{value: 29, text: "Child (of Mother's, Ins. not Financially Respons.)"},
+		{value: 30, text: "Child (of Father's, Ins. not Financially Respons.)"},
+		{value: 31, text: "Stepson or Stepdaughter (Stepmothers Insurance)"},
+		{value: 32, text: "Stepson or Stepdaughter (Stepfathers Insurance)"}
+	]);
 	const [insuranceError, setInsuranceError] = useState("");
 	const [showWarningModal, setWarningShow] = useState(false);
+	const [showMobileInsurance, setMobileInsurancepage] = useState(false);
 	const [docImage, setDocImage] = useState({});
 	const onInputChange = (e, name) => {
 		setInsurance({ ...insurance, [name || e.name]: e.value });
@@ -60,6 +93,8 @@ const Insurance = () =>{
 		}
 	};
 	const [policyNumber, setPolicyNumber] = useState(628);
+	const [insuranceData, setInsuranceData] = useState();
+	const [showInsuranceSection, setInsuranceSection] = useState(false);
 	const [showInsuranceForm, setInsuranceForm] = useState(false);
 	const [insuranceBtnLoading, setInsuranceBtnLoading] = useState(false);
 	const handleClose = () => setShow(false);
@@ -92,7 +127,17 @@ const Insurance = () =>{
 			}
 		}
 	);
-
+	function showUploadInsuranceForm(confirmation)
+	{
+		if(confirmation)
+		{
+			setInsuranceSection(true);
+		}
+		else {
+			setInsuranceSection(false);
+			history.push("/reviewnew");
+		}
+	}
 	function showInsuranceFormToUser(confirmation)
 	{
 		if(confirmation)
@@ -132,9 +177,9 @@ const Insurance = () =>{
 			...insurance,
 			expirationdate: moment(insurance.expirationdate).format("MM/DD/YYYY"),
 			issuedate: moment(insurance.issuedate).format("MM/DD/YYYY"),
-			relationshiptoinsuredid:1,
 			sequencenumber: 1
 		};
+		data.insurancepolicyholderdob = moment(patientContext.patientDetails.dob).format("MM/DD/YYYY");
 		setInsuranceBtnLoading(true);
 		buildFormData(formData, data);
 		let request = {
@@ -155,35 +200,12 @@ const Insurance = () =>{
 						if (res.status === 200) {
 							console.log(res.data.insurances);
 							setPolicyNumber(res.data.insurances[0].insuranceid);
+							setInsuranceData(res.data);
 							console.log(insuranceImg);
-							const insuranceImageasbase64 = {
-								image: insuranceImg.split("base64,")[1],
-							};
 
 							let getInsuranceRes = res.data;
 							//console.log("insuranceImageasbase64", insuranceImageasbase64);
-							const formData = new FormData();
-							buildFormData(formData, insuranceImageasbase64);
-							let request = {
-								url: `${BASE_URL}/v1/24451/patients/${patientId}/insurances/${res.data.insurances[0].insuranceid}/image`,
-								data: new URLSearchParams(formData),
-							};
-							api
-								.postAuth(request)
-								.then((res) => {
-									console.log(res);
-									// setInsuranceImg("");
-									setInsuranceBtnLoading(false);
-									handleClose();
-
-									swal("Insurance has been added successfully", "success");
-									showInsuranceFormToUser(false);
-								})
-								.catch((err) => {
-									swal("Something went wrong", "error");
-									setInsuranceBtnLoading(false);
-									console.log(err);
-								});
+							callInsuranceSection(true);
 						}
 					});
 				}
@@ -195,6 +217,40 @@ const Insurance = () =>{
 			})
 			.finally(() => { });
 	};
+	const callInsuranceSection = (show)=>{
+		setMobileInsurancepage(show);
+	}
+
+	const setInsurancePictures =()=>
+	{
+		let patientId = patientContext.patientDetails.patientid;
+		const insuranceImageasbase64 = {
+			image: insuranceImg.split("base64,")[1],
+		};
+		const formData = new FormData();
+		buildFormData(formData, insuranceImageasbase64);
+		let request = {
+			url: `${BASE_URL}/v1/24451/patients/${patientId}/insurances/${insuranceData.insurances[0].insuranceid}/image`,
+			data: new URLSearchParams(formData),
+		};
+		api
+			.postAuth(request)
+			.then((res) => {
+				console.log(res);
+				// setInsuranceImg("");
+				setInsuranceBtnLoading(false);
+				handleClose();
+
+				swal("Insurance has been added successfully", "success");
+				showInsuranceFormToUser(false);
+			})
+			.catch((err) => {
+				swal("Something went wrong", "error");
+				setInsuranceBtnLoading(false);
+				console.log(err);
+			});
+	}
+
 	useEffect(() =>
 	{
 		(docImage?.insuranceBackimage && docImage?.insuranceFrontimage) && mergeBase64Img();
@@ -216,141 +272,172 @@ const Insurance = () =>{
 					</Modal.Footer>
 				</Modal.Dialog>
 			</Modal>
-			{(showInsuranceForm) ? (
-				<div className="form insurance-form padding-80">
-					<div className="question" >
-						<div className="options">
-							<div className="field">
-								<label>Insurance ID Number</label>
-								<input
-									type="text"
-									name="insuranceidnumber"
-									value={insurance.insuranceidnumber}
-									onInput={(e) => onInputChange(e.target)}
-									required
-								/>
-							</div>
-							<div className="field">
-								<label>Insurance Name</label>
-								<Select
-									value={insurance.label}
-									options={searchList}
-									onChange={(e) => onInputChange(e, 'insurancepackageid')}
-									placeholder= ""
-									className={'insuranceDataSelect'}
-									classNamePrefix={'insuranceDataSelectInner'}
-									openMenuOnClick={true}
-								/>
-							</div>
-							<div className="field">
-								<label>Issue Date</label>
-								<input
-									type="date"
-									name="issuedate"
-									max={maxExpireDate}
-									value={insurance.issuedate}
-									onInput={(e) => onInputChange(e.target)}
-									required
-								/>
-							</div>
-							<div className="field">
-								<label>Expiration Date</label>
-								<input
-									type="date"
-									min={minExpireDate}
-									name="expirationdate"
-									value={insurance.expirationdate}
-									onInput={(e) => onInputChange(e.target)}
-									required
-								/>
-							</div>
-							<div className="field">
-								<label>Policyholder First Name</label>
-								<input
-									type="text"
-									name="insurancepolicyholderfirstname"
-									value={insurance.insurancepolicyholderfirstname}
-									onInput={(e) => onInputChange(e.target)}
-									required
-								/>
-							</div>
-							<div className="field">
-								<label>Policyholder last Name</label>
-								<input
-									type="text"
-									name="insurancepolicyholderlastname"
-									value={insurance.insurancepolicyholderlastname}
-									onInput={(e) => onInputChange(e.target)}
-									required
-								/>
-							</div>
-							<div className="field">
-								<label>Policy Holder Sex</label>
-								<div className="custom-dropdown">
-									<select className="select"
-											name="insurancepolicyholdersex"
-											value={insurance.insurancepolicyholdersex}
-											onChange={(e) => onInputChange(e.target)}
-											required
-									>
-										<option value=""></option>
-										<option value="M">Male</option>
-										<option value="F">Female</option>
-									</select>
-								</div>
-							</div>
-							<div className="field">
-								<label>Insured Entity type Id</label>
-								<div className="custom-dropdown">
-									<select className="select"
-											name="insuredentitytypeid"
-											value={insurance.insuredentitytypeid}
-											onChange={(e) => onInputChange(e.target)}
-											required
-									>
-										<option value=""></option>
-										<option value="1">Primary</option>
-										<option value="2">Secondary</option>
-									</select>
-								</div>
-							</div>
-							<div className="field">
-								<label>Add Insurance Front Image</label>
-								<input style={{ lineHeight: "20px", padding: "8px" }}
-									   type="file"
-									   name="insuranceFrontimage"
-									   onChange={selectInsuranceImage}
-									   required
-								/>
-							</div>
-							<div className="field">
-								<label>Add Insurance Back Image</label>
-								<input style={{ lineHeight: "20px", padding: "8px" }}
-									   type="file"
-									   name="insuranceBackimage"
-									   onChange={selectInsuranceImage}
-									   required
-								/>
-							</div>
-						</div>
-						<div className="d-flex align-items-center justify-content-between">
-							{insuranceImg && <div className="field p-0"><label>Insurance Image Preview</label>
-								<div><img  src={insuranceImg} className="w-100" /></div>
-							</div>}
-						</div>
-					</div>
-					<div className="main-buttons">
-						<button className="outline width-small" onClick={() => history.push("/reviewnew")}>Close</button>
-						<button style={{ marginLeft: "20px" }} className="outline width-small" disabled={insuranceBtnLoading} onClick={() => patientInsurance()}> {insuranceBtnLoading ? "Saving" : "Save"}</button>
-					</div>
-				</div>
-			): (<div>
+			{(showMobileInsurance) ? ((!showInsuranceSection) ? (<div>
 				<div className="main-buttons btn-align-center">
-					<h1 className="confirmation-heading-sec">Would You like to add your Insurance?</h1>
-					<button className="outline width-small" onClick={() => setWarningShow(true)}>No</button>
-					<button style={{ marginLeft: "20px" }} className="outline width-small" onClick={() => showInsuranceFormToUser(true)}> Yes </button>
+					<h1 className="confirmation-heading-sec text-start">If you are accessing this via phone, please upload your insurance pictures otherwise, carry your insurance card along with you to the clinic.</h1>
+					<button className="outline width-small" onClick={() => showUploadInsuranceForm(false)}>No</button>
+					<button style={{marginLeft: "20px"}} className="outline width-small" onClick={() => showUploadInsuranceForm(true)}> Yes</button>
 				</div>
-			</div>)}
+			    </div>) :
+				(<div className="form insurance-form padding-80">
+				<div className="options">
+					<div className="field">
+						<label>Add Insurance Front Image</label>
+						<input style={{lineHeight: "20px", padding: "8px"}}
+							   type="file"
+							   name="insuranceFrontimage"
+							   onChange={selectInsuranceImage}
+							   required
+						/>
+					</div>
+					<div className="field">
+						<label>Add Insurance Back Image</label>
+						<input style={{lineHeight: "20px", padding: "8px"}}
+							   type="file"
+							   name="insuranceBackimage"
+							   onChange={selectInsuranceImage}
+							   required
+						/>
+					</div>
+				</div>
+				<div className="d-flex align-items-center justify-content-between mb-4">
+					{insuranceImg && <div className="field p-0"><label>Insurance Image Preview</label>
+						<div><img src={insuranceImg} className="w-100" /></div>
+					</div>}
+				</div>
+				<div className="main-buttons col-8 d-flex justify-content-md-end">
+					<button className="outline width-small" onClick={() => history.push("/reviewnew")}>Close</button>
+					<button style={{marginLeft: "20px"}} className="outline width-small" onClick={() => setInsurancePictures()}> {insuranceBtnLoading ? "Saving" : "Save"}</button>
+				</div>
+			</div>)) : (<>
+				{(showInsuranceForm) ? (
+					<div className="form insurance-form padding-80">
+						<div className="question">
+							<div className="options">
+								<div className="field">
+									<label>Insurance ID Number</label>
+									<input
+										type="text"
+										name="insuranceidnumber"
+										value={insurance.insuranceidnumber}
+										onInput={(e) => onInputChange(e.target)}
+										required
+									/>
+								</div>
+								<div className="field">
+									<label>Insurance Name</label>
+									<Select
+										value={insurance.label}
+										options={searchList}
+										onChange={(e) => onInputChange(e, "insurancepackageid")}
+										placeholder=""
+										className={"insuranceDataSelect"}
+										classNamePrefix={"insuranceDataSelectInner"}
+										openMenuOnClick={true}
+									/>
+								</div>
+								<div className="field">
+									<label>Issue Date</label>
+									<input
+										type="date"
+										name="issuedate"
+										max={maxExpireDate}
+										value={insurance.issuedate}
+										onInput={(e) => onInputChange(e.target)}
+										required
+									/>
+								</div>
+								<div className="field">
+									<label>Expiration Date</label>
+									<input
+										type="date"
+										min={minExpireDate}
+										name="expirationdate"
+										value={insurance.expirationdate}
+										onInput={(e) => onInputChange(e.target)}
+										required
+									/>
+								</div>
+								<div className="field">
+									<label>Policyholder First Name</label>
+									<input
+										type="text"
+										name="insurancepolicyholderfirstname"
+										value={insurance.insurancepolicyholderfirstname}
+										onInput={(e) => onInputChange(e.target)}
+										required
+									/>
+								</div>
+								<div className="field">
+									<label>Policyholder last Name</label>
+									<input
+										type="text"
+										name="insurancepolicyholderlastname"
+										value={insurance.insurancepolicyholderlastname}
+										onInput={(e) => onInputChange(e.target)}
+										required
+									/>
+								</div>
+								<div className="field">
+									<label>Policy Holder Sex</label>
+									<div className="custom-dropdown">
+										<select className="select"
+												name="insurancepolicyholdersex"
+												value={insurance.insurancepolicyholdersex}
+												onChange={(e) => onInputChange(e.target)}
+												required
+										>
+											<option value=""></option>
+											<option value="M">Male</option>
+											<option value="F">Female</option>
+										</select>
+									</div>
+								</div>
+								<div className="field">
+									<label>Insured Entity type Id</label>
+									<div className="custom-dropdown">
+										<select className="select"
+												name="insuredentitytypeid"
+												value={insurance.insuredentitytypeid}
+												onChange={(e) => onInputChange(e.target)}
+												required
+										>
+											<option value=""></option>
+											<option value="1">Primary</option>
+											<option value="2">Secondary</option>
+										</select>
+									</div>
+								</div>
+								<div className="field">
+									<label>Patient's relationship to policy holder</label>
+									<div className="custom-dropdown">
+										<select className="select"
+												name="relationshiptoinsuredid"
+												value={insurance.relationshiptoinsuredid}
+												onChange={(e) => onInputChange(e.target)}
+												required
+										>
+											{relationshipList && relationshipList.map((res, index)=>{
+												return (<option value={res.value}>{res.text}</option>)
+											})}
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className="main-buttons">
+							<button className="outline width-small" onClick={() => history.push("/reviewnew")}>Close</button>
+							<button style={{marginLeft: "20px"}} className="outline width-small" disabled={insuranceBtnLoading} onClick={() => patientInsurance()}> {insuranceBtnLoading ? "Saving" : "Save"}</button>
+						</div>
+					</div>
+				) : (<div>
+					<div className="main-buttons btn-align-center">
+						<h1 className="confirmation-heading-sec">Would You like to add your Insurance?</h1>
+						<button className="outline width-small" onClick={() => setWarningShow(true)}>No</button>
+						<button style={{marginLeft: "20px"}} className="outline width-small" onClick={() => showInsuranceFormToUser(true)}> Yes</button>
+					</div>
+				</div>)}
+			</>)}
 		</>
 	)
 }

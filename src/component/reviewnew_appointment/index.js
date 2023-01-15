@@ -329,15 +329,15 @@ const ReviewAppoinmentNew = () => {
                 </div>
               </div>
 
-              <div className="dateTimeDiv">
-                <div className="imageDiv">
-                  <img height={20} width={20} src={insurence} />
-                </div>
-                <div className="textLocationDiv">
-                  <p className="labelName">Insurance</p>
-                  <p> {patientContext.patientDetails.insurance}</p>
-                </div>
-              </div>
+              {/*<div className="dateTimeDiv">*/}
+              {/*  <div className="imageDiv">*/}
+              {/*    <img height={20} width={20} src={insurence} />*/}
+              {/*  </div>*/}
+              {/*  <div className="textLocationDiv">*/}
+              {/*    <p className="labelName">Insurance</p>*/}
+              {/*    <p> {patientContext.patientDetails.insurance}</p>*/}
+              {/*  </div>*/}
+              {/*</div>*/}
             </div>
             <div>
               <div className="row" style={{ marginTop: "12px" }}>
