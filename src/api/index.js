@@ -18,7 +18,7 @@ export const getToken = () => {
       .request({
         url: "/oauth2/v1/token",
         method: "post",
-        baseURL: "https://appointmentapi.apatternclinic.com/",
+        baseURL: BASE_URL,
         auth: {
           username: process.env.REACT_APP_USER_NAME,
           password: process.env.REACT_APP_PASSWORD,
