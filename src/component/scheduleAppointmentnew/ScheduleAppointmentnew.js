@@ -434,7 +434,7 @@ const ScheduleAppointmentNew = () => {
             
             <div style={{ marginTop: "24px" }}>
               <button
-                className="buttonDiv"
+                className="buttonDiv nextButton ms-0"
                 onClick={() => {
                   Preview();
                 }}

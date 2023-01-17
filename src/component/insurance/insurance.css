@@ -326,12 +326,12 @@ border-radius: 2px;
 }
 .insuranceDataSelect .insuranceDataSelectInner__indicator
 {
-	color: blue;
+	color: grey;
 }
 
 .select
 {
-	width: 100%!important;
+	min-width: 100%!important;
 	min-height: 40px;
 	line-height: 40px;
 	display: inline-block;

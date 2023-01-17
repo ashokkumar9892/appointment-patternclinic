@@ -354,21 +354,24 @@ const Insurance = () =>{
 										openMenuOnClick={true}
 									/>
 								</div>
-								<div className="field">
+								<div className="field width45">
 									<label>Issue Date</label>
 									<input
 										type="date"
+										className="inputBox"
 										name="issuedate"
 										max={maxExpireDate}
 										value={insurance.issuedate}
-										onInput={(e) => onInputChange(e.target)}
+										onfocus="(this.type='date')"
+										// onInput={(e) => onInputChange(e.target)}
 										required
 									/>
 								</div>
-								<div className="field">
+								<div className="field width45">
 									<label>Expiration Date</label>
 									<input
 										type="date"
+										className="inputBox"
 										min={minExpireDate}
 										name="expirationdate"
 										value={insurance.expirationdate}
@@ -443,7 +446,7 @@ const Insurance = () =>{
 								</div>
 							</div>
 						</div>
-						<div className="main-buttons">
+						<div className="main-buttons d-flex justify-content-md-end justify-content-lg-end justify-content-center">
 							<button className="outline width-small" onClick={() => history.push("/reviewnew")}>Close</button>
 							<button style={{marginLeft: "20px"}} className="outline width-small" disabled={insuranceBtnLoading} onClick={() => patientInsurance()}> {insuranceBtnLoading ? "Saving" : "Save"}</button>
 						</div>

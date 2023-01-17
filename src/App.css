@@ -2,7 +2,7 @@ select {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	background: #F3F3F5 !important;
-	background-image: url("data:image/svg+xml;utf8,<svg fill='blue' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") !important;
+	background-image: url("data:image/svg+xml;utf8,<svg fill='grey' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") !important;
 	background-repeat: no-repeat !important;
 	background-position-x: 100%;
 	background-position-y: 5px;
@@ -12,4 +12,19 @@ select {
 	padding: 1rem;
 	padding-right: 2rem;
 	background-position: right !important;
+}
+
+
+input[type="date"]
+{
+	display:block;
+
+	/* Solution 1 */
+	-webkit-appearance: textfield;
+	-moz-appearance: textfield;
+	/*min-height: 18em;*/
+	/*min-width: 18em;*/
+
+	/* Solution 2 */
+	min-width: 96%;
 }
