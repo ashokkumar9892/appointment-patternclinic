@@ -324,3 +324,22 @@ border-radius: 2px;
 {
 	margin: 0;
 }
+.insuranceDataSelect .insuranceDataSelectInner__indicator
+{
+	color: blue;
+}
+
+.select
+{
+	width: 100%!important;
+	min-height: 40px;
+	line-height: 40px;
+	display: inline-block;
+	padding: 0 12px 0 15px;
+	background: #F3F3F5;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	position: relative;
+	background-repeat: no-repeat;
+	background-position: right 0.75rem center;
+	font-size: 13px;
+}

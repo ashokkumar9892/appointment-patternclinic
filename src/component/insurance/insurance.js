@@ -11,12 +11,15 @@ import PatientContext from "../../context/patientDetails/patientContext";
 import TopHeader from "../common/topHeader";
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import Select from "react-select";
+import Loader from "react-js-loader";
 
 const Insurance = () =>{
 	const history = useHistory();
 	const [insurance, setInsurance] = useState({ departmentid: 1 });
 	const patientContext = useContext(PatientContext);
 	const [insuranceImg, setInsuranceImg] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [showLoadingText, setLoadingText] = useState(false);
 	const [insuranceList, setInsuranceList] = useState([]);
 	const [relationshipList, setRelationshipList] = useState([
 		{value: 1, text: "Self"},
@@ -153,17 +156,20 @@ const Insurance = () =>{
 	}
 	const mergeBase64Img = async () =>
 	{
+		setLoading(true);
 		try
 		{
 			const base64ImageFront = docImage?.insuranceFrontimage;
 			const base64ImageBack = docImage?.insuranceBackimage;
 			await mergeImages([base64ImageFront.split("base64,")[1], base64ImageBack.split("base64,")[1]]).then(b64 =>
 			{
-				setInsuranceImg(b64)
+				setInsuranceImg(b64);
+				setLoading(false);
 			});
 		}
 		catch (error)
 		{
+			setLoading(false);
 			console.log(error);
 		}
 	}
@@ -223,6 +229,7 @@ const Insurance = () =>{
 
 	const setInsurancePictures =()=>
 	{
+		setLoadingText(true);
 		let patientId = patientContext.patientDetails.patientid;
 		const insuranceImageasbase64 = {
 			image: insuranceImg.split("base64,")[1],
@@ -239,12 +246,13 @@ const Insurance = () =>{
 				console.log(res);
 				// setInsuranceImg("");
 				setInsuranceBtnLoading(false);
+				setLoadingText(true);
 				handleClose();
-
 				swal("Insurance has been added successfully", "success");
 				showInsuranceFormToUser(false);
 			})
 			.catch((err) => {
+				setLoadingText(true);
 				swal("Something went wrong", "error");
 				setInsuranceBtnLoading(false);
 				console.log(err);
@@ -274,9 +282,9 @@ const Insurance = () =>{
 			</Modal>
 			{(showMobileInsurance) ? ((!showInsuranceSection) ? (<div>
 				<div className="main-buttons btn-align-center">
-					<h1 className="confirmation-heading-sec text-start">If you are accessing this via phone, please upload your insurance pictures otherwise, carry your insurance card along with you to the clinic.</h1>
-					<button className="outline width-small" onClick={() => showUploadInsuranceForm(false)}>No</button>
-					<button style={{marginLeft: "20px"}} className="outline width-small" onClick={() => showUploadInsuranceForm(true)}> Yes</button>
+					<h1 className="confirmation-heading-sec text-start">If you are accessing this via phone, please upload your insurance pictures otherwise, bring your insurance card along with you to the clinic.</h1>
+					<button className="outline width-small px-3" onClick={() => showUploadInsuranceForm(false)}>Proceed without image</button>
+					<button style={{marginLeft: "20px"}} className="outline width-small" onClick={() => showUploadInsuranceForm(true)}>Upload image</button>
 				</div>
 			    </div>) :
 				(<div className="form insurance-form padding-80">
@@ -300,14 +308,24 @@ const Insurance = () =>{
 						/>
 					</div>
 				</div>
-				<div className="d-flex align-items-center justify-content-between mb-4">
-					{insuranceImg && <div className="field p-0"><label>Insurance Image Preview</label>
-						<div><img src={insuranceImg} className="w-100" /></div>
+					{loading ? (
+						<div className="appointmentcard border-bottom mb-4 col-lg-8 col-md-8">
+							<Loader
+								type="bubble-scale"
+								bgColor={"#0c71c3"}
+								title={"bubble-scale"}
+								color={"#FFFFFF"}
+								size={100}
+							/>
+						</div>
+					):<div className="d-flex align-items-center justify-content-between mb-4">
+						{insuranceImg && <div className="field p-0"><label>Insurance Image Preview</label>
+							<div><img src={insuranceImg} className="w-100" /></div>
+						</div>}
 					</div>}
-				</div>
 				<div className="main-buttons col-8 d-flex justify-content-md-end">
 					<button className="outline width-small" onClick={() => history.push("/reviewnew")}>Close</button>
-					<button style={{marginLeft: "20px"}} className="outline width-small" onClick={() => setInsurancePictures()}> {insuranceBtnLoading ? "Saving" : "Save"}</button>
+					<button style={{marginLeft: "20px"}} className="outline width-small" onClick={() => setInsurancePictures()}> {showLoadingText ? "Saving..." : "Save"}</button>
 				</div>
 			</div>)) : (<>
 				{(showInsuranceForm) ? (

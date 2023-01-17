@@ -26,7 +26,7 @@ const AppointmentNew = () => {
   const [timeData, setTimeData] = useState("");
   const [openApiCall, setOPenAPiCall] = useState(false);
   const [department, setDepartment] = useState("");
-  
+  const [loadingScreen, setLoadingScreen] = useState(false);
   const [departmentList, setDepartmentList] = useState([]);
   const [loading, setLoading] = useState(false);
   const BASE_URL = process.env.REACT_APP_BASE_URL
@@ -41,7 +41,7 @@ const AppointmentNew = () => {
     axios
       .request({ url: `${BASE_URL}/appointmentreasons` })
       .then((data) => {
-        setLoading(false);
+        // setLoading(false);
         setReasonList(data.data?.patientappointmentreasons);
       })
       .catch((err) => {
@@ -52,44 +52,61 @@ const AppointmentNew = () => {
     axios
       .request({ url: `${BASE_URL}/departments` })
       .then((data) => {
-        setLoading(false);
+        // setLoading(false);
         setDepartmentList(data.data?.departments);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  useEffect(() => {
-    departmentApiCall();
-    axios
-      .request({ url: `${BASE_URL}/providers` })
-      .then((data) => {
-        setLoading(false);
-        setProviderList(data.data.providers);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
 
-    ReasonApiCall();
-    getToken();
+  function callInitialAPI()
+  {
+	  departmentApiCall();
+	  axios
+		  .request({ url: `${BASE_URL}/providers` })
+		  .then((data) => {
+			  setProviderList(data.data.providers);
+			  setLoadingScreen(false);
+		  })
+		  .catch((err) => {
+			  console.log(err);
+		  });
+
+	  ReasonApiCall();
+	  getToken();
+  }
+
+  useEffect(() => {
+	  setLoadingScreen(true);
+	  callInitialAPI();
   }, []);
+
+  const callAndHandleMultipleCalls = async (request)=>
+  {
+	 return await api.getShedule(request);
+  }
+
   useEffect(() => {
     let obj = {};
     setLoading(true);
-    providerList.map((item, index) => {
+    let response = [];
+	  providerList.length > 1 && providerList.map((item, index) => {
       let request = {
         url: `${BASE_URL}/v1/24451/appointments/open?practiceid=24451&departmentid=${department}&reasonid=${reason}&providerid=${item.providerid}&enddate=${moment(new Date()).add(30,'d').format("MM/DD/YYYY")}`,
       };
-      api.getShedule(request).then((data) => {
-        setOPenAPiCall(true);
-        obj[item.providerid] = data.data.appointments;
-      });
+		  response.push(callAndHandleMultipleCalls(request));
     });
-    setTimeout(async () => {
-      setSheduleObj(obj);
-      await setLoading(false);
-    }, 10000);
+	  Promise.all(response).then((data) =>
+	  {
+		  let obj = {};
+		  providerList.map((item, index) => {
+			  obj[item.providerid] = data[index].data.appointments;
+		  })
+		  console.log(value);
+		  setSheduleObj(obj);
+		  setLoading(false);
+	  });
   }, [reason]);
 
   const UpdateData = (starttime, appointmentid, appointmenttypeid) => {
@@ -240,21 +257,30 @@ const AppointmentNew = () => {
               </div>
             </div>
           </div>
-          <div className="card-wrap">
-            {loading && (
-              <div className="appointmentcard border-bottom">
-                <Loader
-                  type="bubble-scale"
-                  bgColor={"#0c71c3"}
-                  title={"bubble-scale"}
-                  color={"#FFFFFF"}
-                  size={100}
-                />
-              </div>
-            )}
-          </div>
+			{ loadingScreen ? (<div className="appointmentcard border-bottom">
+				<Loader
+					type="bubble-scale"
+					bgColor={"#0c71c3"}
+					title={"bubble-scale"}
+					color={"#FFFFFF"}
+					size={100}
+				/>
+			</div>) : (<div className="card-wrap">
+				{loading && (
+					<div className="appointmentcard border-bottom">
+						<Loader
+							type="bubble-scale"
+							bgColor={"#0c71c3"}
+							title={"bubble-scale"}
+							color={"#FFFFFF"}
+							size={100}
+						/>
+					</div>
+				)}
+			</div>)}
+
           <div>
-          {!loading && (
+          {(!loading && !loadingScreen) && (
             providerList?.map((item, index) => (
               <ProviderListComp
                 item={item}
