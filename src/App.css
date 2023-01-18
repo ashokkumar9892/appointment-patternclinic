@@ -1,19 +1,13 @@
-select {
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	background: #F3F3F5 !important;
-	background-image: url("data:image/svg+xml;utf8,<svg fill='grey' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") !important;
+select
+{
+	appearance: none !important;
+	-webkit-appearance: none !important;
+	-moz-appearance: none !important;
 	background-repeat: no-repeat !important;
-	background-position-x: 100%;
-	background-position-y: 5px;
-	border: 1px solid #dfdfdf;
-	border-radius: 2px;
-	margin-right: 2rem;
-	padding: 1rem;
-	padding-right: 2rem;
-	background-position: right !important;
+	background-position-x: 98% !important;
+	background-position-y: 50% !important;
+	background-image: url("data:image/svg+xml;utf8,<svg fill='white' stroke='grey' height='24' viewBox='0 0 24 24'  xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") !important;
 }
-
 
 input[type="date"]
 {
@@ -28,3 +22,32 @@ input[type="date"]
 	/* Solution 2 */
 	min-width: 96%;
 }
+
+/*select {*/
+/*	-webkit-appearance: none;*/
+/*	-moz-appearance: none;*/
+/*	appearance: none;*/
+/*	!* Add some styling *!*/
+
+/*	display: block;*/
+/*	width: 100%;*/
+/*	max-width: 320px;*/
+/*	height: 50px;*/
+/*	float: right;*/
+/*	margin: 5px 0px;*/
+/*	padding: 0px 24px;*/
+/*	font-size: 16px;*/
+/*	line-height: 1.75;*/
+/*	color: #333;*/
+/*	background-color: #ffffff;*/
+/*	background-image: none;*/
+/*	border: 1px solid #cccccc;*/
+/*	-ms-word-break: normal;*/
+/*	word-break: normal;*/
+/*}*/
+
+/*select::after*/
+/*{*/
+/*	content: '\f078' !important;*/
+/*	background: #0AA3C2!important;*/
+/*}*/
