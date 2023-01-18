@@ -67,7 +67,7 @@ const Insurance = () =>{
 	const [show, setShow] = useState(false);
 	const checkInsurance = () =>{
 		const request={
-			url: `${BASE_URL}/v1/24451/misc/topinsurancepackages`
+			url: `${BASE_URL}/insurance`
 		}
 		api.getAuth(request).then((res)=>{
 			let insuranceOptions = res.data.insurancepackages.sort((a, b) => a.name.localeCompare(b.name));

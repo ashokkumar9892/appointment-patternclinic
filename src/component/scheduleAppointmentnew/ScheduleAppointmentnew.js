@@ -119,6 +119,23 @@ const ScheduleAppointmentNew = () => {
     }
   }
 
+	const additionalNote = async (url) =>
+	{
+		await api.postAuth(url).then((response) =>
+		{
+			console.log(response);
+			setTimeout(() =>
+			{
+				history.push("/insurance-confirmation");
+				setButtonloading(false);
+			}, 1000);
+		}).catch((error) =>
+		{
+			console.log(error);
+			setButtonloading(false);
+		});
+	};
+
   const ScheduleApi = () => {
     if (validation()) {
       setButtonloading(true);
@@ -135,7 +152,11 @@ const ScheduleAppointmentNew = () => {
         url: `${BASE_URL}/v1/24451/patients`,
         data: formBodydata,
       };
-
+      let patientDetailsdata = `displayonschedule=${false}&notetext=${additional}`;
+      let requestAdditionalNotes = {
+      	url: `${BASE_URL}/v1/24451/appointments/${patientContext.patientDetails.appointmentid}/notes`,
+		  data: patientDetailsdata,
+	  }
       let requestbestmatch = {
         url: `${BASE_URL}/v1/24451/patients/enhancedbestmatch?firstname=${firstname}&lastname=${lastname}&departmentid=1&dob=${dob}&sex=${sex}&returnbestmatches=true`,
       };
@@ -172,10 +193,6 @@ const ScheduleAppointmentNew = () => {
                       additional: additional,
                       patientid: response.data[0].patientid,
                     });
-                    setTimeout(() => {
-                      // history.push("/reviewnew");
-                      setButtonloading(false);
-                    }, 1000);
                   })
                   .catch((error) => {
                     swal(
@@ -202,10 +219,7 @@ const ScheduleAppointmentNew = () => {
                       additional: additional,
                       patientid: response.data[0].patientid,
                     });
-                    setTimeout(() => {
-                      // history.push("/reviewnew");
-                      setButtonloading(false);
-                    }, 1000);
+					  additionalNote(requestAdditionalNotes);
                     return;
                   })
                   .catch((error) => {
@@ -235,11 +249,7 @@ const ScheduleAppointmentNew = () => {
                   additional: additional,
                   patientid: response.data[0].patientid,
                 });
-                setTimeout(() => {
-					history.push('/insurance-confirmation');
-                  // history.push("/reviewnew");
-                  setButtonloading(false);
-                }, 1000);
+				  additionalNote(requestAdditionalNotes);
               })
               .catch((error) => {
                 swal(
