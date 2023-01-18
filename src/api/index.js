@@ -141,10 +141,10 @@ const api = {
       },
     }),
   postAuth: async (request) =>
-    axios.post(request.url, request.data, {
+    axios.post(request.url, request.data,  {
       headers: {
         Authorization: "Bearer " + (await getToken()),
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        "Content-Type": request.contentType ?  request.contentType : "application/x-www-form-urlencoded;charset=UTF-8",
         Accept: "*/*",
         "Accept-Encoding": "gzip, deflate, br",
       },

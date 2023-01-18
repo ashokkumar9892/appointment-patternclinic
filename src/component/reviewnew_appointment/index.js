@@ -19,6 +19,7 @@ import api from "../../api";
 import swal from "sweetalert";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 const ReviewAppoinmentNew = () => {
   const history = useHistory();
@@ -130,6 +131,45 @@ const ReviewAppoinmentNew = () => {
       history.push("/schedule");
     }, 500);
   };
+	const getClientIp = async () =>
+	{
+		let clientIpUrl = {
+			url: `https://api.ipify.org?format=json`
+		};
+		return await axios.get(clientIpUrl.url);
+	};
+
+	const storePatientData = async () =>
+	{
+		let patientDetailsData = {
+			"patientId": patientContext.patientDetails.patientid,
+			"patientName": patientContext.patientDetails.firstname + " " + patientContext.patientDetails.lastname,
+			"appointmentId": patientContext.patientDetails.appointmentid,
+			"appointmentDateAndTime": patientContext.patientDetails.timeData,
+			"departmentName": patientContext.patientDetails.departmentName,
+			"departmentId": patientContext.patientDetails.department,
+			"reasonForVisit": patientContext.patientDetails.reasonForVisit
+		};
+		let storePatientRequest = {
+			url: `${BASE_URL}/athenaappointment/insert`,
+			data: patientDetailsData,
+			contentType: "application/json"
+		};
+		getClientIp().then(async (response) =>
+		{
+			console.log(response.ip);
+			await api.postAuth(storePatientRequest).then((response) =>
+			{
+				console.log(response);
+			}).catch((error) =>
+			{
+				console.log(error);
+			});
+		}).catch((error)=>{
+			console.log(error);
+		})
+	};
+
   const ShaduleAppointment = () => {
 	  if(checkterm){
 		  setLoading(true);
