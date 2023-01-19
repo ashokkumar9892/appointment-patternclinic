@@ -56,7 +56,20 @@ const ScheduleAppointmentNew = () => {
       return true;
     }
   };
-
+// else if (insurance['expirationdate'] < minExpireDate)
+// 	{
+// 		swal("Please select correct expiration date", "error");
+// 		setInsuranceBtnLoading(false);
+// 		isValid = false
+// 		return;
+// 	}
+// 	else if (insurance['issuedate'] > maxExpireDate)
+// 	{
+// 		swal("Please select correct issue  date", "error");
+// 		setInsuranceBtnLoading(false);
+// 		isValid = false
+// 		return;
+// 	}
   const validation = () => {
     console.log(phone.length, "phone ");
     if (firstname.length == 0) {
@@ -71,12 +84,14 @@ const ScheduleAppointmentNew = () => {
       alert("please enter valid email id");
     } else if (phonenumber()) {
       alert(" please enter valid mobile  number  ");
-    } else {
+    } else if (moment(dob).format("YYYY-MM-DD") > dobMax) {
+		alert(" please select valid date of birth  ");
+	}
+    else {
       console.log("check validatin");
       return true;
     }
   };
-
   const Preview = () => {
     setTimeout(() => {
       history.push("/");

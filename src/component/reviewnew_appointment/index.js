@@ -131,32 +131,38 @@ const ReviewAppoinmentNew = () => {
     }, 500);
   };
   const ShaduleAppointment = () => {
-    setLoading(true);
-    const formData = new FormData();
-    buildFormData(formData, details);
-    let request = {
-      url: `${BASE_URL}/v1/24451/appointments/${patientContext.patientDetails.appointmentid}`,
-      data: new URLSearchParams(formData),
-    };
-    api
-      .putAuth(request)
-      .then((data) => {
-        console.log("data", data);
-        setLoading(false);
-        if (data.status === 200) {
-          // history.push("/appointment/" + data.data[0].appointmentid);
-          sendSms(data.data[0].appointmentid);
-        } else {
-          swal("Appointment not Booked!", "error");
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
+	  if(checkterm){
+		  setLoading(true);
+		  const formData = new FormData();
+		  buildFormData(formData, details);
+		  let request = {
+			  url: `${BASE_URL}/v1/24451/appointments/${patientContext.patientDetails.appointmentid}`,
+			  data: new URLSearchParams(formData),
+		  };
+		  api
+			  .putAuth(request)
+			  .then((data) => {
+				  console.log("data", data);
+				  setLoading(false);
+				  if (data.status === 200) {
+					  // history.push("/appointment/" + data.data[0].appointmentid);
+					  sendSms(data.data[0].appointmentid);
+				  } else {
+					  swal("Appointment not Booked!", "error");
+				  }
+			  })
+			  .catch((error) => {
+				  setLoading(false);
 
-        swal("Appointment not Booked!", "error").then((value) => {
-          history.push("/appointment/");
-        });
-      });
+				  swal("Enable to book your appointment, please try again!", "error").then((value) => {
+					  history.push("/appointment/");
+				  });
+			  });
+	  }
+	  else {
+	  	alert("Please accept terms and conditions");
+	  }
+
   };
   const sendSms = (appointmentid) => {
     try {
@@ -377,7 +383,7 @@ const ReviewAppoinmentNew = () => {
                 <button
                   className="nextButton"
                   type="button"
-                  disabled={!checkterm}
+                  // disabled={!checkterm}
                   onClick={() => {
                     ShaduleAppointment();
                   }}
