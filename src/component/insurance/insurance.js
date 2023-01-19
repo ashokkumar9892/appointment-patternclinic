@@ -203,7 +203,7 @@ const Insurance = () =>{
 	const options = [
 		'one', 'two', 'three'
 	];
-	const validation = (expirationdate, issuedate) => {
+	const validation = () => {
 		let isValid = true;
 		const formFields = Object.keys(insurance);
 		let newFormValues = { ...insurance };
@@ -215,30 +215,21 @@ const Insurance = () =>{
 				isValid = false
 				return;
 			}
-			else{
-
+			else if (insurance['expirationdate'] < minExpireDate)
+				{
+					swal("Please select correct expiration date", "error");
+					setInsuranceBtnLoading(false);
+					isValid = false
+					return;
+				}
+			else if (insurance['issuedate'] > maxExpireDate)
+			{
+				swal("Please select correct issue  date", "error");
+				setInsuranceBtnLoading(false);
+				isValid = false
+				return;
 			}
 		});
-		// for (let index = 0; index < formFields.length; index++) {
-		// 	const currentField = formFields[index];
-		// 	const currentValue = insurance[currentField];
-		// 	if(currentField.length > 7)
-		// 	{
-		// 		swal("Please fill all the mandatory field", "error");
-		// 		setInsuranceBtnLoading(false);
-		// 		 isValid = false
-		// 	}
-		// 	 else if (new Date(expirationdate) < new Date(maxExpireDate)) {
-		// 		swal("Please select correct expiration date", "error");
-		// 		setInsuranceBtnLoading(false);
-		// 		isValid = false
-		// 	}
-		// 	else if (new Date(issuedate) >= new Date(minExpireDate)) {
-		// 		swal("Please select correct issue date", "error");
-		// 		setInsuranceBtnLoading(false);
-		// 		isValid = false
-		// 	}
-		// }
 		return isValid;
 	};
 
@@ -259,7 +250,7 @@ const Insurance = () =>{
 			data: new URLSearchParams(formData),
 		};
 
-		if(validation(insurance.expirationdate, insurance.issuedate))
+		if(validation())
 		{
 			api
 				.postAuth(request)
