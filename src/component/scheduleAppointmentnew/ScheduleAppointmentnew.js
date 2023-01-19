@@ -174,6 +174,7 @@ const ScheduleAppointmentNew = () => {
                     });
                     setTimeout(() => {
                       // history.push("/reviewnew");
+						history.push('/insurance-confirmation');
                       setButtonloading(false);
                     }, 1000);
                   })
@@ -204,6 +205,7 @@ const ScheduleAppointmentNew = () => {
                     });
                     setTimeout(() => {
                       // history.push("/reviewnew");
+						history.push('/insurance-confirmation');
                       setButtonloading(false);
                     }, 1000);
                     return;
