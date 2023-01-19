@@ -296,6 +296,7 @@ const ScheduleAppointmentNew = () => {
                   className="inputBox"
                   type="text"
                   name="name"
+				  maxLength={19}
                   value={firstname}
                   onChange={(e) => {
                     setFirstname(e.target.value);

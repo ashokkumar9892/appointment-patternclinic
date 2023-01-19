@@ -96,6 +96,10 @@ const Insurance = () =>{
 		}
 	};
 	const [policyNumber, setPolicyNumber] = useState(628);
+	const [showExistingInsurancePage, setExistingInsurancePage] = useState({
+		message: '',
+		show: false
+	});
 	const [insuranceData, setInsuranceData] = useState();
 	const [showInsuranceSection, setInsuranceSection] = useState(false);
 	const [showInsuranceForm, setInsuranceForm] = useState(false);
@@ -103,6 +107,7 @@ const Insurance = () =>{
 	const handleClose = () => setShow(false);
 	const minExpireDate = moment().add(1, "days").format("YYYY-MM-DD");
 	const maxExpireDate = moment().format("YYYY-MM-DD");
+	const fieldsArrayLabel = ['insuranceidnumber','insuranceidnumber','insurancepackageid','issuedate','expirationdate','insurancepolicyholderfirstname','insurancepolicyholderlastname','insurancepolicyholdersex','insuredentitytypeid']
 	const selectInsuranceImage = (event) => {
 		let reader = new FileReader();
 		reader.readAsDataURL(event.target.files[0]);
@@ -154,6 +159,28 @@ const Insurance = () =>{
 			history.push("/reviewnew");
 		}
 	}
+	const getInsuranceApiCall = ()=>{
+		let request = {
+			url: `${BASE_URL}/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
+			// data: new URLSearchParams(formData),
+		};
+		api.getAuth(request).then((res) => {
+			if (res.status === 200) {
+				// insuranceidnumber
+				//
+				// insuranceplanname
+				(res.data?.insurances && res.data?.insurances.length) ? setExistingInsurancePage({message: `with number : ${res.data?.insurances[0]?.insuranceidnumber} and name : ${res.data?.insurances[0]?.insuranceplanname}`, show: true})  : setExistingInsurancePage({message: '', show: false});
+				// console.log(res.data.insurances);
+				// setPolicyNumber(res.data.insurances[0].insuranceid);
+				// setInsuranceData(res.data)
+				// // console.log(insuranceImg);
+				//
+				// let getInsuranceRes = res.data;
+				// //console.log("insuranceImageasbase64", insuranceImageasbase64);
+				// callInsuranceSection(true);
+			}
+		});
+	}
 	const mergeBase64Img = async () =>
 	{
 		setLoading(true);
@@ -176,6 +203,45 @@ const Insurance = () =>{
 	const options = [
 		'one', 'two', 'three'
 	];
+	const validation = (expirationdate, issuedate) => {
+		let isValid = true;
+		const formFields = Object.keys(insurance);
+		let newFormValues = { ...insurance };
+		fieldsArrayLabel.forEach((val, index)=>{
+			if(!insurance[val])
+			{
+				swal("Please fill all the mandatory field", "error");
+				setInsuranceBtnLoading(false);
+				isValid = false
+				return;
+			}
+			else{
+
+			}
+		});
+		// for (let index = 0; index < formFields.length; index++) {
+		// 	const currentField = formFields[index];
+		// 	const currentValue = insurance[currentField];
+		// 	if(currentField.length > 7)
+		// 	{
+		// 		swal("Please fill all the mandatory field", "error");
+		// 		setInsuranceBtnLoading(false);
+		// 		 isValid = false
+		// 	}
+		// 	 else if (new Date(expirationdate) < new Date(maxExpireDate)) {
+		// 		swal("Please select correct expiration date", "error");
+		// 		setInsuranceBtnLoading(false);
+		// 		isValid = false
+		// 	}
+		// 	else if (new Date(issuedate) >= new Date(minExpireDate)) {
+		// 		swal("Please select correct issue date", "error");
+		// 		setInsuranceBtnLoading(false);
+		// 		isValid = false
+		// 	}
+		// }
+		return isValid;
+	};
+
 	const patientInsurance = () => {
 		setInsuranceError("");
 		const formData = new FormData();
@@ -192,36 +258,40 @@ const Insurance = () =>{
 			url: `${BASE_URL}/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
 			data: new URLSearchParams(formData),
 		};
-		api
-			.postAuth(request)
-			.then((res) => {
-				if (res.status === 200) {
-					let patientId = patientContext.patientDetails.patientid;
-					console.log(insurance.insuranceidnumber);
-					let request = {
-						url: `${BASE_URL}/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
-						data: new URLSearchParams(formData),
-					};
-					api.getAuth(request).then((res) => {
-						if (res.status === 200) {
-							console.log(res.data.insurances);
-							setPolicyNumber(res.data.insurances[0].insuranceid);
-							setInsuranceData(res.data);
-							console.log(insuranceImg);
 
-							let getInsuranceRes = res.data;
-							//console.log("insuranceImageasbase64", insuranceImageasbase64);
-							callInsuranceSection(true);
-						}
-					});
-				}
-			})
-			.catch((error) => {
-				swal("Something went wrong", "error");
-				setInsuranceBtnLoading(false);
-				setInsuranceError(error.response.data);
-			})
-			.finally(() => { });
+		if(validation(insurance.expirationdate, insurance.issuedate))
+		{
+			api
+				.postAuth(request)
+				.then((res) => {
+					if (res.status === 200) {
+						let patientId = patientContext.patientDetails.patientid;
+						console.log(insurance.insuranceidnumber);
+						let request = {
+							url: `${BASE_URL}/v1/24451/patients/${patientContext.patientDetails.patientid}/insurances`,
+							data: new URLSearchParams(formData),
+						};
+						api.getAuth(request).then((res) => {
+							if (res.status === 200) {
+								console.log(res.data.insurances);
+								setPolicyNumber(res.data.insurances[0].insuranceid);
+								setInsuranceData(res.data);
+								console.log(insuranceImg);
+
+								let getInsuranceRes = res.data;
+								//console.log("insuranceImageasbase64", insuranceImageasbase64);
+								callInsuranceSection(true);
+							}
+						});
+					}
+				})
+				.catch((error) => {
+					swal("Something went wrong", "error");
+					setInsuranceBtnLoading(false);
+					setInsuranceError(error.response.data);
+				})
+				.finally(() => { });
+		}
 	};
 	const callInsuranceSection = (show)=>{
 		setMobileInsurancepage(show);
@@ -258,7 +328,9 @@ const Insurance = () =>{
 				console.log(err);
 			});
 	}
-
+		useEffect(()=>{
+			getInsuranceApiCall()
+		},[])
 	useEffect(() =>
 	{
 		(docImage?.insuranceBackimage && docImage?.insuranceFrontimage) && mergeBase64Img();
@@ -333,7 +405,7 @@ const Insurance = () =>{
 						<div className="question">
 							<div className="options">
 								<div className="field">
-									<label>Insurance ID Number</label>
+									<label>Insurance ID Number <span style={{ color: "red" }}>*</span></label>
 									<input
 										type="text"
 										name="insuranceidnumber"
@@ -343,7 +415,7 @@ const Insurance = () =>{
 									/>
 								</div>
 								<div className="field">
-									<label>Insurance Name</label>
+									<label>Insurance Name <span style={{ color: "red" }}>*</span></label>
 									<Select
 										value={insurance.label}
 										options={searchList}
@@ -355,7 +427,7 @@ const Insurance = () =>{
 									/>
 								</div>
 								<div className="field width45">
-									<label>Issue Date</label>
+									<label>Issue Date <span style={{ color: "red" }}>*</span></label>
 									<input
 										type="date"
 										className="inputBox"
@@ -363,12 +435,12 @@ const Insurance = () =>{
 										max={maxExpireDate}
 										value={insurance.issuedate}
 										onfocus="(this.type='date')"
-										// onInput={(e) => onInputChange(e.target)}
+										onInput={(e) => onInputChange(e.target)}
 										required
 									/>
 								</div>
 								<div className="field width45">
-									<label>Expiration Date</label>
+									<label>Expiration Date <span style={{ color: "red" }}>*</span></label>
 									<input
 										type="date"
 										className="inputBox"
@@ -380,7 +452,7 @@ const Insurance = () =>{
 									/>
 								</div>
 								<div className="field">
-									<label>Policyholder First Name</label>
+									<label>Policyholder First Name <span style={{ color: "red" }}>*</span></label>
 									<input
 										type="text"
 										name="insurancepolicyholderfirstname"
@@ -390,7 +462,7 @@ const Insurance = () =>{
 									/>
 								</div>
 								<div className="field">
-									<label>Policyholder last Name</label>
+									<label>Policyholder last Name <span style={{ color: "red" }}>*</span></label>
 									<input
 										type="text"
 										name="insurancepolicyholderlastname"
@@ -400,7 +472,7 @@ const Insurance = () =>{
 									/>
 								</div>
 								<div className="field">
-									<label>Policy Holder Sex</label>
+									<label>Policy Holder Sex <span style={{ color: "red" }}>*</span></label>
 									<div className="custom-dropdown">
 										<select className="select"
 												name="insurancepolicyholdersex"
@@ -415,7 +487,7 @@ const Insurance = () =>{
 									</div>
 								</div>
 								<div className="field">
-									<label>Insured Entity type Id</label>
+									<label>Insured Entity type Id <span style={{ color: "red" }}>*</span></label>
 									<div className="custom-dropdown">
 										<select className="select"
 												name="insuredentitytypeid"
@@ -425,12 +497,12 @@ const Insurance = () =>{
 										>
 											<option value=""></option>
 											<option value="1">Primary</option>
-											<option value="2">Secondary</option>
+											<option value="2" disabled={true}>Secondary</option>
 										</select>
 									</div>
 								</div>
 								<div className="field">
-									<label>Patient's relationship to policy holder</label>
+									<label>Patient's relationship to policy holder <span style={{ color: "red" }}>*</span></label>
 									<div className="custom-dropdown">
 										<select className="select"
 												name="relationshiptoinsuredid"
@@ -453,9 +525,15 @@ const Insurance = () =>{
 					</div>
 				) : (<div>
 					<div className="main-buttons btn-align-center">
-						<h1 className="confirmation-heading-sec">Would You like to add your Insurance?</h1>
-						<button className="outline width-small" onClick={() => setWarningShow(true)}>No</button>
-						<button style={{marginLeft: "20px"}} className="outline width-small" onClick={() => showInsuranceFormToUser(true)}> Yes</button>
+						{!showExistingInsurancePage.show ?(<>
+							<h1 className="confirmation-heading-sec">Would You like to add your Insurance?</h1>
+							<button className="outline width-small" onClick={() => setWarningShow(true)}>No</button>
+							<button style={{marginLeft: "20px"}} className="outline width-small" onClick={() => showInsuranceFormToUser(true)}> Yes</button>
+						</>):(<>
+							<h1 className="confirmation-heading-sec">{`Your Insurance ${showExistingInsurancePage.message} is already registered with the clinic. Please click okay to proceed with the appointment booking`}</h1>
+							<button style={{marginLeft: "20px"}} className="outline width-small" onClick={() => showInsuranceFormToUser(false)}> Okay</button>
+						</>)
+						}
 					</div>
 				</div>)}
 			</>)}
