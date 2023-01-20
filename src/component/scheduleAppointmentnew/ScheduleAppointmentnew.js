@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import swal from "sweetalert";
+import swal from "sweetalert2";
 import dateLogo from "../../assets/schedule/datelogo.png";
 import location from "../../assets/schedule/location.png";
 import "./shedule_appointmentnew.css";
@@ -9,8 +9,8 @@ import TopHeader from "../common/topHeader";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
 const BASE_URL = process.env.REACT_APP_BASE_URL
-    ? process.env.REACT_APP_BASE_URL
-    : "http://localhost:3001";
+  ? process.env.REACT_APP_BASE_URL
+  : "http://localhost:3001";
 
 const ScheduleAppointmentNew = () => {
   const history = useHistory();
@@ -26,6 +26,7 @@ const ScheduleAppointmentNew = () => {
   const [insurance, setInsurance] = useState("");
   const [additional, setAdditional] = useState("");
   const [sex, setSex] = useState("M");
+  const [checkValidation, setValidation] = useState(false);
   const [buttonloading, setButtonloading] = useState(false);
 
   var details = {
@@ -36,11 +37,10 @@ const ScheduleAppointmentNew = () => {
     email: email,
     mobilephone: phone,
     sex: sex,
-    address11:address1,
-    address12:address2,
-    notes: additional
+    address11: address1,
+    address12: address2,
+    notes: additional,
   };
- 
 
   const dobMax = moment().subtract(2, "days").format("YYYY-MM-DD");
 
@@ -56,38 +56,37 @@ const ScheduleAppointmentNew = () => {
       return true;
     }
   };
-// else if (insurance['expirationdate'] < minExpireDate)
-// 	{
-// 		swal("Please select correct expiration date", "error");
-// 		setInsuranceBtnLoading(false);
-// 		isValid = false
-// 		return;
-// 	}
-// 	else if (insurance['issuedate'] > maxExpireDate)
-// 	{
-// 		swal("Please select correct issue  date", "error");
-// 		setInsuranceBtnLoading(false);
-// 		isValid = false
-// 		return;
-// 	}
+  // else if (insurance['expirationdate'] < minExpireDate)
+  // 	{
+  // 		swal("Please select correct expiration date", "error");
+  // 		setInsuranceBtnLoading(false);
+  // 		isValid = false
+  // 		return;
+  // 	}
+  // 	else if (insurance['issuedate'] > maxExpireDate)
+  // 	{
+  // 		swal("Please select correct issue  date", "error");
+  // 		setInsuranceBtnLoading(false);
+  // 		isValid = false
+  // 		return;
+  // 	}
   const validation = () => {
     console.log(phone.length, "phone ");
     if (firstname.length == 0) {
-      alert("please enter first name.");
+      return false;
     } else if (lastname.length == 0) {
-      alert("please enter last name  ");
+      return false;
     } else if (dob.length == 0) {
-      alert(" please select date of birth ");
+      return false;
     } else if (email.length == 0) {
-      alert("please enter valid email id");
+      return false;
     } else if (emailValidation()) {
-      alert("please enter valid email id");
+      return false;
     } else if (phonenumber()) {
-      alert(" please enter valid mobile  number  ");
+      return false;
     } else if (moment(dob).format("YYYY-MM-DD") > dobMax) {
-		alert(" please select valid date of birth  ");
-	}
-    else {
+      return false;
+    } else {
       console.log("check validatin");
       return true;
     }
@@ -99,7 +98,6 @@ const ScheduleAppointmentNew = () => {
   };
 
   useEffect(() => {
-    console.log(patientContext.patientDetails, "hhh");
     if (patientContext.patientDetails.firstname) {
       setFirstname(patientContext.patientDetails.firstname);
     }
@@ -135,6 +133,7 @@ const ScheduleAppointmentNew = () => {
   }
 
   const ScheduleApi = () => {
+    setValidation(true);
     if (validation()) {
       setButtonloading(true);
       var formBody = [];
@@ -189,17 +188,20 @@ const ScheduleAppointmentNew = () => {
                     });
                     setTimeout(() => {
                       // history.push("/reviewnew");
-						history.push('/insurance-confirmation');
+                      history.push("/insurance-confirmation");
                       setButtonloading(false);
                     }, 1000);
                   })
                   .catch((error) => {
-                    swal(
-                      "Invalid Information ",
-                      "Please enter valid Mobile number / Date Of Birth. "
-                    ).then((value) => {
-                      setButtonloading(false);
-                    });
+                    swal
+                      .fire({
+                        icon: "error",
+                        title: "Invalid Information",
+                        text: "Please enter valid Mobile number / Date Of Birth.",
+                      })
+                      .then((value) => {
+                        setButtonloading(false);
+                      });
                   });
                 break;
               } else {
@@ -220,18 +222,21 @@ const ScheduleAppointmentNew = () => {
                     });
                     setTimeout(() => {
                       // history.push("/reviewnew");
-						history.push('/insurance-confirmation');
+                      history.push("/insurance-confirmation");
                       setButtonloading(false);
                     }, 1000);
                     return;
                   })
                   .catch((error) => {
-                    swal(
-                      "Invalid Information ",
-                      "Please enter valid Mobile number / Date Of Birth. "
-                    ).then((value) => {
-                      setButtonloading(false);
-                    });
+                    swal
+                      .fire({
+                        icon: "error",
+                        title: "Invalid Information",
+                        text: "Please enter valid Mobile number / Date Of Birth.",
+                      })
+                      .then((value) => {
+                        setButtonloading(false);
+                      });
                   });
                 break;
               }
@@ -253,28 +258,34 @@ const ScheduleAppointmentNew = () => {
                   patientid: response.data[0].patientid,
                 });
                 setTimeout(() => {
-					history.push('/insurance-confirmation');
+                  history.push("/insurance-confirmation");
                   // history.push("/reviewnew");
                   setButtonloading(false);
                 }, 1000);
               })
               .catch((error) => {
-                swal(
-                  "Invalid Information ",
-                  "Please enter valid Mobile number / Date Of Birth. "
-                ).then((value) => {
-                  setButtonloading(false);
-                });
+                swal
+                  .fire({
+                    icon: "error",
+                    title: "Invalid Information",
+                    text: "Please enter valid Mobile number / Date Of Birth.",
+                  })
+                  .then((value) => {
+                    setButtonloading(false);
+                  });
               });
           }
         })
         .catch((error) => {
-          swal(
-            "Invalid Information ",
-            "Please enter valid Mobile number / Date Of Birth. "
-          ).then((value) => {
-            setButtonloading(false);
-          });
+          swal
+            .fire({
+              icon: "error",
+              title: "Invalid Information",
+              text: "Please enter valid Mobile number / Date Of Birth.",
+            })
+            .then((value) => {
+              setButtonloading(false);
+            });
         });
     }
   };
@@ -308,22 +319,33 @@ const ScheduleAppointmentNew = () => {
                   First Name <span style={{ color: "red" }}>*</span>
                 </p>
                 <input
-                  className="inputBox"
+                  className={`inputBox form-control ${
+                    checkValidation && firstname.length === 0
+                      ? "is-invalid"
+                      : "valid"
+                  }`}
                   type="text"
                   name="name"
-				  maxLength={19}
+                  maxLength={19}
                   value={firstname}
                   onChange={(e) => {
                     setFirstname(e.target.value);
                   }}
                 />
+                <div style={{ marginTop: "-8px" }} class="invalid-feedback">
+                  Please enter first name.
+                </div>
               </div>
               <div className="width45">
                 <p className="labelName">
                   Last Name <span style={{ color: "red" }}>*</span>
                 </p>
                 <input
-                  className="inputBox"
+                  className={`inputBox form-control ${
+                    checkValidation && lastname.length === 0
+                      ? "is-invalid"
+                      : "valid"
+                  }`}
                   type="text"
                   value={lastname}
                   onChange={(e) => {
@@ -331,36 +353,49 @@ const ScheduleAppointmentNew = () => {
                   }}
                   name="name"
                 />
+                <div style={{ marginTop: "-8px" }} class="invalid-feedback">
+                  Please enter last name.
+                </div>
               </div>
             </div>
             <div className="nameRow" style={{ marginTop: "12px" }}>
-            <div className="width45" style={{ marginTop: "12px" }}>
-              <p className="labelName">
-                {" "}
-                Date of Birth <span style={{ color: "red" }}>*</span>
-              </p>
-              <input
-                className="inputBox"
-                type="date"
-                name="name"
-                value={viewDob}
-                max={dobMax}
-                onChange={createDob}
-              />
-            </div>
-            <div className="width45" style={{ marginTop: "12px" }}>
-              <p className="labelName">
-                {" "}
-                Legal Sex <span style={{ color: "red" }}>*</span>
-              </p>
-              <select
-                className="inputBox"
-                onChange={(e) => setSex(e.target.value)}
-              >
-                <option value="M">Male</option>
-                <option value="F">Female</option>
-              </select>
-            </div>
+              <div className="width45" style={{ marginTop: "12px" }}>
+                <p className="labelName">
+                  {" "}
+                  Date of Birth <span style={{ color: "red" }}>*</span>
+                </p>
+                <input
+                  className={`inputBox form-control ${
+                    checkValidation && dob.length === 0 ? "is-invalid" : "valid"
+                  }`}
+                  type="date"
+                  name="name"
+                  value={viewDob}
+                  max={dobMax}
+                  onChange={createDob}
+                />
+                <div style={{ marginTop: "-8px" }} class="invalid-feedback">
+                  Please enter date of birth.
+                </div>
+              </div>
+              <div className="width45" style={{ marginTop: "12px" }}>
+                <p className="labelName">
+                  {" "}
+                  Legal Sex <span style={{ color: "red" }}>*</span>
+                </p>
+                <select
+                  className={`inputBox form-control ${
+                    checkValidation && sex.length === 0 ? "is-invalid" : "valid"
+                  }`}
+                  onChange={(e) => setSex(e.target.value)}
+                >
+                  <option value="M">Male</option>
+                  <option value="F">Female</option>
+                </select>
+                <div style={{ marginTop: "-8px" }} class="invalid-feedback">
+                  Please select sex type.
+                </div>
+              </div>
             </div>
             <div className="nameRow" style={{ marginTop: "12px" }}>
               <div className="width45">
@@ -368,7 +403,9 @@ const ScheduleAppointmentNew = () => {
                   Primary Phone <span style={{ color: "red" }}>*</span>
                 </p>
                 <input
-                  className="inputBox"
+                  className={`inputBox form-control ${
+                    checkValidation && phonenumber() ? "is-invalid" : "valid"
+                  }`}
                   type="number"
                   name="name"
                   maxLength="10"
@@ -377,37 +414,47 @@ const ScheduleAppointmentNew = () => {
                     setPhone(e.target.value);
                   }}
                 />
+                <div style={{ marginTop: "-8px" }} class="invalid-feedback">
+                  Please enter valid phone number.
+                </div>
               </div>
               <div className="width45">
-              <p className="labelName">
-                Email <span style={{ color: "red" }}>*</span>
-              </p>
-              <input
-                className="inputBox"
-                type="email"
-                name="name"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
+                <p className="labelName">
+                  Email <span style={{ color: "red" }}>*</span>
+                </p>
+                <input
+                  className={`inputBox form-control ${
+                    checkValidation && emailValidation()
+                      ? "is-invalid"
+                      : "valid"
+                  }`}
+                  type="email"
+                  name="name"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+                <div style={{ marginTop: "-8px" }} class="invalid-feedback">
+                  Please enter valid email.
+                </div>
               </div>
             </div>
             <div className="nameRow" style={{ marginTop: "12px" }}>
-            <div className="width45">
-            <p className="labelName">Address Line 1</p>
+              <div className="width45">
+                <p className="labelName">Address Line 1</p>
                 <input
                   className="inputBox"
                   onChange={(e) => setaddress1(e.target.value)}
                 />
-                </div>
-                <div className="width45">
-            <p className="labelName">Address Line 2</p>
+              </div>
+              <div className="width45">
+                <p className="labelName">Address Line 2</p>
                 <input
                   className="inputBox"
                   onChange={(e) => setaddress2(e.target.value)}
                 />
-                </div>
+              </div>
             </div>
             <div style={{ marginTop: "24px" }}>
               <p className="labelName">Additional Notes</p>
@@ -449,7 +496,7 @@ const ScheduleAppointmentNew = () => {
                 </div>
               </div>
             </div>
-            
+
             <div style={{ marginTop: "24px" }}>
               <button
                 className="buttonDiv nextButton ms-0"
