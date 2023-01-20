@@ -31,7 +31,7 @@ const ScheduleAppointmentNew = () => {
   var details = {
     firstname: firstname,
     lastname: lastname,
-    departmentid: 1,
+    departmentid: patientContext.patientDetails.department,
     dob: dob,
     email: email,
     mobilephone: phone,
