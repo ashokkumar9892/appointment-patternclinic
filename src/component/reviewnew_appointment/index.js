@@ -25,6 +25,7 @@ const ReviewAppoinmentNew = () => {
   const history = useHistory();
   const patientContext = useContext(PatientContext);
   const [show, setShow] = useState(false);
+  const [clientIp, setClientIp] = useState();
   const [insuranceError, setInsuranceError] = useState("");
   const [insuranceBtnLoading, setInsuranceBtnLoading] = useState(false);
   const [checkterm, setCheckterm] = useState(false);
@@ -131,13 +132,23 @@ const ReviewAppoinmentNew = () => {
       history.push("/schedule");
     }, 500);
   };
-	const getClientIp = async () =>
-	{
-		let clientIpUrl = {
-			url: `https://api.ipify.org?format=json`
-		};
-		return await axios.get(clientIpUrl.url);
-	};
+    const getClientIp = () => {
+        let clientIpUrl = {
+            url: `https://api.ipify.org?format=json`
+        };
+        axios.get(clientIpUrl.url).then((response) => {
+            setClientIp(response?.data?.ip || null);
+        }).catch((err)=>{
+            console.log(err);
+        });
+    };
+
+    useEffect(() => {
+        getClientIp();
+        return()=>{
+            setClientIp(null);
+        }
+    }, []);
 
   const storePatientData = async () =>
 	{
@@ -145,25 +156,18 @@ const ReviewAppoinmentNew = () => {
 			"patientId": patientContext.patientDetails.patientid?patientContext.patientDetails.patientid:null,
 			"patientName": (patientContext.patientDetails.firstname + " " + patientContext.patientDetails.lastname)?patientContext.patientDetails.firstname + " " + patientContext.patientDetails.lastname:null,
 			"appointmentId": patientContext.patientDetails.appointmentid?patientContext.patientDetails.appointmentid:null,
-			"appointmentDateAndTime": patientContext.patientDetails.timeData?patientContext.patientDetails.timeData:null,
-			"departmentName": patientContext.patientDetails.departmentName?patientContext.patientDetails.departmentName:null,
+			"appointmentDateAndTime": patientContext.patientDetails.value + " " + patientContext.patientDetails.timeData?patientContext.patientDetails.value + " " + patientContext.patientDetails.timeData:null,
+			"departmentName": patientContext.patientDetails.location?patientContext.patientDetails.location:null,
 			"departmentId": patientContext.patientDetails.department?patientContext.patientDetails.department:null,
-			"reasonForVisit": patientContext.patientDetails.reasonForVisit?patientContext.patientDetails.reasonForVisit:null,
+			"reasonForVisit": patientContext.patientDetails.reason?patientContext.patientDetails.reason:null,
       "patientFeedback":null,
-      "ipAddress":null
+      "ipAddress": clientIp || null
 		};
 		let storePatientRequest = {
 			url: `${BASE_URL}/athenaappointment/insert`,
 			data: {patient : patientDetailsData},
 			contentType: "application/json"
 		};
-		getClientIp().then(async (response) =>
-		{
-      console.log(response);
-			console.log(response.data.ip);
-      storePatientRequest.data.patient.ipAddress = response.data.ip;
-      console.log(storePatientRequest);
-      console.log(storePatientRequest.data.patient.ipAddress);
 			await api.postAuth(storePatientRequest).then((res) =>
 			{
 				console.log(res);
@@ -171,9 +175,6 @@ const ReviewAppoinmentNew = () => {
 			{
 				console.log('error ',error);
 			});
-		}).catch((error)=>{
-			console.log(error);
-		})
 	};
   const ShaduleAppointment = () => {
 	  if(checkterm){
@@ -193,11 +194,11 @@ const ReviewAppoinmentNew = () => {
 					  // history.push("/appointment/" + data.data[0].appointmentid);
             
 					  sendSms(data.data[0].appointmentid);
-            storePatientData().then(data =>{
-              console.log('data ',data);
-            }).catch(err=>{
-              console.log(err);
-            });
+                        storePatientData().then(data =>{
+                          console.log('data ',data);
+                        }).catch(err=>{
+                          console.log(err);
+                        });
 				  } else {
 					  swal("Appointment not Booked!", "error");
 				  }
