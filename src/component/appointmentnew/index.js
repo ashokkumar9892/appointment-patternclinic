@@ -21,6 +21,7 @@ const AppointmentNew = () => {
   const [reasonLabel, setReasonLabel] = useState("");
   const [reasonList, setReasonList] = useState([]);
   const [provider, setProvider] = useState("");
+  const [availableProviderList, availableSetProviderList] = useState([]);
   const [providerList, setProviderList] = useState([]);
   const [location, setLoction] = useState("OOLTEWAH CLINIC (EDT)");
   const [timeData, setTimeData] = useState("");
@@ -62,11 +63,16 @@ const AppointmentNew = () => {
 
   function callInitialAPI()
   {
+    let initialProviderList = [];
 	  departmentApiCall();
 	  axios
 		  .request({ url: `${BASE_URL}/providers` })
 		  .then((data) => {
 			  setProviderList(data.data.providers);
+			  data.data.providers.forEach((item, index)=>{
+                initialProviderList.push(item.providerid);
+              });
+			  availableSetProviderList(initialProviderList);
 			  setLoadingScreen(false);
 		  })
 		  .catch((err) => {
@@ -89,24 +95,32 @@ const AppointmentNew = () => {
 
   useEffect(() => {
     let obj = {};
-    setLoading(true);
-    let response = [];
-	  providerList.length > 1 && providerList.map((item, index) => {
-      let request = {
-        url: `${BASE_URL}/v1/24451/appointments/open?practiceid=24451&departmentid=${department}&reasonid=${reason}&providerid=${item.providerid}&enddate=${moment(new Date()).add(30,'d').format("MM/DD/YYYY")}`,
-      };
-		  response.push(callAndHandleMultipleCalls(request));
-    });
-	  Promise.all(response).then((data) =>
-	  {
-		  let obj = {};
-		  providerList.map((item, index) => {
-			  obj[item.providerid] = data[index].data.appointments;
-		  })
-		  console.log(value);
-		  setSheduleObj(obj);
-		  setLoading(false);
-	  });
+    let localProviderId = [];
+    if (reason) {
+      setLoading(true);
+      let response = [];
+      availableSetProviderList([]);
+      providerList.length > 1 && providerList.map((item, index) => {
+        let request = {
+          url: `${BASE_URL}/v1/24451/appointments/open?practiceid=24451&departmentid=${department}&reasonid=${reason}&providerid=${item.providerid}&enddate=${moment(new Date()).add(30, 'd').format("MM/DD/YYYY")}`,
+        };
+        response.push(callAndHandleMultipleCalls(request));
+      });
+      Promise.all(response).then((data) => {
+        let obj = {};
+        providerList.map((item, index) => {
+          if (data[index].data?.totalcount > 0) {
+            obj[item.providerid] = data[index].data.appointments;
+            localProviderId.push(data[index]['data']['appointments'][0]['localproviderid']);
+          }
+        })
+        console.log(value);
+        availableSetProviderList(localProviderId);
+        setSheduleObj(obj);
+        console.log(localProviderId);
+        setLoading(false);
+      });
+    }
   }, [reason]);
 
   const UpdateData = (starttime, appointmentid, appointmenttypeid) => {
@@ -185,13 +199,15 @@ const AppointmentNew = () => {
                   <label>
                     <span className="step"> Step 2 : </span> Patient Type
                   </label>
-                  <div style={{ marginTop: "8px" }}>
+                  <div style={{ marginTop: "8px"}}>
                     <select
                       className="formselectdiv"
                       disabled={!department}
+                      style={{background: `${(!department) ? '#80808014' : ''}`}}
                       value={patientType}
                       onChange={(event) => {
                         setPatientType(event.target.value);
+                        setReason("");
                       }}
                     >
                       <option value="" hidden>
@@ -210,6 +226,7 @@ const AppointmentNew = () => {
                     <select
                       disabled={!patientType}
                       className="formselectdiv"
+                      style={{background: `${(!patientType) ? '#80808014' : ''}`}}
                       value={reason}
                       onChange={(event) => {
                         setReason(event.target.value);
@@ -287,7 +304,7 @@ const AppointmentNew = () => {
           <div>
           {(!loading && !loadingScreen) && (
             providerList?.map((item, index) => (
-              <ProviderListComp
+                availableProviderList.includes(item.providerid) && (<ProviderListComp
                 item={item}
                 sheduleobj={sheduleobj}
                 patientType={patientType}
@@ -296,7 +313,7 @@ const AppointmentNew = () => {
                 value={value}
                 UpdateData={UpdateData}
                 setLoading={setLoading}
-              />
+              />)
             ))
             )}
           </div>
