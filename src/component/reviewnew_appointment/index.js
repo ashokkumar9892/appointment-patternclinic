@@ -139,37 +139,42 @@ const ReviewAppoinmentNew = () => {
 		return await axios.get(clientIpUrl.url);
 	};
 
-	const storePatientData = async () =>
+  const storePatientData = async () =>
 	{
 		let patientDetailsData = {
-			"patientId": patientContext.patientDetails.patientid,
-			"patientName": patientContext.patientDetails.firstname + " " + patientContext.patientDetails.lastname,
-			"appointmentId": patientContext.patientDetails.appointmentid,
-			"appointmentDateAndTime": patientContext.patientDetails.timeData,
-			"departmentName": patientContext.patientDetails.departmentName,
-			"departmentId": patientContext.patientDetails.department,
-			"reasonForVisit": patientContext.patientDetails.reasonForVisit
+			"patientId": patientContext.patientDetails.patientid?patientContext.patientDetails.patientid:null,
+			"patientName": (patientContext.patientDetails.firstname + " " + patientContext.patientDetails.lastname)?patientContext.patientDetails.firstname + " " + patientContext.patientDetails.lastname:null,
+			"appointmentId": patientContext.patientDetails.appointmentid?patientContext.patientDetails.appointmentid:null,
+			"appointmentDateAndTime": patientContext.patientDetails.timeData?patientContext.patientDetails.timeData:null,
+			"departmentName": patientContext.patientDetails.departmentName?patientContext.patientDetails.departmentName:null,
+			"departmentId": patientContext.patientDetails.department?patientContext.patientDetails.department:null,
+			"reasonForVisit": patientContext.patientDetails.reasonForVisit?patientContext.patientDetails.reasonForVisit:null,
+      "patientFeedback":null,
+      "ipAddress":null
 		};
 		let storePatientRequest = {
 			url: `${BASE_URL}/athenaappointment/insert`,
-			data: patientDetailsData,
+			data: {patient : patientDetailsData},
 			contentType: "application/json"
 		};
 		getClientIp().then(async (response) =>
 		{
-			console.log(response.ip);
-			await api.postAuth(storePatientRequest).then((response) =>
+      console.log(response);
+			console.log(response.data.ip);
+      storePatientRequest.data.patient.ipAddress = response.data.ip;
+      console.log(storePatientRequest);
+      console.log(storePatientRequest.data.patient.ipAddress);
+			await api.postAuth(storePatientRequest).then((res) =>
 			{
-				console.log(response);
+				console.log(res);
 			}).catch((error) =>
 			{
-				console.log(error);
+				console.log('error ',error);
 			});
 		}).catch((error)=>{
 			console.log(error);
 		})
 	};
-
   const ShaduleAppointment = () => {
 	  if(checkterm){
 		  setLoading(true);
@@ -186,7 +191,13 @@ const ReviewAppoinmentNew = () => {
 				  setLoading(false);
 				  if (data.status === 200) {
 					  // history.push("/appointment/" + data.data[0].appointmentid);
+            
 					  sendSms(data.data[0].appointmentid);
+            storePatientData().then(data =>{
+              console.log('data ',data);
+            }).catch(err=>{
+              console.log(err);
+            });
 				  } else {
 					  swal("Appointment not Booked!", "error");
 				  }
