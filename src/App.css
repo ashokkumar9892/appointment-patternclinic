@@ -18,7 +18,7 @@ input[type="date"]
 	-moz-appearance: textfield;
 	/*min-height: 18em;*/
 	/*min-width: 18em;*/
-
+	background: #ffffff;
 	/* Solution 2 */
 	min-width: 96%;
 }

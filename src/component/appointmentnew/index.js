@@ -69,10 +69,6 @@ const AppointmentNew = () => {
 		  .request({ url: `${BASE_URL}/providers` })
 		  .then((data) => {
 			  setProviderList(data.data.providers);
-			  data.data.providers.forEach((item, index)=>{
-                initialProviderList.push(item.providerid);
-              });
-			  availableSetProviderList(initialProviderList);
 			  setLoadingScreen(false);
 		  })
 		  .catch((err) => {
@@ -114,6 +110,7 @@ const AppointmentNew = () => {
             localProviderId.push(data[index]['data']['appointments'][0]['localproviderid']);
           }
         })
+        localProviderId.sort((a,b)=>{return a-b})
         console.log(value);
         availableSetProviderList(localProviderId);
         setSheduleObj(obj);
@@ -176,6 +173,7 @@ const AppointmentNew = () => {
                         setDepartment(event.target.value);
                         setPatientType("");
                         setReason("");
+                        availableSetProviderList([]);
                       }}
                     >
                       <option value="" hidden>
@@ -208,6 +206,7 @@ const AppointmentNew = () => {
                       onChange={(event) => {
                         setPatientType(event.target.value);
                         setReason("");
+                        availableSetProviderList([]);
                       }}
                     >
                       <option value="" hidden>
@@ -230,6 +229,7 @@ const AppointmentNew = () => {
                       value={reason}
                       onChange={(event) => {
                         setReason(event.target.value);
+                        availableSetProviderList([]);
                       }}
                     >
                       <option value="" hidden>
@@ -302,7 +302,7 @@ const AppointmentNew = () => {
 			</div>)}
 
           <div>
-          {(!loading && !loadingScreen) && (
+          {(!loading && !loadingScreen) && ( availableProviderList.length > 0 ? (
             providerList?.map((item, index) => (
                 availableProviderList.includes(item.providerid) && (<ProviderListComp
                 item={item}
@@ -314,7 +314,7 @@ const AppointmentNew = () => {
                 UpdateData={UpdateData}
                 setLoading={setLoading}
               />)
-            ))
+            ))) : (<div className="appointmentcard no-data-found-card"> <h2 className="card-heading mb-30px">There was no data found for the selected filter options. Change the filter options and try again.</h2></div>)
             )}
           </div>
 

@@ -955,3 +955,15 @@ html .owl-theme .owl-nav [class*=owl-]:hover {
 		width:50%;
 	}
 }
+
+.no-data-found-card
+{
+	min-height: calc(50vh - 100px);
+	text-align: left;
+	padding: 55px;
+}
+
+.no-data-found-card h2
+{
+	color: #111111ad !important;
+}

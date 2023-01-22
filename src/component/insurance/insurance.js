@@ -332,7 +332,7 @@ const Insurance = () => {
         console.log(res);
         // setInsuranceImg("");
         setInsuranceBtnLoading(false);
-        setLoadingText(true);
+        setLoadingText(false);
         handleClose();
         swal("Insurance has been added successfully", "success");
         showInsuranceFormToUser(false);
