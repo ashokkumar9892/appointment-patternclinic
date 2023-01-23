@@ -233,6 +233,12 @@ export default function HealthHistoryForm(props) {
     isFormStep5();
   })
 
+  useEffect(() => {
+    window.gtag("event", "conversion", {
+      send_to: "AW-774469977/9IDQCMrBpoEYENnypfEC",
+    });
+  });
+
   const handleSurgerBlock = (event) => {
     let data = JSON.parse(JSON.stringify(surgeries));
     if (event == "add") {

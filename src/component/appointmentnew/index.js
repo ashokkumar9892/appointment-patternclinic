@@ -23,7 +23,7 @@ const AppointmentNew = () => {
   const [provider, setProvider] = useState("");
   const [availableProviderList, availableSetProviderList] = useState([]);
   const [providerList, setProviderList] = useState([]);
-  const [location, setLoction] = useState("OOLTEWAH CLINIC (EDT)");
+  const [location, setLoction] = useState("OOLTEWAH CLINIC (EST)");
   const [timeData, setTimeData] = useState("");
   const [openApiCall, setOPenAPiCall] = useState(false);
   const [department, setDepartment] = useState("");
@@ -80,8 +80,11 @@ const AppointmentNew = () => {
   }
 
   useEffect(() => {
-	  setLoadingScreen(true);
-	  callInitialAPI();
+    setLoadingScreen(true);
+    callInitialAPI();
+    window.gtag("event", "conversion", {
+      send_to: "AW-774469977/9IDQCMrBpoEYENnypfEC",
+    });
   }, []);
 
   const callAndHandleMultipleCalls = async (request)=>
@@ -171,6 +174,7 @@ const AppointmentNew = () => {
                       className="formselectdiv"
                       onChange={(event) => {
                         setDepartment(event.target.value);
+                        setLoction(event.target.selectedOptions[0].text);
                         setPatientType("");
                         setReason("");
                         availableSetProviderList([]);

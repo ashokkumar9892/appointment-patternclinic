@@ -341,6 +341,12 @@ export default function IntakeForm(props) {
     }
   });
 
+  useEffect(()=>{
+    window.gtag("event", "conversion", {
+      send_to: "AW-774469977/9IDQCMrBpoEYENnypfEC",
+    });
+  });
+
   const generateDocs = (step) => {
     html2canvas(document.getElementById(`pdf-ref-${step}`)).then(async res => {
       const canvasData = { ...stepCanvas, [step]: res };

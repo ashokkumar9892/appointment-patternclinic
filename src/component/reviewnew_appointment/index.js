@@ -16,7 +16,7 @@ import Button from "react-bootstrap/Button";
 import TopHeader from "../common/topHeader";
 import PatientContext from "../../context/patientDetails/patientContext";
 import api from "../../api";
-import swal from "sweetalert";
+import swal from "sweetalert2";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -143,12 +143,15 @@ const ReviewAppoinmentNew = () => {
         });
     };
 
-    useEffect(() => {
-        getClientIp();
-        return()=>{
-            setClientIp(null);
-        }
-    }, []);
+  useEffect(() => {
+    getClientIp();
+    window.gtag("event", "conversion", {
+      send_to: "AW-774469977/9IDQCMrBpoEYENnypfEC",
+    });
+    return () => {
+      setClientIp(null);
+    }
+  }, []);
 
   const storePatientData = async () =>
 	{
@@ -212,7 +215,11 @@ const ReviewAppoinmentNew = () => {
 			  });
 	  }
 	  else {
-	  	alert("Please accept terms and conditions");
+        swal.fire({
+          icon: "error",
+          title: "Invalid Information",
+          text: "Please accept terms and conditions.",
+        });
 	  }
 
   };
@@ -352,7 +359,7 @@ const ReviewAppoinmentNew = () => {
                   <p>
                     {" "}
                     {patientContext.patientDetails.value} <br />
-                    {patientContext.patientDetails.timeData}(EDT)
+                    {patientContext.patientDetails.timeData}(EST)
                   </p>
                 </div>
               </div>

@@ -98,6 +98,7 @@ const ScheduleAppointmentNew = () => {
   };
 
   useEffect(() => {
+    console.log(patientContext.patientDetails);
     if (patientContext.patientDetails.firstname) {
       setFirstname(patientContext.patientDetails.firstname);
     }
@@ -123,6 +124,9 @@ const ScheduleAppointmentNew = () => {
     if (patientContext.patientDetails.sex) {
       setSex(patientContext.patientDetails.sex);
     }
+    window.gtag("event", "conversion", {
+      send_to: "AW-774469977/9IDQCMrBpoEYENnypfEC",
+    });
   }, []);
 
   function phonenumber() {
@@ -366,7 +370,7 @@ const ScheduleAppointmentNew = () => {
                 </p>
                 <input
                   className={`inputBox form-control ${
-                    checkValidation && dob.length === 0 ? "is-invalid" : "valid"
+                    (checkValidation && dob.length === 0 || checkValidation && moment(dob).format("YYYY-MM-DD") > dobMax) ? "is-invalid" : "valid"
                   }`}
                   type="date"
                   name="name"
@@ -482,7 +486,7 @@ const ScheduleAppointmentNew = () => {
                     12
                       ? "pm"
                       : "am"}{" "}
-                    (EDT)
+                    (EST)
                   </p>
                 </div>
               </div>

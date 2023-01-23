@@ -351,6 +351,9 @@ const Insurance = () => {
   };
   useEffect(() => {
     getInsuranceApiCall();
+    window.gtag("event", "conversion", {
+      send_to: "AW-774469977/9IDQCMrBpoEYENnypfEC",
+    });
   }, []);
   useEffect(() => {
     docImage?.insuranceBackimage &&
@@ -421,6 +424,8 @@ const Insurance = () => {
           </div>
         ) : (
           <div className="form insurance-form padding-80">
+            <h2 className="card-heading mb-30px">Insurance Image Information</h2>
+
             <div className="options">
               <div className="field">
                 <label>Add Insurance Front Image</label>
@@ -487,6 +492,7 @@ const Insurance = () => {
         <>
           {showInsuranceForm ? (
             <div className="form insurance-form padding-80">
+              <h2 className="card-heading mb-30px">Insurance Information</h2>
               <div className="question">
                 <div className="options">
                   <div className="field">

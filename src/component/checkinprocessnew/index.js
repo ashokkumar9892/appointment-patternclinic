@@ -88,6 +88,9 @@ const CheckInNew = () => {
 
 	useEffect(() => {
 		loadData();
+		window.gtag("event", "conversion", {
+			send_to: "AW-774469977/9IDQCMrBpoEYENnypfEC",
+		});
 	}, []);
 
 	useEffect(() => {

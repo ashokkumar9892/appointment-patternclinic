@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./appointmentnew.css";
 import { useState } from "react";
 
@@ -14,6 +14,13 @@ const SheduleData = (props) => {
     var strTime = hours + ":" + minutes + " " + ampm;
     return strTime;
   }
+
+  useEffect(()=>{
+    window.gtag("event", "conversion", {
+      send_to: "AW-774469977/9IDQCMrBpoEYENnypfEC",
+    });
+  },[]);
+
   return (
     <>
       <div

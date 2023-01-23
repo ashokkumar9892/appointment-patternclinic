@@ -113,6 +113,12 @@ const ScheduleAppointment = () => {
     }
   }, []);
 
+  useEffect(() => {
+    window.gtag("event", "conversion", {
+      send_to: "AW-774469977/9IDQCMrBpoEYENnypfEC",
+    });
+  }, []);
+
   const ScheduleApi = () => {
     if (validation()) {
       setButtonloading(true);
@@ -360,7 +366,7 @@ const ScheduleAppointment = () => {
                                         )[0] > 12
                                           ? "pm"
                                           : "am"}{" "}
-                                        (EDT)
+                                        (EST)
                                       </div>
                                     </div>
                                   </div>

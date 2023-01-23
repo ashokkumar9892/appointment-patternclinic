@@ -236,6 +236,13 @@ export default function CovidForm(props) {
     isFormStep4();
     isFormStep5();
   })
+
+  useEffect(() => {
+    window.gtag("event", "conversion", {
+      send_to: "AW-774469977/9IDQCMrBpoEYENnypfEC",
+    });
+  }, []);
+
   return (
    <div className='px-3'>
     { formStep == 1 ?  
